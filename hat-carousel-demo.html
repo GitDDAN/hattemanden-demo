@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hattemanden - Classic Top Hat Collection</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS CUSTOM PROPERTIES ===== */
+        :root {
+            --primary: #8b6914;
+            --primary-dark: #6d5310;
+            --primary-light: #b8922a;
+            --primary-glow: rgba(139, 105, 20, 0.15);
+
+            --bg-base: #f1eee9;
+            --bg-elevated: #faf8f5;
+            --bg-surface: #ffffff;
+
+            --text-primary: #3f1e1f;
+            --text-secondary: #3c3737;
+            --text-muted: #6b5c5d;
+
+            --border-subtle: rgba(63, 30, 31, 0.08);
+            --border-default: rgba(63, 30, 31, 0.12);
+
+            --shadow-sm: 0 1px 2px rgba(63, 30, 31, 0.08), 0 1px 3px rgba(63, 30, 31, 0.04);
+            --shadow-md: 0 4px 6px rgba(63, 30, 31, 0.08), 0 2px 4px rgba(63, 30, 31, 0.04);
+            --shadow-lg: 0 10px 15px rgba(63, 30, 31, 0.1), 0 4px 6px rgba(63, 30, 31, 0.05);
+
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+
+            --carousel-panel-w: 280px;
+            --carousel-panel-h: 300px;
+            --carousel-tz: 420px;
+            --carousel-speed: 0.7s;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: rgba(250, 248, 245, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.75rem 1.5rem;
+        }
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .logo-text h1 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+        .logo-text .tagline {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--primary);
+        }
+
+        /* ===== DEMO NAV ===== */
+        .demo-nav {
+            margin-left: auto;
+            display: flex;
+            gap: 0.35rem;
+        }
+        .demo-nav a {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            color: var(--text-muted);
+            padding: 0.35rem 0.75rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-default);
+            transition: all 180ms ease;
+            white-space: nowrap;
+        }
+        .demo-nav a:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: var(--primary-glow);
+        }
+        .demo-nav a.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-color: var(--primary);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            max-width: 700px;
+            margin: 2rem auto 0;
+            padding: 2rem 2rem 1.75rem;
+            text-align: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+        }
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--primary-dark);
+            background: var(--primary-glow);
+            padding: 0.25rem 0.85rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 0.75rem;
+        }
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 0.5rem;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 0.75rem;
+        }
+        .hero-price {
+            font-size: 1rem;
+            color: var(--text-secondary);
+        }
+        .hero-price strong {
+            color: var(--primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        /* ===== 3D CAROUSEL ===== */
+        .carousel-section {
+            padding: 2.5rem 1rem 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .carousel-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .carousel-viewport {
+            width: 100%;
+            max-width: 650px;
+            height: 400px;
+            perspective: 1200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            clip-path: inset(0 0 0 0);
+        }
+        .carousel-ring {
+            position: relative;
+            width: var(--carousel-panel-w);
+            height: var(--carousel-panel-h);
+            transform-style: preserve-3d;
+            transition: transform var(--carousel-speed) cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
+        }
+        .carousel-panel {
+            position: absolute;
+            width: var(--carousel-panel-w);
+            height: var(--carousel-panel-h);
+            top: 0;
+            left: 0;
+            background: var(--bg-surface);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border: 1px solid var(--border-subtle);
+        }
+        .carousel-panel img {
+            width: 92%;
+            height: 80%;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+        .panel-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-muted);
+            margin-top: 0.6rem;
+        }
+
+        /* Arrow buttons */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--border-default);
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all 180ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: system-ui, sans-serif;
+            user-select: none;
+        }
+        .carousel-arrow:hover {
+            background: var(--primary-glow);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-50%) scale(1.08);
+            box-shadow: var(--shadow-lg);
+        }
+        .carousel-arrow:active {
+            transform: translateY(-50%) scale(0.96);
+        }
+        .carousel-prev { left: 0; }
+        .carousel-next { right: 0; }
+
+        /* Current color display */
+        .current-color {
+            text-align: center;
+            margin-top: 1.25rem;
+        }
+        .current-color-name {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            transition: opacity 0.3s ease;
+        }
+        .current-color-sub {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 0.15rem;
+        }
+
+        /* ===== SWATCHES ===== */
+        .swatches-section {
+            text-align: center;
+            padding: 1.5rem 1rem 0.5rem;
+        }
+        .swatches-title {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        .swatches-row {
+            display: flex;
+            justify-content: center;
+            gap: 0.65rem;
+            flex-wrap: wrap;
+        }
+        .swatch {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 2.5px solid var(--border-default);
+            cursor: pointer;
+            transition: all 200ms ease;
+            position: relative;
+        }
+        .swatch:hover {
+            transform: scale(1.18);
+            box-shadow: var(--shadow-md);
+        }
+        .swatch.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow), var(--shadow-md);
+            transform: scale(1.12);
+        }
+        .swatch[title]::after {
+            content: attr(title);
+            position: absolute;
+            bottom: -1.6rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.55rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            white-space: nowrap;
+            opacity: 0;
+            transition: opacity 150ms ease;
+            pointer-events: none;
+        }
+        .swatch:hover::after,
+        .swatch.active::after {
+            opacity: 1;
+        }
+
+        /* ===== PRODUCT INFO ===== */
+        .product-info {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .info-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .info-card h3 {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.85rem 2rem;
+        }
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .detail-item .label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+        .detail-item .value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* ===== FEATURES BAR ===== */
+        .features-bar {
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .site-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .site-footer .footer-note {
+            font-size: 0.65rem;
+            margin-top: 0.25rem;
+            color: var(--primary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ===== IMAGE COUNT INDICATOR ===== */
+        .carousel-indicator {
+            text-align: center;
+            margin-top: 0.75rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.35rem;
+        }
+        .indicator-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: var(--border-default);
+            transition: all 250ms ease;
+        }
+        .indicator-dot.active {
+            background: var(--primary);
+            transform: scale(1.3);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            :root {
+                --carousel-panel-w: 220px;
+                --carousel-panel-h: 240px;
+                --carousel-tz: 300px;
+            }
+            .carousel-viewport {
+                height: 320px;
+                perspective: 900px;
+            }
+            .hero-title { font-size: 2rem; }
+            .hero { margin: 1.5rem 1rem 0; padding: 1.5rem; }
+            .carousel-arrow { width: 42px; height: 42px; font-size: 1.3rem; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .features-bar { gap: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            :root {
+                --carousel-panel-w: 180px;
+                --carousel-panel-h: 200px;
+                --carousel-tz: 240px;
+            }
+            .carousel-viewport {
+                height: 270px;
+                perspective: 700px;
+            }
+            .hero-title { font-size: 1.6rem; }
+            .hero-subtitle { font-size: 0.85rem; }
+            .swatch { width: 32px; height: 32px; }
+            .carousel-arrow { width: 38px; height: 38px; font-size: 1.1rem; }
+            .current-color-name { font-size: 1.1rem; }
+            .features-bar { flex-direction: column; align-items: center; gap: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <script>if(sessionStorage.getItem('hm-demo-auth')!=='ok')window.location.href='index.html';</script>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-inner">
+            <span class="logo-icon">H</span>
+            <div class="logo-text">
+                <h1>hattemanden.dk</h1>
+                <span class="tagline">Dansk hattetradition</span>
+            </div>
+            <nav class="demo-nav">
+                <a href="hat-carousel-demo.html" class="active">Farvekarrusel</a>
+                <a href="hat-rotation-demo.html">360&deg; Visning</a>
+                <a href="hat-images-demo.html">Billeder</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <span class="hero-badge">Kollektion</span>
+        <h2 class="hero-title">Classic Top Hat</h2>
+        <p class="hero-subtitle">Engelsk h&oslash;j hat af 100% ren uld &mdash; 10 farver</p>
+        <p class="hero-price">Fra <strong>600 DKK</strong></p>
+    </section>
+
+    <!-- 3D CAROUSEL -->
+    <section class="carousel-section">
+        <div class="carousel-container">
+            <button class="carousel-arrow carousel-prev" aria-label="Forrige">&#8249;</button>
+            <div class="carousel-viewport">
+                <div class="carousel-ring" id="carouselRing">
+                    <!-- Panels generated by JS -->
+                </div>
+            </div>
+            <button class="carousel-arrow carousel-next" aria-label="N&aelig;ste">&#8250;</button>
+        </div>
+        <div class="current-color">
+            <div class="current-color-name" id="currentColorName">Sort</div>
+            <div class="current-color-sub" id="currentColorSub">Black</div>
+        </div>
+        <div class="carousel-indicator" id="carouselIndicator"></div>
+    </section>
+
+    <!-- COLOR SWATCHES -->
+    <section class="swatches-section">
+        <div class="swatches-title">V&aelig;lg farve</div>
+        <div class="swatches-row" id="swatchesRow">
+            <!-- Swatches generated by JS -->
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <div class="features-bar">
+        <div class="feature">
+            <span class="feature-icon">&#127918;</span>
+            <span>100% Premium Uld</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">&#9997;</span>
+            <span>H&aring;ndlavet kvalitet</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">&#127775;</span>
+            <span>Satin for &amp; silkeb&aring;nd</span>
+        </div>
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <section class="product-info">
+        <div class="info-card">
+            <h3>Produktdetaljer</h3>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="label">Materiale</span>
+                    <span class="value">100% Premium Uld</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Stil</span>
+                    <span class="value">Klassisk H&oslash;j Hat</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Oprindelse</span>
+                    <span class="value">Designed in England</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">For</span>
+                    <span class="value">Satin &amp; l&aelig;der svedrem</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">H&oslash;jde</span>
+                    <span class="value">12,5 cm</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Sk&aelig;rm</span>
+                    <span class="value">4,5 cm</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Farver</span>
+                    <span class="value">10 tilg&aelig;ngelige</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Unisex</span>
+                    <span class="value">Ja &mdash; alle st&oslash;rrelser</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <p>hattemanden.dk &mdash; Karrusel demo</p>
+        <p class="footer-note">Design prototype &bull; Interaktiv visning</p>
+    </footer>
+
+    <script>
+        /* ===== HAT DATA ===== */
+        const BASE = 'https://www.euroaccessories.co.uk/media/catalog/product/cache/00a37c1af0df5e40dcad3e450dc00c72/image/';
+        const HAT_DATA = [
+            { name: 'Sort',         nameEn: 'Black',       swatch: '#222222',  hash: '777cc' },
+            { name: 'Gr\u00e5',     nameEn: 'Grey',        swatch: '#808080',  hash: '78884' },
+            { name: 'Hvid',         nameEn: 'White',       swatch: '#F0EDE6',  hash: '7d74e' },
+            { name: 'Brun',         nameEn: 'Brown',       swatch: '#7B5B3A',  hash: '7426f' },
+            { name: 'R\u00f8d',     nameEn: 'Red',         swatch: '#C0392B',  hash: '7ada0' },
+            { name: 'Bordeaux',     nameEn: 'Burgundy',    swatch: '#722F37',  hash: '7e6b5' },
+            { name: 'Marinebl\u00e5', nameEn: 'Navy Blue', swatch: '#1E3A5F',  hash: '756ef' },
+            { name: 'Lilla',        nameEn: 'Purple',      swatch: '#7D3C98',  hash: '7af80' },
+            { name: 'Pink',         nameEn: 'Pink',        swatch: '#D4788C',  hash: '77e4a' },
+            { name: 'Olivengr\u00f8n', nameEn: 'Olive Green', swatch: '#556B2F', hash: '78119' },
+        ];
+
+        const PANEL_COUNT = HAT_DATA.length;
+        const THETA = 360 / PANEL_COUNT;
+
+        let currentIndex = 0;
+        let autoRotateTimer = null;
+
+        /* ===== BUILD CAROUSEL PANELS ===== */
+        function buildCarousel() {
+            const ring = document.getElementById('carouselRing');
+            const swatchesRow = document.getElementById('swatchesRow');
+            const indicator = document.getElementById('carouselIndicator');
+
+            HAT_DATA.forEach((hat, i) => {
+                // Panel
+                const panel = document.createElement('div');
+                panel.className = 'carousel-panel';
+                panel.dataset.index = i;
+                const angle = THETA * i;
+                panel.style.transform = `rotateY(${angle}deg) translateZ(var(--carousel-tz))`;
+                panel.innerHTML = `
+                    <img src="${BASE}${hat.hash}/classic-top-hat-e15-01.jpg"
+                         alt="Classic Top Hat - ${hat.nameEn}"
+                         loading="lazy"
+                         referrerpolicy="no-referrer">
+                    <span class="panel-label">${hat.name}</span>
+                `;
+                ring.appendChild(panel);
+
+                // Swatch
+                const swatch = document.createElement('button');
+                swatch.className = 'swatch' + (i === 0 ? ' active' : '');
+                swatch.dataset.index = i;
+                swatch.style.background = hat.swatch;
+                swatch.title = hat.name;
+                swatch.setAttribute('aria-label', hat.name);
+                if (hat.nameEn === 'White') {
+                    swatch.style.border = '2.5px solid #ccc';
+                }
+                swatch.addEventListener('click', () => {
+                    stopAutoRotate();
+                    rotateToIndex(i);
+                });
+                swatchesRow.appendChild(swatch);
+
+                // Indicator dot
+                const dot = document.createElement('div');
+                dot.className = 'indicator-dot' + (i === 0 ? ' active' : '');
+                indicator.appendChild(dot);
+            });
+
+            // Set initial position
+            rotateToIndex(0);
+        }
+
+        /* ===== ROTATION ===== */
+        function rotateToIndex(index) {
+            currentIndex = index;
+            const ring = document.getElementById('carouselRing');
+            const angle = -(THETA * index);
+            ring.style.transform = `rotateY(${angle}deg)`;
+
+            // Update swatches
+            document.querySelectorAll('.swatch').forEach((s, i) => {
+                s.classList.toggle('active', i === index);
+            });
+
+            // Update indicator dots
+            document.querySelectorAll('.indicator-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === index);
+            });
+
+            // Update color name
+            const hat = HAT_DATA[index];
+            document.getElementById('currentColorName').textContent = hat.name;
+            document.getElementById('currentColorSub').textContent = hat.nameEn;
+        }
+
+        /* ===== NAVIGATION ===== */
+        document.querySelector('.carousel-prev').addEventListener('click', () => {
+            stopAutoRotate();
+            rotateToIndex((currentIndex - 1 + PANEL_COUNT) % PANEL_COUNT);
+        });
+        document.querySelector('.carousel-next').addEventListener('click', () => {
+            stopAutoRotate();
+            rotateToIndex((currentIndex + 1) % PANEL_COUNT);
+        });
+
+        /* ===== KEYBOARD ===== */
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                stopAutoRotate();
+                rotateToIndex((currentIndex - 1 + PANEL_COUNT) % PANEL_COUNT);
+            } else if (e.key === 'ArrowRight') {
+                stopAutoRotate();
+                rotateToIndex((currentIndex + 1) % PANEL_COUNT);
+            }
+        });
+
+        /* ===== TOUCH / SWIPE ===== */
+        let touchStartX = 0;
+        const viewport = document.querySelector('.carousel-viewport');
+
+        viewport.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        viewport.addEventListener('touchend', (e) => {
+            const diff = touchStartX - e.changedTouches[0].screenX;
+            if (Math.abs(diff) > 50) {
+                stopAutoRotate();
+                if (diff > 0) {
+                    rotateToIndex((currentIndex + 1) % PANEL_COUNT);
+                } else {
+                    rotateToIndex((currentIndex - 1 + PANEL_COUNT) % PANEL_COUNT);
+                }
+            }
+        }, { passive: true });
+
+        /* ===== AUTO-ROTATE ===== */
+        function startAutoRotate() {
+            autoRotateTimer = setInterval(() => {
+                rotateToIndex((currentIndex + 1) % PANEL_COUNT);
+            }, 2500);
+        }
+
+        function stopAutoRotate() {
+            if (autoRotateTimer) {
+                clearInterval(autoRotateTimer);
+                autoRotateTimer = null;
+            }
+        }
+
+        /* ===== PRELOAD IMAGES ===== */
+        function preloadImages() {
+            HAT_DATA.forEach(hat => {
+                const img = new Image();
+                img.src = `${BASE}${hat.hash}/classic-top-hat-e15-01.jpg`;
+            });
+        }
+
+        /* ===== INIT ===== */
+        document.addEventListener('DOMContentLoaded', () => {
+            buildCarousel();
+            preloadImages();
+            startAutoRotate();
+        });
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hattemanden - Classic Top Hat 360° Visning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS CUSTOM PROPERTIES ===== */
+        :root {
+            --primary: #8b6914;
+            --primary-dark: #6d5310;
+            --primary-light: #b8922a;
+            --primary-glow: rgba(139, 105, 20, 0.15);
+
+            --bg-base: #f1eee9;
+            --bg-elevated: #faf8f5;
+            --bg-surface: #ffffff;
+
+            --text-primary: #3f1e1f;
+            --text-secondary: #3c3737;
+            --text-muted: #6b5c5d;
+
+            --border-subtle: rgba(63, 30, 31, 0.08);
+            --border-default: rgba(63, 30, 31, 0.12);
+
+            --shadow-sm: 0 1px 2px rgba(63, 30, 31, 0.08), 0 1px 3px rgba(63, 30, 31, 0.04);
+            --shadow-md: 0 4px 6px rgba(63, 30, 31, 0.08), 0 2px 4px rgba(63, 30, 31, 0.04);
+            --shadow-lg: 0 10px 15px rgba(63, 30, 31, 0.1), 0 4px 6px rgba(63, 30, 31, 0.05);
+
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+
+            --flip-speed: 0.5s;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: rgba(250, 248, 245, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0.75rem 1.5rem;
+        }
+        .header-inner {
+            max-width: 900px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .logo-text h1 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+        .logo-text .tagline {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--primary);
+        }
+
+        /* ===== DEMO NAV ===== */
+        .demo-nav {
+            margin-left: auto;
+            display: flex;
+            gap: 0.35rem;
+        }
+        .demo-nav a {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            color: var(--text-muted);
+            padding: 0.35rem 0.75rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-default);
+            transition: all 180ms ease;
+            white-space: nowrap;
+        }
+        .demo-nav a:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: var(--primary-glow);
+        }
+        .demo-nav a.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-color: var(--primary);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            max-width: 700px;
+            margin: 2rem auto 0;
+            padding: 2rem 2rem 1.75rem;
+            text-align: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+        }
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--primary-dark);
+            background: var(--primary-glow);
+            padding: 0.25rem 0.85rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 0.75rem;
+        }
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 0.5rem;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-bottom: 0.25rem;
+        }
+        .hero-color {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+        .hero-color .dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #222;
+            vertical-align: middle;
+            margin-right: 0.35rem;
+            border: 1px solid var(--border-default);
+        }
+
+        /* ===== ROTATION VIEWER ===== */
+        .viewer-section {
+            padding: 2.5rem 1rem 1rem;
+            position: relative;
+            z-index: 1;
+        }
+        .viewer-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .viewer-stage {
+            width: 100%;
+            max-width: 560px;
+            aspect-ratio: 1 / 1;
+            perspective: 1000px;
+            overflow: hidden;
+            position: relative;
+            background: var(--bg-surface);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-subtle);
+            cursor: grab;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .viewer-stage:active {
+            cursor: grabbing;
+        }
+        .viewer-flipper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform var(--flip-speed) cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .viewer-flipper.no-transition {
+            transition: none !important;
+        }
+        .viewer-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+        }
+        .viewer-face img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            border-radius: var(--radius-sm);
+            user-select: none;
+            -webkit-user-drag: none;
+            pointer-events: none;
+        }
+        .viewer-face.back {
+            transform: rotateY(180deg);
+        }
+
+        /* Drag hint overlay */
+        .drag-hint {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: rgba(63, 30, 31, 0.45);
+            border-radius: var(--radius-xl);
+            z-index: 15;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.5s ease;
+        }
+        .drag-hint.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        .drag-hint-text {
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .drag-hint-arrow {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.5rem;
+            animation: dragHintPulse 1.8s ease-in-out infinite;
+        }
+        @keyframes dragHintPulse {
+            0%, 100% { transform: translateX(0); opacity: 0.7; }
+            50% { transform: translateX(12px); opacity: 1; }
+        }
+
+        /* Arrow buttons */
+        .viewer-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid var(--border-default);
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            font-size: 1.6rem;
+            line-height: 1;
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+            transition: all 180ms ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: system-ui, sans-serif;
+            user-select: none;
+        }
+        .viewer-arrow:hover {
+            background: var(--primary-glow);
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-50%) scale(1.08);
+            box-shadow: var(--shadow-lg);
+        }
+        .viewer-arrow:active {
+            transform: translateY(-50%) scale(0.96);
+        }
+        .viewer-prev { left: 0; }
+        .viewer-next { right: 0; }
+
+        /* Angle label + counter */
+        .angle-info {
+            text-align: center;
+            margin-top: 1.25rem;
+        }
+        .angle-name {
+            font-family: var(--font-heading);
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            transition: opacity 0.25s ease;
+        }
+        .angle-counter {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+            margin-top: 0.15rem;
+        }
+
+        /* Dot indicators */
+        .dot-indicators {
+            text-align: center;
+            margin-top: 0.75rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .dot-btn {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--border-default);
+            border: none;
+            cursor: pointer;
+            transition: all 250ms ease;
+            padding: 0;
+        }
+        .dot-btn:hover {
+            background: var(--primary-light);
+            transform: scale(1.3);
+        }
+        .dot-btn.active {
+            background: var(--primary);
+            transform: scale(1.4);
+        }
+
+        /* Thumbnail strip */
+        .thumb-strip {
+            max-width: 560px;
+            margin: 1.25rem auto 0;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .thumb-btn {
+            width: 64px;
+            height: 64px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            border: 2.5px solid var(--border-default);
+            background: var(--bg-surface);
+            cursor: pointer;
+            transition: all 200ms ease;
+            padding: 3px;
+            flex-shrink: 0;
+        }
+        .thumb-btn:hover {
+            border-color: var(--primary-light);
+            transform: scale(1.08);
+            box-shadow: var(--shadow-md);
+        }
+        .thumb-btn.active {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-glow), var(--shadow-md);
+            transform: scale(1.05);
+        }
+        .thumb-btn img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: calc(var(--radius-md) - 4px);
+            pointer-events: none;
+        }
+
+        /* Rotation slider */
+        .slider-section {
+            max-width: 560px;
+            margin: 1.5rem auto 0;
+            padding: 0 1rem;
+        }
+        .slider-label {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 0.65rem;
+        }
+        .slider-wrap {
+            position: relative;
+        }
+        .rotation-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 4px;
+            border-radius: 2px;
+            background: var(--border-default);
+            outline: none;
+            cursor: pointer;
+        }
+        .rotation-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: 2px solid #fff;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+            transition: transform 150ms ease;
+        }
+        .rotation-slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        .rotation-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border: 2px solid #fff;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+        }
+        .slider-ticks {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            padding: 0 8px;
+        }
+        .slider-tick {
+            font-size: 0.55rem;
+            color: var(--text-muted);
+            text-align: center;
+            width: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* ===== FEATURES BAR ===== */
+        .features-bar {
+            max-width: 700px;
+            margin: 2.5rem auto 2rem;
+            padding: 0 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+        .feature-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        /* ===== PRODUCT INFO ===== */
+        .product-info {
+            max-width: 600px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .info-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem 2rem;
+            box-shadow: var(--shadow-sm);
+        }
+        .info-card h3 {
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .detail-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.85rem 2rem;
+        }
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .detail-item .label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+        }
+        .detail-item .value {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .site-footer p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+        .site-footer .footer-note {
+            font-size: 0.65rem;
+            margin-top: 0.25rem;
+            color: var(--primary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .viewer-stage {
+                max-width: 420px;
+            }
+            .hero-title { font-size: 2rem; }
+            .hero { margin: 1.5rem 1rem 0; padding: 1.5rem; }
+            .viewer-arrow { width: 42px; height: 42px; font-size: 1.3rem; }
+            .thumb-btn { width: 52px; height: 52px; }
+            .thumb-strip { gap: 0.4rem; }
+            .detail-grid { grid-template-columns: 1fr; }
+            .features-bar { gap: 1rem; }
+        }
+
+        @media (max-width: 480px) {
+            .viewer-stage {
+                max-width: 100%;
+                aspect-ratio: 4 / 3;
+                border-radius: var(--radius-lg);
+            }
+            .hero-title { font-size: 1.6rem; }
+            .hero-subtitle { font-size: 0.85rem; }
+            .viewer-arrow { width: 38px; height: 38px; font-size: 1.1rem; }
+            .angle-name { font-size: 1.1rem; }
+            .thumb-btn { width: 44px; height: 44px; }
+            .thumb-strip { gap: 0.3rem; }
+            .features-bar { flex-direction: column; align-items: center; gap: 0.75rem; }
+            .slider-ticks { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <script>if(sessionStorage.getItem('hm-demo-auth')!=='ok')window.location.href='index.html';</script>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="header-inner">
+            <span class="logo-icon">H</span>
+            <div class="logo-text">
+                <h1>hattemanden.dk</h1>
+                <span class="tagline">Dansk hattetradition</span>
+            </div>
+            <nav class="demo-nav">
+                <a href="hat-carousel-demo.html">Farvekarrusel</a>
+                <a href="hat-rotation-demo.html" class="active">360&deg; Visning</a>
+                <a href="hat-images-demo.html">Billeder</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <span class="hero-badge">Interaktiv Visning</span>
+        <h2 class="hero-title">Classic Top Hat</h2>
+        <p class="hero-subtitle">360&deg; produktvisning &mdash; unders&oslash;g hver detalje</p>
+        <p class="hero-color"><span class="dot"></span>Sort</p>
+    </section>
+
+    <!-- ROTATION VIEWER -->
+    <section class="viewer-section">
+        <div class="viewer-container">
+            <button class="viewer-arrow viewer-prev" aria-label="Forrige vinkel">&#8249;</button>
+            <div class="viewer-stage" id="viewerStage">
+                <div class="viewer-flipper" id="viewerFlipper">
+                    <div class="viewer-face front" id="faceFront">
+                        <img id="imgFront" src="" alt="Classic Top Hat" referrerpolicy="no-referrer">
+                    </div>
+                    <div class="viewer-face back" id="faceBack">
+                        <img id="imgBack" src="" alt="Classic Top Hat" referrerpolicy="no-referrer">
+                    </div>
+                </div>
+                <div class="drag-hint" id="dragHint">
+                    <span class="drag-hint-text">Tr&aelig;k for at rotere</span>
+                    <span class="drag-hint-arrow">&#8592; &#9711; &#8594;</span>
+                </div>
+            </div>
+            <button class="viewer-arrow viewer-next" aria-label="N&aelig;ste vinkel">&#8250;</button>
+        </div>
+
+        <!-- Angle label + counter -->
+        <div class="angle-info">
+            <div class="angle-name" id="angleName">Front</div>
+            <div class="angle-counter" id="angleCounter">1 / 7</div>
+        </div>
+
+        <!-- Dot indicators -->
+        <div class="dot-indicators" id="dotIndicators"></div>
+    </section>
+
+    <!-- THUMBNAIL STRIP -->
+    <div class="thumb-strip" id="thumbStrip"></div>
+
+    <!-- ROTATION SLIDER -->
+    <section class="slider-section">
+        <div class="slider-label">Rotationsposition</div>
+        <div class="slider-wrap">
+            <input type="range" class="rotation-slider" id="rotationSlider" min="0" max="6" step="1" value="0">
+            <div class="slider-ticks" id="sliderTicks"></div>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <div class="features-bar">
+        <div class="feature">
+            <span class="feature-icon">&#127918;</span>
+            <span>100% Premium Uld</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">&#9997;</span>
+            <span>H&aring;ndlavet kvalitet</span>
+        </div>
+        <div class="feature">
+            <span class="feature-icon">&#127775;</span>
+            <span>Satin for &amp; silkeb&aring;nd</span>
+        </div>
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <section class="product-info">
+        <div class="info-card">
+            <h3>Produktdetaljer</h3>
+            <div class="detail-grid">
+                <div class="detail-item">
+                    <span class="label">Materiale</span>
+                    <span class="value">100% Premium Uld</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Stil</span>
+                    <span class="value">Klassisk H&oslash;j Hat</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Oprindelse</span>
+                    <span class="value">Designed in England</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">For</span>
+                    <span class="value">Satin &amp; l&aelig;der svedrem</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">H&oslash;jde</span>
+                    <span class="value">12,5 cm</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Sk&aelig;rm</span>
+                    <span class="value">4,5 cm</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Farve</span>
+                    <span class="value">Sort (Black)</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Unisex</span>
+                    <span class="value">Ja &mdash; alle st&oslash;rrelser</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <p>hattemanden.dk &mdash; 360&deg; Rotation demo</p>
+        <p class="footer-note">Design prototype &bull; Interaktiv visning</p>
+    </footer>
+
+    <script>
+        /* ===== ANGLE DATA ===== */
+        const BASE = 'https://www.euroaccessories.co.uk/media/catalog/product/cache/00a37c1af0df5e40dcad3e450dc00c72/image/';
+        const ANGLES = [
+            { hash: '7a296', label: 'Front',            desc: 'Front view' },
+            { hash: '7b242', label: 'Let Vinklet',      desc: 'Slight angle' },
+            { hash: '777cc', label: '3/4 Visning',      desc: '3/4 front-left' },
+            { hash: '7c57f', label: 'Sl\u00f8jfe Detalje', desc: 'Ribbon bow close-up' },
+            { hash: '76912', label: 'B\u00e5nd Detalje',   desc: 'Hat band close-up' },
+            { hash: '7eb3f', label: 'Set Oppefra',      desc: 'Top-down view' },
+            { hash: '79259', label: 'Indvendig',         desc: 'Inside / red satin' },
+        ];
+        const TOTAL = ANGLES.length;
+
+        function imgUrl(index) {
+            return BASE + ANGLES[index].hash + '/classic-top-hat-e15-01.jpg';
+        }
+
+        /* ===== STATE ===== */
+        let currentIndex = 0;
+        let isFlipping = false;
+        let flipCount = 0;          // tracks cumulative rotation for direction
+        let hintDismissed = false;
+
+        /* ===== DOM REFS ===== */
+        const stage      = document.getElementById('viewerStage');
+        const flipper    = document.getElementById('viewerFlipper');
+        const imgFront   = document.getElementById('imgFront');
+        const imgBack    = document.getElementById('imgBack');
+        const angleName  = document.getElementById('angleName');
+        const angleCounter = document.getElementById('angleCounter');
+        const dragHint   = document.getElementById('dragHint');
+        const slider     = document.getElementById('rotationSlider');
+
+        /* ===== BUILD UI ===== */
+        function buildUI() {
+            const dotWrap  = document.getElementById('dotIndicators');
+            const thumbWrap = document.getElementById('thumbStrip');
+            const ticksWrap = document.getElementById('sliderTicks');
+
+            ANGLES.forEach((angle, i) => {
+                // Dots
+                const dot = document.createElement('button');
+                dot.className = 'dot-btn' + (i === 0 ? ' active' : '');
+                dot.dataset.index = i;
+                dot.setAttribute('aria-label', angle.label);
+                dot.addEventListener('click', () => goToAngle(i));
+                dotWrap.appendChild(dot);
+
+                // Thumbnails
+                const thumb = document.createElement('button');
+                thumb.className = 'thumb-btn' + (i === 0 ? ' active' : '');
+                thumb.dataset.index = i;
+                thumb.innerHTML = '<img src="' + imgUrl(i) + '" alt="' + angle.label + '" referrerpolicy="no-referrer">';
+                thumb.addEventListener('click', () => goToAngle(i));
+                thumbWrap.appendChild(thumb);
+
+                // Slider ticks
+                const tick = document.createElement('span');
+                tick.className = 'slider-tick';
+                tick.textContent = angle.label;
+                ticksWrap.appendChild(tick);
+            });
+
+            // Set initial image
+            imgFront.src = imgUrl(0);
+            imgBack.src = imgUrl(0);
+            updateLabels();
+        }
+
+        /* ===== UPDATE UI STATE ===== */
+        function updateLabels() {
+            angleName.textContent = ANGLES[currentIndex].label;
+            angleCounter.textContent = (currentIndex + 1) + ' / ' + TOTAL;
+
+            document.querySelectorAll('.dot-btn').forEach(function(d, i) {
+                d.classList.toggle('active', i === currentIndex);
+            });
+            document.querySelectorAll('.thumb-btn').forEach(function(t, i) {
+                t.classList.toggle('active', i === currentIndex);
+            });
+
+            slider.value = currentIndex;
+        }
+
+        /* ===== DISMISS DRAG HINT ===== */
+        function dismissHint() {
+            if (!hintDismissed) {
+                hintDismissed = true;
+                dragHint.classList.add('hidden');
+            }
+        }
+
+        /* ===== 3D FLIP TRANSITION ===== */
+        function flipTo(newIndex, direction) {
+            if (isFlipping || newIndex === currentIndex) return;
+            isFlipping = true;
+            dismissHint();
+
+            // direction: 1 = forward (clockwise), -1 = backward (counter-clockwise)
+            var dir = direction || 1;
+
+            // Determine which face is currently showing
+            var isFrontShowing = (flipCount % 2 === 0);
+
+            // Load new image on the hidden face
+            if (isFrontShowing) {
+                imgBack.src = imgUrl(newIndex);
+            } else {
+                imgFront.src = imgUrl(newIndex);
+            }
+
+            // Increment or decrement flip count
+            flipCount += dir;
+
+            // Apply rotation
+            flipper.classList.remove('no-transition');
+            flipper.style.transform = 'rotateY(' + (flipCount * 180) + 'deg)';
+
+            currentIndex = newIndex;
+            updateLabels();
+
+            // Wait for transition to complete
+            setTimeout(function() {
+                isFlipping = false;
+            }, 520);
+        }
+
+        /* ===== INSTANT SWAP (for drag) ===== */
+        function instantSwap(newIndex) {
+            if (newIndex === currentIndex) return;
+            dismissHint();
+
+            var isFrontShowing = (flipCount % 2 === 0);
+            if (isFrontShowing) {
+                imgFront.src = imgUrl(newIndex);
+            } else {
+                imgBack.src = imgUrl(newIndex);
+            }
+
+            currentIndex = newIndex;
+            updateLabels();
+        }
+
+        /* ===== GO TO ANGLE (from thumbnails/dots) ===== */
+        function goToAngle(index) {
+            if (index === currentIndex) return;
+            // Auto-detect direction: shortest path on circular ring
+            var fwd = (index - currentIndex + TOTAL) % TOTAL;
+            var bwd = (currentIndex - index + TOTAL) % TOTAL;
+            var direction = fwd <= bwd ? 1 : -1;
+            flipTo(index, direction);
+        }
+
+        /* ===== ARROW NAVIGATION ===== */
+        document.querySelector('.viewer-prev').addEventListener('click', function() {
+            var next = (currentIndex - 1 + TOTAL) % TOTAL;
+            flipTo(next, -1);
+        });
+        document.querySelector('.viewer-next').addEventListener('click', function() {
+            var next = (currentIndex + 1) % TOTAL;
+            flipTo(next, 1);
+        });
+
+        /* ===== KEYBOARD ===== */
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                var next = (currentIndex - 1 + TOTAL) % TOTAL;
+                flipTo(next, -1);
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                var next = (currentIndex + 1) % TOTAL;
+                flipTo(next, 1);
+            }
+        });
+
+        /* ===== SLIDER ===== */
+        slider.addEventListener('input', function() {
+            var idx = parseInt(this.value, 10);
+            if (idx !== currentIndex) {
+                var fwd = (idx - currentIndex + TOTAL) % TOTAL;
+                var bwd = (currentIndex - idx + TOTAL) % TOTAL;
+                var direction = fwd <= bwd ? 1 : -1;
+                // Use instant swap for slider scrubbing (no animation delay)
+                instantSwap(idx);
+            }
+        });
+
+        /* ===== MOUSE DRAG ON IMAGE ===== */
+        var isDragging = false;
+        var dragStartX = 0;
+        var dragAccum = 0;
+        var DRAG_THRESHOLD = 80; // px per angle change
+
+        stage.addEventListener('mousedown', function(e) {
+            if (isFlipping) return;
+            isDragging = true;
+            dragStartX = e.clientX;
+            dragAccum = 0;
+            dismissHint();
+            e.preventDefault();
+        });
+
+        document.addEventListener('mousemove', function(e) {
+            if (!isDragging) return;
+
+            var deltaX = e.clientX - dragStartX;
+            dragAccum = deltaX;
+
+            // Live tilt feedback
+            var tiltDeg = Math.max(-25, Math.min(25, deltaX * 0.3));
+            var baseDeg = flipCount * 180;
+            flipper.classList.add('no-transition');
+            flipper.style.transform = 'rotateY(' + (baseDeg + tiltDeg) + 'deg)';
+
+            // Check if we've crossed a threshold
+            if (Math.abs(dragAccum) >= DRAG_THRESHOLD) {
+                var direction = dragAccum > 0 ? -1 : 1;
+                var next = (currentIndex + direction + TOTAL) % TOTAL;
+                instantSwap(next);
+                dragStartX = e.clientX;
+                dragAccum = 0;
+
+                // Reset tilt
+                flipper.style.transform = 'rotateY(' + (flipCount * 180) + 'deg)';
+            }
+        });
+
+        document.addEventListener('mouseup', function() {
+            if (!isDragging) return;
+            isDragging = false;
+
+            // Snap back tilt
+            flipper.classList.remove('no-transition');
+            flipper.style.transform = 'rotateY(' + (flipCount * 180) + 'deg)';
+        });
+
+        /* ===== TOUCH DRAG ===== */
+        var touchDragging = false;
+        var touchStartX = 0;
+        var touchAccum = 0;
+
+        stage.addEventListener('touchstart', function(e) {
+            if (isFlipping) return;
+            touchDragging = true;
+            touchStartX = e.changedTouches[0].clientX;
+            touchAccum = 0;
+            dismissHint();
+        }, { passive: true });
+
+        stage.addEventListener('touchmove', function(e) {
+            if (!touchDragging) return;
+
+            var currentX = e.changedTouches[0].clientX;
+            var deltaX = currentX - touchStartX;
+            touchAccum = deltaX;
+
+            // Live tilt
+            var tiltDeg = Math.max(-25, Math.min(25, deltaX * 0.3));
+            var baseDeg = flipCount * 180;
+            flipper.classList.add('no-transition');
+            flipper.style.transform = 'rotateY(' + (baseDeg + tiltDeg) + 'deg)';
+
+            // Threshold swap
+            if (Math.abs(touchAccum) >= DRAG_THRESHOLD) {
+                var direction = touchAccum > 0 ? -1 : 1;
+                var next = (currentIndex + direction + TOTAL) % TOTAL;
+                instantSwap(next);
+                touchStartX = currentX;
+                touchAccum = 0;
+
+                flipper.style.transform = 'rotateY(' + (flipCount * 180) + 'deg)';
+            }
+
+            e.preventDefault();
+        }, { passive: false });
+
+        stage.addEventListener('touchend', function() {
+            if (!touchDragging) return;
+            touchDragging = false;
+
+            flipper.classList.remove('no-transition');
+            flipper.style.transform = 'rotateY(' + (flipCount * 180) + 'deg)';
+        }, { passive: true });
+
+        /* ===== PRELOAD IMAGES ===== */
+        function preloadImages() {
+            ANGLES.forEach(function(angle, i) {
+                var img = new Image();
+                img.src = imgUrl(i);
+            });
+        }
+
+        /* ===== INIT ===== */
+        document.addEventListener('DOMContentLoaded', function() {
+            buildUI();
+            preloadImages();
+        });
+    </script>
+
+</body>
+</html>
