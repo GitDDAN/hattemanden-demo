@@ -195,10 +195,72 @@
             transform: translateY(-4px);
             box-shadow: var(--shadow-lg);
         }
-        .collage-item img {
+        .collage-item img,
+        .collage-item video {
             width: 100%;
             height: auto;
             display: block;
+        }
+
+        /* ===== VIDEO CROP (hides watermark) ===== */
+        .collage-item .video-wrap {
+            position: relative;
+            overflow: hidden;
+            /* Crop bottom 8% to hide Veo3 watermark */
+            margin-bottom: -8%;
+            padding-bottom: 0;
+        }
+        .collage-item .video-wrap video {
+            display: block;
+            width: 100%;
+        }
+        .collage-item .video-controls {
+            position: absolute;
+            bottom: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 0.5rem;
+            opacity: 0;
+            transition: opacity 250ms ease;
+            z-index: 10;
+        }
+        .collage-item:hover .video-controls {
+            opacity: 1;
+        }
+        .video-controls button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.4);
+            background: rgba(0,0,0,0.5);
+            color: #fff;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(4px);
+            transition: all 180ms ease;
+        }
+        .video-controls button:hover {
+            background: rgba(0,0,0,0.7);
+            transform: scale(1.1);
+        }
+        .video-badge {
+            position: absolute;
+            top: 0.6rem;
+            left: 0.6rem;
+            font-size: 0.55rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #fff;
+            background: rgba(139, 105, 20, 0.85);
+            padding: 0.2rem 0.55rem;
+            border-radius: var(--radius-full);
+            z-index: 10;
+            backdrop-filter: blur(4px);
         }
         .collage-item .caption {
             padding: 0.6rem 0.85rem;
@@ -270,12 +332,28 @@
         .lightbox.open {
             display: flex;
         }
-        .lightbox img {
+        .lightbox img,
+        .lightbox video {
             max-width: 90vw;
             max-height: 90vh;
             object-fit: contain;
             border-radius: var(--radius-lg);
             box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        .lightbox .lightbox-video-wrap {
+            position: relative;
+            overflow: hidden;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+        .lightbox .lightbox-video-wrap video {
+            display: block;
+            max-width: 90vw;
+            max-height: 90vh;
+            /* Crop bottom to hide watermark */
+            margin-bottom: -8%;
         }
         .lightbox-close {
             position: absolute;
@@ -342,9 +420,9 @@
 
     <!-- HERO -->
     <section class="hero">
-        <span class="hero-badge">AI Produktbilleder</span>
-        <h2 class="hero-title">Billedeksempler</h2>
-        <p class="hero-subtitle">Eksempler p&aring; AI-genererede produktbilleder vi kan skabe til webshoppen</p>
+        <span class="hero-badge">AI Produktbilleder &amp; Video</span>
+        <h2 class="hero-title">Billed- &amp; Videoeksempler</h2>
+        <p class="hero-subtitle">Eksempler p&aring; AI-genererede produktbilleder og video vi kan skabe til webshoppen</p>
     </section>
 
     <!-- IMAGE COUNT -->
@@ -361,6 +439,9 @@
     <div class="lightbox" id="lightbox">
         <button class="lightbox-close" id="lightboxClose">&times;</button>
         <img id="lightboxImg" src="" alt="Forst&oslash;rret billede">
+        <div class="lightbox-video-wrap" id="lightboxVideoWrap" style="display:none;">
+            <video id="lightboxVideo" controls autoplay loop muted playsinline></video>
+        </div>
     </div>
 
     <!-- FOOTER -->
@@ -370,15 +451,16 @@
     </footer>
 
     <script>
-        /* ===== IMAGE DATA ===== */
-        const IMAGES = [
-            { file: 'images/Whisk_ktmyqdn5ajmykjnw0czmhtytudm0qtl4mtzw0cm.jpeg', caption: 'Produktbillede 1', tag: 'AI' },
-            { file: 'images/Whisk_ytzijdozgdnkrwy50cmibjytgjn1qtl2edmy0im.jpeg', caption: 'Produktbillede 2', tag: 'AI' },
-            { file: 'images/Whisk_ijmhv2nlrgm4utyk1ymzadotq2y1qtl1czni1sy.jpeg', caption: 'Produktbillede 3', tag: 'AI' },
-            { file: 'images/Whisk_ign0ywo0qjz3ywni1so3cjytudolrtlwimnj1yn.jpeg', caption: 'Produktbillede 4', tag: 'AI' },
-            { file: 'images/Whisk_edzkrzmykzn4i2mk1yyzejytktm2qtlmjmmi1ym.jpeg', caption: 'Produktbillede 5', tag: 'AI' },
-            { file: 'images/Whisk_mzmjzznwqdzwkdz00imkftytewn2qtlizdn20so.jpeg', caption: 'Produktbillede 6', tag: 'AI' },
-            { file: 'images/Whisk_kdzzijm0qwn4ydo20inxcjyte2nwqtl2gdoy0in.jpeg', caption: 'Produktbillede 7', tag: 'AI' },
+        /* ===== MEDIA DATA ===== */
+        const MEDIA = [
+            { file: 'images/Whisk_ktmyqdn5ajmykjnw0czmhtytudm0qtl4mtzw0cm.jpeg', caption: 'Produktbillede 1', tag: 'AI', type: 'image' },
+            { file: 'images/Cinematic_Animation_Of_A_Serene_Lake.mp4', caption: 'Cinematic produktvideo', tag: 'VIDEO', type: 'video' },
+            { file: 'images/Whisk_ytzijdozgdnkrwy50cmibjytgjn1qtl2edmy0im.jpeg', caption: 'Produktbillede 2', tag: 'AI', type: 'image' },
+            { file: 'images/Whisk_ijmhv2nlrgm4utyk1ymzadotq2y1qtl1czni1sy.jpeg', caption: 'Produktbillede 3', tag: 'AI', type: 'image' },
+            { file: 'images/Whisk_ign0ywo0qjz3ywni1so3cjytudolrtlwimnj1yn.jpeg', caption: 'Produktbillede 4', tag: 'AI', type: 'image' },
+            { file: 'images/Whisk_edzkrzmykzn4i2mk1yyzejytktm2qtlmjmmi1ym.jpeg', caption: 'Produktbillede 5', tag: 'AI', type: 'image' },
+            { file: 'images/Whisk_mzmjzznwqdzwkdz00imkftytewn2qtlizdn20so.jpeg', caption: 'Produktbillede 6', tag: 'AI', type: 'image' },
+            { file: 'images/Whisk_kdzzijm0qwn4ydo20inxcjyte2nwqtl2gdoy0in.jpeg', caption: 'Produktbillede 7', tag: 'AI', type: 'image' },
         ];
 
         /* ===== BUILD COLLAGE ===== */
@@ -386,22 +468,73 @@
             const collage = document.getElementById('collage');
             const countEl = document.getElementById('imageCount');
 
-            countEl.innerHTML = '<strong>' + IMAGES.length + '</strong> billeder genereret';
+            var imageCount = MEDIA.filter(function(m) { return m.type === 'image'; }).length;
+            var videoCount = MEDIA.filter(function(m) { return m.type === 'video'; }).length;
+            countEl.innerHTML = '<strong>' + imageCount + '</strong> billeder + <strong>' + videoCount + '</strong> video genereret';
 
-            IMAGES.forEach(function(img, i) {
+            MEDIA.forEach(function(media, i) {
                 const item = document.createElement('div');
                 item.className = 'collage-item';
-                item.innerHTML =
-                    '<img src="' + img.file + '" alt="' + img.caption + '" loading="lazy">' +
-                    '<div class="caption">' +
-                        '<span>' + img.caption + '</span>' +
-                        '<span class="caption-badge">' + img.tag + '</span>' +
-                    '</div>';
 
-                item.style.cursor = 'zoom-in';
-                item.addEventListener('click', function() {
-                    openLightbox(img.file);
-                });
+                if (media.type === 'video') {
+                    item.innerHTML =
+                        '<div class="video-wrap">' +
+                            '<span class="video-badge">AI Video</span>' +
+                            '<video src="' + media.file + '" muted loop playsinline preload="metadata"></video>' +
+                            '<div class="video-controls">' +
+                                '<button class="btn-play" title="Afspil">&#9654;</button>' +
+                            '</div>' +
+                        '</div>' +
+                        '<div class="caption">' +
+                            '<span>' + media.caption + '</span>' +
+                            '<span class="caption-badge">' + media.tag + '</span>' +
+                        '</div>';
+
+                    /* Auto-play on hover, pause on leave */
+                    item.addEventListener('mouseenter', function() {
+                        var vid = item.querySelector('video');
+                        if (vid) vid.play();
+                    });
+                    item.addEventListener('mouseleave', function() {
+                        var vid = item.querySelector('video');
+                        if (vid) vid.pause();
+                    });
+
+                    /* Play/pause button */
+                    setTimeout(function() {
+                        var btn = item.querySelector('.btn-play');
+                        if (btn) {
+                            btn.addEventListener('click', function(e) {
+                                e.stopPropagation();
+                                var vid = item.querySelector('video');
+                                if (vid.paused) {
+                                    vid.play();
+                                    btn.innerHTML = '&#9646;&#9646;';
+                                } else {
+                                    vid.pause();
+                                    btn.innerHTML = '&#9654;';
+                                }
+                            });
+                        }
+                    }, 0);
+
+                    item.style.cursor = 'pointer';
+                    item.addEventListener('click', function() {
+                        openVideoLightbox(media.file);
+                    });
+                } else {
+                    item.innerHTML =
+                        '<img src="' + media.file + '" alt="' + media.caption + '" loading="lazy">' +
+                        '<div class="caption">' +
+                            '<span>' + media.caption + '</span>' +
+                            '<span class="caption-badge">' + media.tag + '</span>' +
+                        '</div>';
+
+                    item.style.cursor = 'zoom-in';
+                    item.addEventListener('click', function() {
+                        openLightbox(media.file);
+                    });
+                }
 
                 collage.appendChild(item);
             });
@@ -410,15 +543,34 @@
         /* ===== LIGHTBOX ===== */
         const lightbox = document.getElementById('lightbox');
         const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxVideoWrap = document.getElementById('lightboxVideoWrap');
+        const lightboxVideo = document.getElementById('lightboxVideo');
 
         function openLightbox(src) {
+            lightboxVideoWrap.style.display = 'none';
+            lightboxVideo.pause();
+            lightboxVideo.src = '';
+            lightboxImg.style.display = '';
             lightboxImg.src = src;
+            lightbox.classList.add('open');
+        }
+
+        function openVideoLightbox(src) {
+            lightboxImg.style.display = 'none';
+            lightboxImg.src = '';
+            lightboxVideoWrap.style.display = '';
+            lightboxVideo.src = src;
+            lightboxVideo.play();
             lightbox.classList.add('open');
         }
 
         function closeLightbox() {
             lightbox.classList.remove('open');
             lightboxImg.src = '';
+            lightboxVideo.pause();
+            lightboxVideo.src = '';
+            lightboxVideoWrap.style.display = 'none';
+            lightboxImg.style.display = '';
         }
 
         lightbox.addEventListener('click', closeLightbox);
