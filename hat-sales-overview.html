@@ -1,0 +1,1715 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hattemanden - Salgsoversigt</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS CUSTOM PROPERTIES ===== */
+        :root {
+            --primary: #8b6914;
+            --primary-dark: #6d5310;
+            --primary-light: #b8922a;
+            --primary-glow: rgba(139, 105, 20, 0.15);
+
+            --bg-base: #f1eee9;
+            --bg-elevated: #faf8f5;
+            --bg-surface: #ffffff;
+
+            --text-primary: #3f1e1f;
+            --text-secondary: #3c3737;
+            --text-muted: #6b5c5d;
+
+            --border-subtle: rgba(63, 30, 31, 0.08);
+            --border-default: rgba(63, 30, 31, 0.12);
+
+            --shadow-sm: 0 1px 2px rgba(63, 30, 31, 0.08), 0 1px 3px rgba(63, 30, 31, 0.04);
+            --shadow-md: 0 4px 6px rgba(63, 30, 31, 0.08), 0 2px 4px rgba(63, 30, 31, 0.04);
+            --shadow-lg: 0 10px 15px rgba(63, 30, 31, 0.1), 0 4px 6px rgba(63, 30, 31, 0.05);
+
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 20px;
+            --radius-full: 9999px;
+
+            --green: #2d7a3a;
+            --green-bg: rgba(45, 122, 58, 0.08);
+            --red: #b5342a;
+            --red-bg: rgba(181, 52, 42, 0.06);
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            background: var(--bg-base);
+            color: var(--text-primary);
+            line-height: 1.5;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ===== HEADER ===== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            background: rgba(250, 248, 245, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 1rem 2.5rem;
+        }
+        .header-inner {
+            max-width: none;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0 1rem;
+        }
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            font-family: var(--font-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .logo-text h1 {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: -0.01em;
+            line-height: 1.2;
+        }
+        .logo-text .tagline {
+            display: block;
+            font-size: 0.6rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--primary);
+        }
+
+        /* ===== DEMO NAV ===== */
+        .demo-nav {
+            margin-left: auto;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .demo-nav a {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            color: var(--text-muted);
+            padding: 0.45rem 1rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-default);
+            transition: all 180ms ease;
+            white-space: nowrap;
+        }
+        .demo-nav a:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: var(--primary-glow);
+        }
+        .demo-nav a.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-color: var(--primary);
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            max-width: none;
+            margin: 2.5rem 2.5rem 0;
+            padding: 2.5rem 3rem 2rem;
+            text-align: center;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-sm);
+        }
+        .hero-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--primary-dark);
+            background: var(--primary-glow);
+            padding: 0.25rem 0.85rem;
+            border-radius: var(--radius-full);
+            margin-bottom: 0.75rem;
+        }
+        .hero-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+            line-height: 1.15;
+            margin-bottom: 0.5rem;
+        }
+        .hero-subtitle {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ===== SUMMARY CARDS ===== */
+        .summary-grid {
+            max-width: none;
+            margin: 2rem 2.5rem 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.25rem;
+        }
+        .summary-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 1.75rem 1.5rem;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+        .summary-card .value {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1.1;
+        }
+        .summary-card .label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+        }
+
+        /* ===== CATEGORY SECTION ===== */
+        .category-section {
+            max-width: none;
+            margin: 3rem 2.5rem 0;
+        }
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        .category-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .category-title {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .category-count {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--primary);
+            background: var(--primary-glow);
+            padding: 0.15rem 0.6rem;
+            border-radius: var(--radius-full);
+            margin-left: auto;
+        }
+
+        /* ===== SUBCATEGORY TABLE ===== */
+        .sub-table {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+            margin-bottom: 1.25rem;
+        }
+        .sub-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .sub-table thead th {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            padding: 1rem 1.25rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+            background: var(--bg-elevated);
+        }
+        .sub-table thead th.r { text-align: right; }
+
+        .sub-table tbody td {
+            font-size: 0.875rem;
+            padding: 0.85rem 1.25rem;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-secondary);
+        }
+        .sub-table tbody td.r {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+        .sub-name {
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .sub-detail {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            display: block;
+            margin-top: 0.1rem;
+        }
+
+        /* ===== EXPANDABLE ROWS ===== */
+        .sub-row {
+            cursor: pointer;
+            user-select: none;
+            transition: background 150ms ease;
+        }
+        .sub-row:hover {
+            background: var(--bg-elevated);
+        }
+        .sub-row.expanded {
+            background: var(--primary-glow);
+        }
+        .chevron {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.4rem;
+            vertical-align: middle;
+            transition: transform 250ms ease;
+            color: var(--primary);
+            font-size: 0.65rem;
+        }
+        .sub-row.expanded .chevron {
+            transform: rotate(90deg);
+        }
+
+        /* Product detail rows */
+        .product-rows td {
+            padding: 0 !important;
+            border-bottom: none !important;
+        }
+        .product-rows .product-inner {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 350ms ease;
+        }
+        .product-rows.open .product-inner {
+            max-height: 2000px;
+        }
+        .product-list {
+            border-top: 1px solid var(--border-subtle);
+            background: var(--bg-elevated);
+        }
+        .product-list table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .product-list th {
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            padding: 0.65rem 1.25rem 0.5rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .product-list th.r { text-align: right; }
+        .product-list td {
+            font-size: 0.8rem;
+            padding: 0.55rem 1.25rem;
+            color: var(--text-secondary);
+            border-bottom: 1px solid rgba(63, 30, 31, 0.04);
+        }
+        .product-list td.r {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+        .product-list tr:last-child td {
+            border-bottom: none;
+        }
+        .product-list tr:hover td {
+            background: rgba(139, 105, 20, 0.04);
+        }
+        .product-list .p-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        .product-list .date-old {
+            color: var(--red);
+            font-size: 0.65rem;
+        }
+        .product-list .date-recent {
+            color: var(--green);
+            font-size: 0.65rem;
+        }
+        .link-cell { text-align: left; white-space: nowrap; }
+        .link-cell a {
+            display: inline-block;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            padding: 0.25rem 0.6rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--primary);
+            background: var(--primary-glow);
+            transition: all 150ms ease;
+        }
+        .link-cell a:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        .link-cell .no-link {
+            display: inline-block;
+            color: var(--text-muted);
+            opacity: 0.3;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+        }
+
+        /* ===== TOGGLE BUTTONS (Video / Lifestyle) ===== */
+        .toggle-cell {
+            text-align: center;
+            white-space: nowrap;
+        }
+        .toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: var(--radius-full);
+            border: 1.5px solid var(--border-default);
+            background: var(--bg-surface);
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 180ms ease;
+            user-select: none;
+        }
+        .toggle-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-glow);
+        }
+        .toggle-btn.active {
+            border-color: var(--green);
+            background: var(--green-bg);
+            color: var(--green);
+        }
+        .toggle-btn.active:hover {
+            border-color: var(--red);
+            background: var(--red-bg);
+            color: var(--red);
+        }
+        .toggle-btn .toggle-icon {
+            font-size: 0.8rem;
+            line-height: 1;
+        }
+
+        /* ===== EDITABLE KILDE ===== */
+        .kilde-cell {
+            white-space: nowrap;
+        }
+        .kilde-cell .kilde-inner {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+        }
+        .edit-link-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            background: transparent;
+            color: var(--text-muted);
+            font-size: 0.72rem;
+            cursor: pointer;
+            transition: all 150ms ease;
+            flex-shrink: 0;
+        }
+        .edit-link-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-glow);
+        }
+        .add-link-btn {
+            display: inline-block;
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            padding: 0.25rem 0.6rem;
+            border-radius: var(--radius-sm);
+            border: 1.5px dashed var(--border-default);
+            background: transparent;
+            cursor: pointer;
+            transition: all 150ms ease;
+            font-family: var(--font-body);
+        }
+        .add-link-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-glow);
+            border-style: solid;
+        }
+
+        /* ===== CATEGORY TOTAL ROW ===== */
+        .sub-table tfoot td {
+            font-size: 0.875rem;
+            font-weight: 700;
+            padding: 1rem 1.25rem;
+            border-top: 2px solid var(--border-default);
+            background: var(--bg-elevated);
+            color: var(--text-primary);
+        }
+        .sub-table tfoot td.r {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* ===== ZERO SALES SECTION ===== */
+        .zero-section {
+            max-width: none;
+            margin: 3rem 2.5rem 0;
+        }
+        .zero-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.25rem;
+        }
+        .zero-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: var(--red-bg);
+            border: 1px solid rgba(181, 52, 42, 0.15);
+            color: var(--red);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .zero-title {
+            font-family: var(--font-heading);
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--red);
+        }
+        .zero-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--red);
+            background: var(--red-bg);
+            padding: 0.15rem 0.6rem;
+            border-radius: var(--radius-full);
+            margin-left: auto;
+        }
+        .zero-table {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1px solid rgba(181, 52, 42, 0.1);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+        .zero-table table { width: 100%; border-collapse: collapse; }
+        .zero-table thead th {
+            font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--text-muted); padding: 1rem 1.25rem;
+            text-align: left; border-bottom: 1px solid var(--border-subtle); background: var(--bg-elevated);
+        }
+        .zero-table thead th.r { text-align: right; }
+        .zero-table tbody td {
+            font-size: 0.875rem; padding: 0.75rem 1.25rem;
+            border-bottom: 1px solid var(--border-subtle); color: var(--text-muted);
+        }
+        .zero-table tbody td.r { text-align: right; }
+        .zero-table tbody tr:last-child td { border-bottom: none; }
+
+        /* Zero-sales expandable */
+        .zero-table .sub-row { cursor: pointer; user-select: none; transition: background 150ms; }
+        .zero-table .sub-row:hover { background: rgba(181, 52, 42, 0.03); }
+        .zero-table .sub-row.expanded { background: var(--red-bg); }
+        .zero-table .chevron { color: var(--red); }
+        .zero-table .product-list { background: rgba(181, 52, 42, 0.02); }
+        .zero-table .product-list tr:hover td { background: rgba(181, 52, 42, 0.03); }
+
+        /* ===== SELECTION SUMMARY PANEL ===== */
+        .selection-panel {
+            position: fixed;
+            bottom: 1.5rem;
+            right: 1.5rem;
+            z-index: 300;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            min-width: 260px;
+            overflow: hidden;
+            font-family: var(--font-body);
+        }
+        .panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.75rem 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: #fff;
+        }
+        .panel-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .panel-toggle {
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0 0.25rem;
+        }
+        .panel-body {
+            padding: 1rem;
+        }
+        .panel-body.collapsed {
+            display: none;
+        }
+        .panel-counts {
+            display: flex;
+            gap: 1.25rem;
+            margin-bottom: 0.85rem;
+        }
+        .panel-count {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .panel-count span {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+        }
+        .panel-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        .export-btn {
+            flex: 1;
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--primary);
+            background: var(--primary);
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 150ms ease;
+        }
+        .export-btn:hover {
+            background: var(--primary-dark);
+        }
+        .clear-btn {
+            padding: 0.5rem 0.75rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-default);
+            background: transparent;
+            color: var(--text-muted);
+            font-family: var(--font-body);
+            font-size: 0.72rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 150ms ease;
+        }
+        .clear-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        /* ===== SYNC STATUS INDICATOR ===== */
+        .sync-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.6rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.5);
+            margin-left: auto;
+            margin-right: 0.5rem;
+            transition: all 300ms ease;
+        }
+        .sync-dot {
+            font-size: 0.6rem;
+            line-height: 1;
+            display: inline-block;
+        }
+        .sync-label { white-space: nowrap; }
+        .sync-syncing .sync-dot,
+        .sync-loading .sync-dot {
+            animation: sync-spin 1s linear infinite;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .sync-syncing .sync-label,
+        .sync-loading .sync-label { color: rgba(255, 255, 255, 0.9); }
+        .sync-synced .sync-dot { color: #86efac; }
+        .sync-synced .sync-label { color: #86efac; }
+        .sync-error .sync-dot { color: #fca5a5; }
+        .sync-error .sync-label { color: #fca5a5; }
+        @keyframes sync-spin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== FOOTER ===== */
+        .site-footer {
+            text-align: center;
+            padding: 3rem 2.5rem;
+            margin-top: 3rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .site-footer p { font-size: 0.8rem; color: var(--text-muted); }
+        .site-footer .footer-note {
+            font-size: 0.65rem; margin-top: 0.25rem; color: var(--primary);
+            font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2rem; }
+            .hero { margin: 1.5rem 1rem 0; padding: 1.5rem; }
+            .summary-grid { grid-template-columns: repeat(2, 1fr); }
+            .sub-table thead th, .sub-table tbody td { padding: 0.5rem 0.65rem; font-size: 0.72rem; }
+            .product-list th, .product-list td { padding: 0.35rem 0.65rem; font-size: 0.65rem; }
+            .zero-table thead th, .zero-table tbody td { padding: 0.5rem 0.65rem; font-size: 0.72rem; }
+        }
+        @media (max-width: 480px) {
+            .hero-title { font-size: 1.6rem; }
+            .hero-subtitle { font-size: 0.85rem; }
+            .summary-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+            .summary-card .value { font-size: 1.4rem; }
+            .demo-nav { gap: 0.2rem; }
+            .demo-nav a { padding: 0.3rem 0.5rem; font-size: 0.55rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="site-header">
+        <div class="header-inner">
+            <span class="logo-icon">H</span>
+            <div class="logo-text">
+                <h1>hattemanden.dk</h1>
+                <span class="tagline">Dansk hattetradition</span>
+            </div>
+            <nav class="demo-nav">
+                <a href="hat-carousel-demo.html">Farvekarrusel</a>
+                <a href="hat-rotation-demo.html">360&deg; Visning</a>
+                <a href="hat-images-demo.html">Billeder</a>
+                <a href="hat-sales-overview.html" class="active">Salgsoversigt</a>
+                <a href="https://hattemanden-dashboard.onrender.com" target="_blank">Dashboard &#8599;</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <span class="hero-badge">Produktanalyse</span>
+        <h2 class="hero-title">Salgsoversigt</h2>
+        <p class="hero-subtitle">110 solgte produkter fordelt p&aring; kategorier og underkategorier</p>
+    </section>
+
+    <!-- SUMMARY CARDS -->
+    <div class="summary-grid">
+        <div class="summary-card">
+            <div class="value">110</div>
+            <div class="label">Solgte produkter</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">46</div>
+            <div class="label">Nul salg</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">811</div>
+            <div class="label">Enheder solgt</div>
+        </div>
+        <div class="summary-card">
+            <div class="value">361K</div>
+            <div class="label">Oms&aelig;tning (DKK)</div>
+        </div>
+    </div>
+
+    <!-- Tables rendered by JS below -->
+    <div id="app"></div>
+
+    <footer class="site-footer">
+        <p>hattemanden.dk &bull; Salgsoversigt</p>
+        <p class="footer-note">Data fra 3. februar 2026 &bull; Produktanalyse</p>
+    </footer>
+
+<script>
+/* ===== PRODUCT DATA ===== */
+const DATA = {
+  herrehatte: {
+    title: 'Herrehatte', icon: '\u2654', totalProducts: 82, totalUnits: 649, totalRevenue: '173.100',
+    subs: [
+      { name: 'Kasketter & Chauff\u00f8r', products: 9, units: 156, revenue: '46.700',
+        items: [
+          { n: 'L\u00e6derkasket', price: 375, sold: 57, rev: '17.900', date: '9.1.2026' },
+          { n: 'Chauff\u00f8r Kasket', price: 450, sold: 50, rev: '18.000', date: '12.12.2025' },
+          { n: 'Kaptajn Kasket 562', price: 140, sold: 11, rev: '1.232', date: '19.5.2025' },
+          { n: 'Cap 555', price: 400, sold: 8, rev: '2.560', date: '26.11.2025' },
+          { n: 'L\u00e6derkasket 991', price: 500, sold: 8, rev: '2.920', date: '15.6.2025' },
+          { n: 'Imiteret l\u00e6dercap 781', price: 189, sold: 7, rev: '1.058', date: '7.6.2025' },
+          { n: 'Cap 780', price: 149, sold: 7, rev: '833', date: '5.2.2025' },
+          { n: 'Chauff\u00f8r', price: 400, sold: 6, rev: '1.920', date: '12.10.2025' },
+          { n: 'PVC 1011', price: 220, sold: 2, rev: '320', date: '9.8.2024' },
+        ]},
+      { name: 'Panama & Sommer', products: 9, units: 99, revenue: '15.000',
+        items: [
+          { n: 'Bouble VW', price: 220, sold: 27, rev: '4.752', date: '28.11.2025' },
+          { n: 'Italia', price: 85, sold: 25, rev: '1.700', date: '13.7.2025' },
+          { n: 'Bouble med Liverpool', price: 275, sold: 9, rev: '1.980', date: '5.10.2024' },
+          { n: 'Bouble VW S\u00f8gr\u00e6s', price: 250, sold: 9, rev: '1.800', date: '30.5.2025' },
+          { n: 'Cuba 2041', price: 220, sold: 8, rev: '1.408', date: '29.7.2024' },
+          { n: 'Roma', price: 150, sold: 8, rev: '960', date: '29.7.2024' },
+          { n: 'Cuba 1018', price: 150, sold: 7, rev: '840', date: '2.1.2026' },
+          { n: 'Napoli Panama kopi', price: 200, sold: 5, rev: '800', date: '29.7.2024' },
+          { n: 'Lux Panama 2042', price: 950, sold: 1, rev: '760', date: '1.8.2025' },
+        ]},
+      { name: 'Jagthatte', products: 11, units: 67, revenue: '17.700',
+        items: [
+          { n: 'Jagthat 889', price: 300, sold: 20, rev: '4.080', date: '5.10.2024' },
+          { n: 'Jagthat 892', price: 350, sold: 15, rev: '4.200', date: '10.12.2025' },
+          { n: 'Jagthat 885', price: 500, sold: 9, rev: '3.600', date: '17.1.2021' },
+          { n: 'Jagthat 779', price: 400, sold: 6, rev: '1.920', date: '6.6.2025' },
+          { n: 'Jagthat 881', price: 400, sold: 4, rev: '1.280', date: '26.11.2022' },
+          { n: 'Jagthat 887', price: 250, sold: 4, rev: '800', date: '19.12.2022' },
+          { n: 'Jagthat 891', price: 250, sold: 3, rev: '600', date: '1.8.2022' },
+          { n: 'Jagthat 890', price: 250, sold: 2, rev: '400', date: '24.2.2023' },
+          { n: 'Jagthat 882', price: 250, sold: 2, rev: '400', date: '10.2.2019' },
+          { n: 'Jagthat 883', price: 280, sold: 1, rev: '224', date: '1.11.2018' },
+          { n: 'Jagthat 884', price: 250, sold: 1, rev: '200', date: '14.12.2019' },
+        ]},
+      { name: 'Bowler & Formal', products: 5, units: 65, revenue: '24.900',
+        items: [
+          { n: 'Bowler', price: 550, sold: 22, rev: '9.680', date: '3.11.2025' },
+          { n: 'Pork Pie', price: 220, sold: 21, rev: '3.696', date: '19.3.2024' },
+          { n: 'H\u00f8j Hat', price: 600, sold: 18, rev: '9.280', date: '22.8.2025' },
+          { n: 'H\u00f8j Hat HCA', price: 750, sold: 3, rev: '1.920', date: '14.8.2024' },
+          { n: 'Pork Pie 1024', price: 450, sold: 1, rev: '360', date: '11.12.2019' },
+        ]},
+      { name: 'Trilby & Fedora', products: 6, units: 60, revenue: '16.200',
+        items: [
+          { n: 'Pepino', price: 350, sold: 27, rev: '7.560', date: '18.10.2025' },
+          { n: 'Engelsk Trilby', price: 300, sold: 12, rev: '2.880', date: '25.6.2025' },
+          { n: 'Trilby', price: 300, sold: 12, rev: '2.880', date: '18.6.2025' },
+          { n: 'Faust', price: 450, sold: 4, rev: '1.440', date: '28.10.2025' },
+          { n: 'Trilby 2040', price: 200, sold: 3, rev: '480', date: '10.3.2024' },
+          { n: '1112 Faust', price: 599, sold: 2, rev: '958', date: '7.12.2023' },
+        ]},
+      { name: 'Western & Australske', products: 9, units: 57, revenue: '19.700',
+        items: [
+          { n: 'Australsk B\u00f8ffel', price: 300, sold: 20, rev: '4.800', date: '28.10.2025' },
+          { n: 'Australia 4046', price: 750, sold: 9, rev: '5.400', date: '24.1.2024' },
+          { n: 'Aussie Western', price: 400, sold: 9, rev: '2.880', date: '4.2.2025' },
+          { n: 'USA', price: 350, sold: 7, rev: '1.960', date: '26.12.2025' },
+          { n: 'Western 2016', price: 500, sold: 4, rev: '1.600', date: '26.12.2025' },
+          { n: 'Australsk', price: 450, sold: 3, rev: '1.116', date: '16.6.2020' },
+          { n: 'Bill Western', price: 350, sold: 3, rev: '840', date: '10.6.2024' },
+          { n: 'Guns and Roses', price: 950, sold: 1, rev: '760', date: '26.3.2025' },
+          { n: 'John Western', price: 400, sold: 1, rev: '320', date: '31.1.2023' },
+        ]},
+      { name: 'Sixpence', products: 7, units: 41, revenue: '7.700',
+        items: [
+          { n: 'Gatwick', price: 220, sold: 13, rev: '2.288', date: '9.11.2025' },
+          { n: 'Sildeben 1012', price: 220, sold: 7, rev: '1.232', date: '9.3.2024' },
+          { n: 'Sixpence 2', price: 200, sold: 7, rev: '1.120', date: '27.9.2025' },
+          { n: '9908 Sixpence', price: 350, sold: 6, rev: '1.680', date: '14.10.2024' },
+          { n: 'Engelsk sixpence/flatcap', price: 250, sold: 3, rev: '600', date: '23.11.2024' },
+          { n: '6640 Sixpence', price: 180, sold: 3, rev: '432', date: '22.4.2020' },
+          { n: 'Sixpence', price: 200, sold: 2, rev: '320', date: '15.5.2024' },
+        ]},
+      { name: 'City & Klassisk', products: 8, units: 24, revenue: '7.900',
+        items: [
+          { n: 'Harris Tweed 2011', price: 400, sold: 6, rev: '1.920', date: '28.11.2025' },
+          { n: '8801', price: 280, sold: 5, rev: '1.120', date: '14.9.2020' },
+          { n: 'City London', price: 350, sold: 4, rev: '1.120', date: '14.12.2022' },
+          { n: 'News', price: 400, sold: 3, rev: '920', date: '14.10.2024' },
+          { n: 'Preformance', price: 1050, sold: 2, rev: '1.680', date: '15.11.2022' },
+          { n: 'Dublin 7 | 1019', price: 350, sold: 2, rev: '560', date: '12.12.2023' },
+          { n: 'Dublin 5 | 1019', price: 400, sold: 1, rev: '320', date: '6.3.2022' },
+          { n: 'St. Petersborg 2015', price: 350, sold: 1, rev: '280', date: '4.2.2021' },
+        ]},
+      { name: 'Newsboy & Peaky Blinders', products: 8, units: 23, revenue: '5.900',
+        items: [
+          { n: 'Newsboy', price: 400, sold: 8, rev: '2.560', date: '13.4.2025' },
+          { n: 'Newsboy 1013', price: 250, sold: 7, rev: '1.400', date: '16.9.2022' },
+          { n: 'Patchwork 1015', price: 250, sold: 3, rev: '600', date: '9.1.2021' },
+          { n: 'Newsboy Cambridge', price: 380, sold: 1, rev: '304', date: '13.9.2025' },
+          { n: 'Picky Blinders Birmingham', price: 350, sold: 1, rev: '280', date: '13.9.2025' },
+          { n: 'Birmingham 561', price: 350, sold: 1, rev: '280', date: '10.4.2023' },
+          { n: 'Newsboy 557', price: 400, sold: 1, rev: '320', date: '28.7.2023' },
+          { n: 'Baker', price: 250, sold: 1, rev: '200', date: '16.1.2019' },
+        ]},
+      { name: '\u00d8vrige', products: 10, units: 57, revenue: '11.400',
+        items: [
+          { n: 'Tyrolerhat 569', price: 300, sold: 17, rev: '3.800', date: '26.9.2025' },
+          { n: 'Alpehue', price: 350, sold: 11, rev: '2.680', date: '16.7.2024' },
+          { n: 'Oilskin', price: 200, sold: 8, rev: '1.280', date: '9.4.2024' },
+          { n: 'Bossa', price: 400, sold: 7, rev: '2.240', date: '29.6.2025' },
+          { n: 'Bob Marley', price: 120, sold: 6, rev: '576', date: '3.2.2024' },
+          { n: 'Tyrolerhat 568', price: 49, sold: 3, rev: '117', date: '29.8.2022' },
+          { n: 'Oilskin (2)', price: 220, sold: 2, rev: '352', date: '3.10.2024' },
+          { n: 'Lotus 1014', price: 250, sold: 1, rev: '200', date: '1.2.2018' },
+          { n: 'Skull Cap 111', price: 160, sold: 1, rev: '128', date: '2.1.2022' },
+          { n: 'Strikhue', price: 79, sold: 1, rev: '63', date: '2.10.2022' },
+        ]},
+    ]
+  },
+  damehatte: {
+    title: 'Damehatte', icon: '\u2655', totalProducts: 21, totalUnits: 66, totalRevenue: '11.190',
+    subs: [
+      { name: 'Klassiske', products: 8, units: 16, revenue: '3.800',
+        items: [
+          { n: '1105', price: 150, sold: 4, rev: '480', date: '23.3.2021' },
+          { n: 'Royal', price: 400, sold: 3, rev: '960', date: '20.12.2025' },
+          { n: 'Quin', price: 499, sold: 2, rev: '798', date: '26.7.2024' },
+          { n: 'Napoli', price: 250, sold: 2, rev: '400', date: '11.12.2022' },
+          { n: 'Padova', price: 150, sold: 2, rev: '240', date: '29.3.2022' },
+          { n: 'Royal Derby', price: 599, sold: 1, rev: '479', date: '11.3.2025' },
+          { n: 'Maltesene', price: 300, sold: 1, rev: '240', date: '24.1.2019' },
+          { n: 'Garda', price: 250, sold: 1, rev: '200', date: '10.12.2020' },
+        ]},
+      { name: 'Sommerhatte', products: 6, units: 16, revenue: '2.760',
+        items: [
+          { n: 'Olivia', price: 250, sold: 5, rev: '1.000', date: '8.8.2025' },
+          { n: 'Derby 2045', price: 250, sold: 3, rev: '600', date: '9.7.2025' },
+          { n: 'Limone', price: 250, sold: 3, rev: '600', date: '6.4.2025' },
+          { n: 'Torino - Str\u00e5', price: 100, sold: 3, rev: '240', date: '5.2.2025' },
+          { n: 'Paris 2044', price: 200, sold: 1, rev: '160', date: '1.9.2025' },
+          { n: 'Torino', price: 200, sold: 1, rev: '160', date: '19.6.2020' },
+        ]},
+      { name: 'Kasketter', products: 2, units: 20, revenue: '2.560',
+        items: [
+          { n: 'Damekasket', price: 160, sold: 16, rev: '2.048', date: '2.8.2025' },
+          { n: 'Damekasket m. sl\u00f8jfe', price: 160, sold: 4, rev: '512', date: '4.3.2025' },
+        ]},
+      { name: 'Trilby & Fedora', products: 2, units: 7, revenue: '1.240',
+        items: [
+          { n: 'Trilby Spec', price: 200, sold: 6, rev: '960', date: '1.2.2024' },
+          { n: 'Fedora 2043', price: 350, sold: 1, rev: '280', date: '26.2.2020' },
+        ]},
+      { name: 'Vinterhatte', products: 3, units: 7, revenue: '830',
+        items: [
+          { n: 'Strikhue Angorauld Mix', price: 160, sold: 3, rev: '384', date: '15.2.2023' },
+          { n: 'Strikhue m. \u00e6gte pels', price: 190, sold: 2, rev: '304', date: '24.12.2025' },
+          { n: '\u00d8revarmerer', price: 90, sold: 2, rev: '144', date: '4.11.2021' },
+        ]},
+    ]
+  },
+  festtoej: {
+    title: 'Festt\u00f8j', icon: '\u2605', totalProducts: 5, totalUnits: 66, totalRevenue: '72.740',
+    subs: [
+      { name: 'Chapeau / Formal hat', products: 1, units: 23, revenue: '62.440',
+        items: [
+          { n: 'Chapeau Clarque', price: 4650, sold: 23, rev: '62.440', date: '27.1.2026' },
+        ]},
+      { name: 'T\u00f8j', products: 2, units: 25, revenue: '8.550',
+        items: [
+          { n: 'Kjoleskjorte Boswell', price: 599, sold: 14, rev: '5.032', date: '1.3.2024' },
+          { n: 'Kjolevest Boswell', price: 499, sold: 11, rev: '3.520', date: '5.7.2023' },
+        ]},
+      { name: 'Tilbeh\u00f8r', products: 2, units: 18, revenue: '1.750',
+        items: [
+          { n: 'Handsker', price: 199, sold: 10, rev: '1.050', date: '12.12.2025' },
+          { n: 'Butterfly', price: 149, sold: 8, rev: '704', date: '11.12.2023' },
+        ]},
+    ]
+  },
+  diverse: {
+    title: 'Diverse', icon: '\u2699', totalProducts: 2, totalUnits: 7, totalRevenue: '438',
+    subs: [
+      { name: 'Refleksb\u00e5nd 780', products: 1, units: 5, revenue: '198',
+        items: [
+          { n: 'Refleksb\u00e5nd 780', price: 49.5, sold: 5, rev: '198', date: '15.12.2025' },
+        ]},
+      { name: 'Motorbriller', products: 1, units: 2, revenue: '240',
+        items: [
+          { n: 'Motorbriller', price: 150, sold: 2, rev: '240', date: '8.2.2024' },
+        ]},
+    ]
+  }
+};
+
+const ZERO = [
+  { cat: 'Herrehatte', count: 25, items: [
+    { n: 'H\u00f8j Engelsk 4051', price: 950, created: '23.11.2022' },
+    { n: 'Australsk L\u00e6derhat 4044', price: 750, created: '23.11.2022' },
+    { n: 'Australsk L\u00e6derhat 8888', price: 1250, created: '23.11.2022' },
+    { n: 'Australsk 4045', price: 775, created: '23.11.2022' },
+    { n: 'Manchester', price: 250, created: '23.11.2022' },
+    { n: 'Sixpence 6609', price: 380, created: '23.11.2022' },
+    { n: 'Kasket 6608', price: 400, created: '23.11.2022' },
+    { n: 'Lotus 1014', price: 250, created: '1.5.2021', url: 'https://www.hattemanden.dk/vare/lotus-1014-2/' },
+    { n: '6666 - Dizy', price: 950, created: '16.3.2020' },
+    { n: 'Pilot 2014', price: 650, created: '11.12.2019' },
+    { n: 'Detroit 2013', price: 450, created: '11.12.2019' },
+    { n: 'Camden 2012', price: 400, created: '11.12.2019' },
+    { n: 'Scotchman 560', price: 190, created: '27.10.2019' },
+    { n: 'Scotchman 559', price: 190, created: '27.10.2019' },
+    { n: 'Fly Sport 556', price: 240, created: '27.10.2019' },
+    { n: 'Milano 2050', price: 250, created: '10.5.2019' },
+    { n: 'Jagthat 888', price: 190, created: '18.9.2018' },
+    { n: 'Jagthat 886', price: 120, created: '18.9.2018' },
+    { n: 'Maurice', price: 180, created: '12.7.2018' },
+    { n: 'Bob Marly med h\u00e5r', price: 200, created: '16.1.2018' },
+    { n: 'Kasket PVC', price: 220, created: '8.12.2017' },
+    { n: 'Hatteras', price: 200, created: '8.12.2017' },
+    { n: 'L\u00e6dersportshjelm', price: 649, created: '18.3.2017' },
+    { n: 'Sherlock', price: 250, created: '8.1.2017' },
+    { n: 'Lord Nelson', price: 450, created: '8.1.2017' },
+  ]},
+  { cat: 'Kjoler', count: 6, items: [
+    { n: 'Kjole - 41310B', price: 259, created: '13.6.2024' },
+    { n: 'Kjole - 01277', price: 259, created: '13.6.2024' },
+    { n: 'Kjole - 41321', price: 259, created: '13.6.2024' },
+    { n: 'Kjole - 41326', price: 259, created: '13.6.2024' },
+    { n: 'Kjole - 31220', price: 259, created: '13.6.2024' },
+    { n: 'Kjole - 41331', price: 259, created: '13.6.2024' },
+  ]},
+  { cat: 'Hawai skjorter', count: 6, items: [
+    { n: 'Hawai Skjorte - 96106-01', price: 179, created: '13.6.2024' },
+    { n: 'Hawai Skjorte - 86112-01', price: 179, created: '13.6.2024' },
+    { n: 'Hawai Skjorte - 36114-02', price: 179, created: '13.6.2024' },
+    { n: 'Hawai Skjorte - 26107-02', price: 179, created: '13.6.2024' },
+    { n: 'Hawai Skjorte - 26105-01', price: 179, created: '13.6.2024' },
+    { n: 'Hawai Skjorte - 26105-02', price: 179, created: '13.6.2024' },
+  ]},
+  { cat: 'Damehatte', count: 6, items: [
+    { n: 'Venice 2048', price: 140, created: '10.5.2019' },
+    { n: 'Damepelshue', price: 220, created: '8.12.2017' },
+    { n: 'Bolero', price: 300, created: '8.1.2017' },
+    { n: 'Roma', price: 300, created: '8.1.2017', url: 'https://www.hattemanden.dk/vare/roma/' },
+    { n: 'Bologna', price: 250, created: '8.1.2017' },
+    { n: 'Firenze', price: 300, created: '8.1.2017' },
+  ]},
+  { cat: 'Festt\u00f8j', count: 2, items: [
+    { n: 'Smoking', price: 2950, created: '25.4.2017' },
+    { n: 'Kjole og Hvidt', price: 3950, created: '18.3.2017' },
+  ]},
+  { cat: 'Diverse', count: 1, items: [
+    { n: 'Pilotbriller', price: 150, created: '13.4.2020' },
+  ]},
+];
+
+/* ===== PRODUCT URL MAP ===== */
+const PRODUCT_URLS = {
+  "Chapeau Clarque": "https://www.hattemanden.dk/vare/chapeau-clarque/",
+  "Chauff\u00f8r Kasket": "https://www.hattemanden.dk/vare/chauffoer-kasket/",
+  "L\u00e6derkasket": "https://www.hattemanden.dk/vare/laederkasket/",
+  "Bowler": "https://www.hattemanden.dk/vare/bowler/",
+  "H\u00f8j Hat": "https://www.hattemanden.dk/vare/hoej-hat/",
+  "Pepino": "https://www.hattemanden.dk/vare/pepino/",
+  "Australia 4046": "https://www.hattemanden.dk/vare/australia/",
+  "Kjoleskjorte Boswell": "https://www.hattemanden.dk/vare/kjoleskjorte-boswell/",
+  "Australsk B\u00f8ffel": "https://www.hattemanden.dk/vare/australsk-boeffellaeder/",
+  "Bouble VW": "https://www.hattemanden.dk/vare/bouble-vw/",
+  "Jagthat 892": "https://www.hattemanden.dk/vare/jagthat-892/",
+  "Jagthat 889": "https://www.hattemanden.dk/vare/jagthat-889/",
+  "Tyrolerhat 569": "https://www.hattemanden.dk/vare/tyrolerhat-569/",
+  "Pork Pie": "https://www.hattemanden.dk/vare/pork-pie/",
+  "Jagthat 885": "https://www.hattemanden.dk/vare/jagthat-885/",
+  "Kjolevest Boswell": "https://www.hattemanden.dk/vare/kjolevest-boswell/",
+  "L\u00e6derkasket 991": "https://www.hattemanden.dk/vare/laederkasket-991/",
+  "Engelsk Trilby": "https://www.hattemanden.dk/vare/engelsk-trilby/",
+  "Trilby": "https://www.hattemanden.dk/vare/trilby/",
+  "Aussie Western": "https://www.hattemanden.dk/vare/aussie-western/",
+  "Alpehue": "https://www.hattemanden.dk/vare/alpehue/",
+  "Newsboy": "https://www.hattemanden.dk/vare/newsboy/",
+  "Cap 555": "https://www.hattemanden.dk/vare/cap-555/",
+  "Gatwick": "https://www.hattemanden.dk/vare/gatwick/",
+  "Bossa": "https://www.hattemanden.dk/vare/bossa/",
+  "Damekasket": "https://www.hattemanden.dk/vare/damekasket-2/",
+  "Bouble med Liverpool": "https://www.hattemanden.dk/vare/bouble-med-liverpool/",
+  "USA": "https://www.hattemanden.dk/vare/usa/",
+  "Jagthat 779": "https://www.hattemanden.dk/vare/jagthat-779/",
+  "Harris Tweed 2011": "https://www.hattemanden.dk/vare/harris-tweed-2011/",
+  "Chauff\u00f8r": "https://www.hattemanden.dk/vare/chauffoer/",
+  "H\u00f8j Hat HCA": "https://www.hattemanden.dk/vare/hoej-hat-hca/",
+  "Bouble VW S\u00f8gr\u00e6s": "https://www.hattemanden.dk/vare/bouble-vw-soegraes/",
+  "Italia": "https://www.hattemanden.dk/vare/italia/",
+  "9908 Sixpence": "https://www.hattemanden.dk/vare/9908-sexpence/",
+  "Preformance": "https://www.hattemanden.dk/vare/preformance/",
+  "Western 2016": "https://www.hattemanden.dk/vare/western-2016/",
+  "Faust": "https://www.hattemanden.dk/vare/faust/",
+  "Cuba 2041": "https://www.hattemanden.dk/vare/cuba-2041/",
+  "Newsboy 1013": "https://www.hattemanden.dk/vare/newsboy-1013/",
+  "Jagthat 881": "https://www.hattemanden.dk/vare/jagthat-881/",
+  "Oilskin": "https://www.hattemanden.dk/vare/oilskin/",
+  "Oilskin (2)": "https://www.hattemanden.dk/vare/oilskin-2/",
+  "Kaptajn Kasket 562": "https://www.hattemanden.dk/vare/kaptajn-kasket-562/",
+  "Sildeben 1012": "https://www.hattemanden.dk/vare/sildeben-1012/",
+  "Sixpence 2": "https://www.hattemanden.dk/vare/sixpence-2/",
+  "City London": "https://www.hattemanden.dk/vare/city-london/",
+  "Australsk": "https://www.hattemanden.dk/vare/laederhat-boeffelskind/",
+  "Imiteret l\u00e6dercap 781": "https://www.hattemanden.dk/vare/imiteret-laedercap-781/",
+  "Handsker": "https://www.hattemanden.dk/vare/handsker/",
+  "Olivia": "https://www.hattemanden.dk/vare/olivia/",
+  "Roma": "https://www.hattemanden.dk/vare/roma-2/",
+  "Trilby Spec": "https://www.hattemanden.dk/vare/trilby-spec/",
+  "Royal": "https://www.hattemanden.dk/vare/royal/",
+  "1112 Faust": "https://www.hattemanden.dk/vare/1112-faust/",
+  "News": "https://www.hattemanden.dk/vare/news/",
+  "Cuba 1018": "https://www.hattemanden.dk/vare/cuba-1018/",
+  "Bill Western": "https://www.hattemanden.dk/vare/bill-western/",
+  "Cap 780": "https://www.hattemanden.dk/vare/cap-780/",
+  "Jagthat 887": "https://www.hattemanden.dk/vare/jagthat-887/",
+  "Napoli Panama kopi": "https://www.hattemanden.dk/vare/napoli-panama-kopi/",
+  "Quin": "https://www.hattemanden.dk/vare/quin/",
+  "Guns and Roses": "https://www.hattemanden.dk/vare/guns-and-roses/",
+  "Lux Panama 2042": "https://www.hattemanden.dk/vare/lux-panama-2042/",
+  "Butterfly": "https://www.hattemanden.dk/vare/butterfly/",
+  "Engelsk sixpence/flatcap": "https://www.hattemanden.dk/vare/engelsk-sixpence-flatcap/",
+  "Derby 2045": "https://www.hattemanden.dk/vare/derby-2045/",
+  "Jagthat 891": "https://www.hattemanden.dk/vare/jagthat-891/",
+  "Patchwork 1015": "https://www.hattemanden.dk/vare/patchwork-1015/",
+  "Limone": "https://www.hattemanden.dk/vare/limone/",
+  "Bob Marley": "https://www.hattemanden.dk/vare/bob-marley/",
+  "Dublin 7 | 1019": "https://www.hattemanden.dk/vare/dublin-7-1019/",
+  "Damekasket m. sl\u00f8jfe": "https://www.hattemanden.dk/vare/damekasket/",
+  "Trilby 2040": "https://www.hattemanden.dk/vare/trilby-2040/",
+  "Royal Derby": "https://www.hattemanden.dk/vare/royal-derby/",
+  "6640 Sixpence": "https://www.hattemanden.dk/vare/6640-sixpence/",
+  "Jagthat 890": "https://www.hattemanden.dk/vare/jagthat-890/",
+  "Jagthat 882": "https://www.hattemanden.dk/vare/jagthat-882/",
+  "Napoli": "https://www.hattemanden.dk/vare/napoli/",
+  "Strikhue Angorauld Mix": "https://www.hattemanden.dk/vare/strikhue-angorauld-mix/",
+  "Pork Pie 1024": "https://www.hattemanden.dk/vare/pork-pie-1024/",
+  "Dublin 5 | 1019": "https://www.hattemanden.dk/vare/dublin-5-1019/",
+  "Newsboy 557": "https://www.hattemanden.dk/vare/newsboy-557/",
+  "Sixpence": "https://www.hattemanden.dk/vare/sixpence/",
+  "PVC 1011": "https://www.hattemanden.dk/vare/pvc-1011/",
+  "John Western": "https://www.hattemanden.dk/vare/john-western/",
+  "Newsboy Cambridge": "https://www.hattemanden.dk/vare/newsboy-cambridge/",
+  "Strikhue m. \u00e6gte pels": "https://www.hattemanden.dk/vare/strikhue-med-aegte-pels/",
+  "Picky Blinders Birmingham": "https://www.hattemanden.dk/vare/picky-blinders-birmingham/",
+  "St. Petersborg 2015": "https://www.hattemanden.dk/vare/st-petersborg-2015/",
+  "Birmingham 561": "https://www.hattemanden.dk/vare/birmingham-561/",
+  "Fedora 2043": "https://www.hattemanden.dk/vare/fedora-2043/",
+  "Padova": "https://www.hattemanden.dk/vare/padova/",
+  "Torino - Str\u00e5": "https://www.hattemanden.dk/vare/torino-straa/",
+  "Motorbriller": "https://www.hattemanden.dk/vare/motorbriller/",
+  "Maltesene": "https://www.hattemanden.dk/vare/maltesene/",
+  "Jagthat 883": "https://www.hattemanden.dk/vare/jagthat-883/",
+  "Jagthat 884": "https://www.hattemanden.dk/vare/jagthat-884/",
+  "Baker": "https://www.hattemanden.dk/vare/baker/",
+  "Lotus 1014": "https://www.hattemanden.dk/vare/lotus-1014/",
+  "Garda": "https://www.hattemanden.dk/vare/garda/",
+  "Refleksb\u00e5nd 780": "https://www.hattemanden.dk/vare/refleksbaand-780/",
+  "Paris 2044": "https://www.hattemanden.dk/vare/paris-2044/",
+  "Torino": "https://www.hattemanden.dk/vare/torino/",
+  "\u00d8revarmerer": "https://www.hattemanden.dk/vare/oerevarmerer/",
+  "Skull Cap 111": "https://www.hattemanden.dk/vare/style-kalot-111/",
+  "Tyrolerhat 568": "https://www.hattemanden.dk/vare/tyrolerhat-568/",
+  "Strikhue": "https://www.hattemanden.dk/vare/strikhue/",
+  "1105": "https://www.hattemanden.dk/vare/1105/",
+  "8801": "https://www.hattemanden.dk/vare/8801/",
+  "Kjole - 41310B": "https://www.hattemanden.dk/vare/kjole-41310b/",
+  "Kjole - 01277": "https://www.hattemanden.dk/vare/kjole-01277/",
+  "Kjole - 41321": "https://www.hattemanden.dk/vare/kjole-41321/",
+  "Kjole - 41326": "https://www.hattemanden.dk/vare/kjole-41326/",
+  "Kjole - 31220": "https://www.hattemanden.dk/vare/kjole-31220/",
+  "Kjole - 41331": "https://www.hattemanden.dk/vare/kjole-41331/",
+  "Hawai Skjorte - 96106-01": "https://www.hattemanden.dk/vare/hawai-skjorte-96106-01/",
+  "Hawai Skjorte - 86112-01": "https://www.hattemanden.dk/vare/hawai-skjorte-86112-01/",
+  "Hawai Skjorte - 36114-02": "https://www.hattemanden.dk/vare/hawai-skjorte-36114-02/",
+  "Hawai Skjorte - 26107-02": "https://www.hattemanden.dk/vare/hawai-skjorte-26107-02/",
+  "Hawai Skjorte - 26105-01": "https://www.hattemanden.dk/vare/hawai-skjorte-26105-01/",
+  "Hawai Skjorte - 26105-02": "https://www.hattemanden.dk/vare/hawai-skjorte-26105-02/",
+  "H\u00f8j Engelsk 4051": "https://www.hattemanden.dk/vare/hoej-engelsk-4051/",
+  "Australsk L\u00e6derhat 4044": "https://www.hattemanden.dk/vare/australsk-laederhat-4044/",
+  "Australsk L\u00e6derhat 8888": "https://www.hattemanden.dk/vare/australsk-laederhat-8888/",
+  "Australsk 4045": "https://www.hattemanden.dk/vare/australsk-4045/",
+  "Manchester": "https://www.hattemanden.dk/vare/manchester/",
+  "Sixpence 6609": "https://www.hattemanden.dk/vare/sixpence-6609/",
+  "Kasket 6608": "https://www.hattemanden.dk/vare/kasket-6608/",
+  "6666 - Dizy": "https://www.hattemanden.dk/vare/6666-dizy/",
+  "Pilot 2014": "https://www.hattemanden.dk/vare/pilot-2014/",
+  "Detroit 2013": "https://www.hattemanden.dk/vare/detroit-2013/",
+  "Camden 2012": "https://www.hattemanden.dk/vare/camden-2012/",
+  "Scotchman 560": "https://www.hattemanden.dk/vare/scotchman-560/",
+  "Scotchman 559": "https://www.hattemanden.dk/vare/scotchman-559/",
+  "Fly Sport 556": "https://www.hattemanden.dk/vare/fly-sport-556/",
+  "Milano 2050": "https://www.hattemanden.dk/vare/milano-2050/",
+  "Jagthat 888": "https://www.hattemanden.dk/vare/jagthat-888/",
+  "Jagthat 886": "https://www.hattemanden.dk/vare/jagthat-886/",
+  "Maurice": "https://www.hattemanden.dk/vare/maurice/",
+  "Bob Marly med h\u00e5r": "https://www.hattemanden.dk/vare/bob-marly-med-haar/",
+  "Damepelshue": "https://www.hattemanden.dk/vare/damepelshue/",
+  "Kasket PVC": "https://www.hattemanden.dk/vare/kasket-pvc/",
+  "Hatteras": "https://www.hattemanden.dk/vare/hatteras/",
+  "Smoking": "https://www.hattemanden.dk/vare/smoking/",
+  "Kjole og Hvidt": "https://www.hattemanden.dk/vare/kjole/",
+  "L\u00e6dersportshjelm": "https://www.hattemanden.dk/vare/359/",
+  "Sherlock": "https://www.hattemanden.dk/vare/sherlock/",
+  "Bolero": "https://www.hattemanden.dk/vare/bolero/",
+  "Venice 2048": "https://www.hattemanden.dk/vare/venice-2048/",
+  "Bologna": "https://www.hattemanden.dk/vare/bologna/",
+  "Firenze": "https://www.hattemanden.dk/vare/firenze/",
+  "Lord Nelson": "https://www.hattemanden.dk/vare/lord-nelson/",
+  "Pilotbriller": "https://www.hattemanden.dk/vare/pilotbriller/"
+};
+
+/* Source/supplier URLs — euroaccessories.co.uk + hutlager.de (Faustmann) */
+const PRODUCT_SOURCES = {
+  "Bowler": "https://www.euroaccessories.co.uk/classic-bowler-hat-e15-04",
+  "Høj Hat": "https://www.euroaccessories.co.uk/classic-top-hat-e15-01",
+  "Høj Hat HCA": "https://www.euroaccessories.co.uk/very-tall-top-hat-e20-39",
+  "Høj Engelsk 4051": "https://www.euroaccessories.co.uk/e39-278",
+  "Pork Pie": "https://www.euroaccessories.co.uk/e25-36",
+  "Pork Pie 1024": "https://www.euroaccessories.co.uk/e25-36",
+  "Trilby": "https://www.euroaccessories.co.uk/wool-felt-trilby-hat-e15-12",
+  "Engelsk Trilby": "https://www.euroaccessories.co.uk/wool-felt-trilby-hat-e15-12",
+  "Pepino": "https://www.euroaccessories.co.uk/wool-felt-trilby-hat-e15-12",
+  "Trilby 2040": "https://www.euroaccessories.co.uk/wool-felt-trilby-hat-e15-12",
+  "Trilby Spec": "https://www.euroaccessories.co.uk/wool-felt-trilby-hat-e15-12",
+  "Faust": "https://www.euroaccessories.co.uk/wool-felt-classic-fedora-hat-e17-01",
+  "1112 Faust": "https://www.euroaccessories.co.uk/e17-01a",
+  "Fedora 2043": "https://www.euroaccessories.co.uk/e17-01a",
+  "Bossa": "https://www.euroaccessories.co.uk/e17-01a",
+  "6666 - Dizy": "https://www.euroaccessories.co.uk/e17-01a",
+  "Aussie Western": "https://www.euroaccessories.co.uk/e36-09",
+  "USA": "https://www.euroaccessories.co.uk/e36-09",
+  "Western 2016": "https://www.euroaccessories.co.uk/e40-295",
+  "Bill Western": "https://www.euroaccessories.co.uk/e40-295",
+  "John Western": "https://www.euroaccessories.co.uk/e40-295",
+  "Guns and Roses": "https://www.euroaccessories.co.uk/e39-180",
+  "Australia 4046": "https://www.euroaccessories.co.uk/e21-144",
+  "Australsk Bøffel": "https://www.euroaccessories.co.uk/e21-144",
+  "Australsk": "https://www.euroaccessories.co.uk/e21-144",
+  "Australsk 4045": "https://www.euroaccessories.co.uk/e21-144",
+  "Australsk Læderhat 4044": "https://www.euroaccessories.co.uk/e21-144",
+  "Australsk Læderhat 8888": "https://www.euroaccessories.co.uk/e21-144",
+  "Sixpence": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Sixpence 2": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "6640 Sixpence": "https://www.euroaccessories.co.uk/e40-129",
+  "9908 Sixpence": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Sixpence 6609": "https://www.euroaccessories.co.uk/e40-129",
+  "Gatwick": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Sildeben 1012": "https://www.euroaccessories.co.uk/herringbone-tweed-flat-cap-e19-27",
+  "Engelsk sixpence/flatcap": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Harris Tweed 2011": "https://www.euroaccessories.co.uk/herringbone-tweed-flat-cap-e19-27",
+  "City London": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "8801": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Manchester": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Scotchman 560": "https://www.euroaccessories.co.uk/e40-129",
+  "Scotchman 559": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Maurice": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Fly Sport 556": "https://www.euroaccessories.co.uk/e40-129",
+  "Cap 555": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Cap 780": "https://www.euroaccessories.co.uk/100-wool-flat-cap-e17-06",
+  "Læderkasket": "https://www.euroaccessories.co.uk/e40-129",
+  "Læderkasket 991": "https://www.euroaccessories.co.uk/e40-129",
+  "Imiteret lædercap 781": "https://www.euroaccessories.co.uk/e40-129",
+  "Kasket 6608": "https://www.euroaccessories.co.uk/e40-129",
+  "Newsboy": "https://www.euroaccessories.co.uk/e40-133",
+  "Newsboy 1013": "https://www.euroaccessories.co.uk/e40-133",
+  "Newsboy 557": "https://www.euroaccessories.co.uk/e40-133",
+  "Newsboy Cambridge": "https://www.euroaccessories.co.uk/e40-133",
+  "News": "https://www.euroaccessories.co.uk/e40-133",
+  "Baker": "https://www.euroaccessories.co.uk/e36-34",
+  "Picky Blinders Birmingham": "https://www.euroaccessories.co.uk/e36-34",
+  "Birmingham 561": "https://www.euroaccessories.co.uk/e36-34",
+  "Patchwork 1015": "https://www.euroaccessories.co.uk/wholesale-hats/wholesale-newsboy-caps/wholesale-patched-newsboy-caps/patchwork-eight-panel-newsboy-cap-e34-59",
+  "Dublin 7 | 1019": "https://www.euroaccessories.co.uk/e36-34",
+  "Dublin 5 | 1019": "https://www.euroaccessories.co.uk/e36-34",
+  "Hatteras": "https://www.euroaccessories.co.uk/e40-133",
+  "Cuba 2041": "https://www.euroaccessories.co.uk/e24-14",
+  "Cuba 1018": "https://www.euroaccessories.co.uk/e24-14",
+  "Napoli Panama kopi": "https://www.euroaccessories.co.uk/e24-14",
+  "Napoli": "https://www.euroaccessories.co.uk/e24-14",
+  "Milano 2050": "https://www.euroaccessories.co.uk/e24-14",
+  "Lux Panama 2042": "https://www.euroaccessories.co.uk/e24-14",
+  "Bouble VW": "https://www.euroaccessories.co.uk/e30-01",
+  "Bouble med Liverpool": "https://www.euroaccessories.co.uk/e30-01",
+  "Bouble VW Søgræs": "https://www.euroaccessories.co.uk/e30-01",
+  "Italia": "https://www.euroaccessories.co.uk/e30-01",
+  "Roma": "https://www.euroaccessories.co.uk/e30-01",
+  "Kaptajn Kasket 562": "https://www.euroaccessories.co.uk/e40-130",
+  "Lord Nelson": "https://www.euroaccessories.co.uk/e40-130",
+  "Sherlock": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 889": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 892": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 885": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 779": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 881": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 887": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 891": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 890": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 882": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 883": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 884": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 888": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Jagthat 886": "https://www.euroaccessories.co.uk/sherlock-holmes-deerstalker-tweed-check-hat-e31-73",
+  "Skull Cap 111": "https://www.euroaccessories.co.uk/e39-218",
+  "Alpehue": "https://www.euroaccessories.co.uk/e39-222",
+  "Bob Marley": "https://www.euroaccessories.co.uk/large-knitted-peaked-rasta-hat-e17-64",
+  "Bob Marly med hår": "https://www.euroaccessories.co.uk/e40-100",
+  "Oilskin": "https://www.euroaccessories.co.uk/unisex-rainproof-wax-bucket-hat-e36-29",
+  "Oilskin (2)": "https://www.euroaccessories.co.uk/unisex-rainproof-wax-bucket-hat-e36-29",
+  "Strikhue": "https://www.euroaccessories.co.uk/e38-317",
+  "Strikhue Angorauld Mix": "https://www.euroaccessories.co.uk/e38-317",
+  "Strikhue m. ægte pels": "https://www.euroaccessories.co.uk/faux-fur-hat-e15-186",
+  "Pilot 2014": "https://www.euroaccessories.co.uk/rabbit-fur-trapper-hat-e31-85",
+  "Detroit 2013": "https://www.euroaccessories.co.uk/rabbit-fur-trapper-hat-e31-85",
+  "Camden 2012": "https://www.euroaccessories.co.uk/rabbit-fur-trapper-hat-e31-85",
+  "St. Petersborg 2015": "https://www.euroaccessories.co.uk/rabbit-fur-trapper-hat-e31-85",
+  "Damepelshue": "https://www.euroaccessories.co.uk/faux-fur-hat-e15-186",
+  "Damekasket": "https://www.euroaccessories.co.uk/e15-150",
+  "Damekasket m. sløjfe": "https://www.euroaccessories.co.uk/e15-150",
+  "Olivia": "https://www.euroaccessories.co.uk/womens-wool-felt-cloche-hat-e31-106",
+  "1105": "https://www.euroaccessories.co.uk/womens-wool-felt-cloche-hat-e31-106",
+  "Royal": "https://www.euroaccessories.co.uk/womens-wool-felt-cloche-hat-e31-106",
+  "Quin": "https://www.euroaccessories.co.uk/womens-wool-felt-cloche-hat-e31-106",
+  "Maltesene": "https://www.euroaccessories.co.uk/e31-119",
+  "Padova": "https://www.euroaccessories.co.uk/womens-wool-felt-cloche-hat-e31-106",
+  "Garda": "https://www.euroaccessories.co.uk/womens-wool-felt-cloche-hat-e31-106",
+  "Torino": "https://www.euroaccessories.co.uk/womens-wool-felt-cloche-hat-e31-106",
+  "Firenze": "https://www.euroaccessories.co.uk/womens-wool-felt-cloche-hat-e31-106",
+  "Derby 2045": "https://www.euroaccessories.co.uk/e38-57",
+  "Limone": "https://www.euroaccessories.co.uk/e38-57",
+  "Paris 2044": "https://www.euroaccessories.co.uk/e38-354",
+  "Venice 2048": "https://www.euroaccessories.co.uk/e38-57",
+  "Bolero": "https://www.euroaccessories.co.uk/e32-44",
+  "Bologna": "https://www.euroaccessories.co.uk/e32-44",
+  "Torino - Strå": "https://www.euroaccessories.co.uk/e32-21",
+  /* hutlager.de / Faustmann (2nd supplier) */
+  "Chapeau Clarque": "https://www.hutlager.de/1404/Zylinder--aus-100~-Haar/?fb=61",
+  "Chauffør Kasket": "https://www.hutlager.de/3973/Herren---Schirmmuetze/?fb=56",
+  "Chauffør": "https://www.hutlager.de/3973/Herren---Schirmmuetze/?fb=56",
+  "Tyrolerhat 569": "https://www.hutlager.de/3375/Sepplhut/?fb=43",
+  "Tyrolerhat 568": "https://www.hutlager.de/1188/Sepplhut/?fb=44",
+};
+
+/* ===== STATE MANAGEMENT (localStorage) ===== */
+const LS_KEY = 'hattemanden_sales_selections';
+
+function loadSelections() {
+  try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
+  catch(e) { return {}; }
+}
+
+function saveSelections(sel) {
+  localStorage.setItem(LS_KEY, JSON.stringify(sel));
+}
+
+/* ===== GOOGLE SHEETS SYNC ===== */
+const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbwvwajvewy3XFl2kL4OxPi3grMba0a1cxsdYU1G56PXhuGKQuUyYfDM8D0Y3CSqruRWmA/exec';
+let _syncTimeout = null;
+
+function setSyncStatus(status) {
+  const indicator = document.getElementById('sync-indicator');
+  if (!indicator) return;
+  const dot = indicator.querySelector('.sync-dot');
+  const label = indicator.querySelector('.sync-label');
+  indicator.className = 'sync-indicator sync-' + status;
+  switch (status) {
+    case 'syncing':  dot.textContent = '\u21BB'; label.textContent = 'Gemmer...'; break;
+    case 'synced':   dot.textContent = '\u2713'; label.textContent = 'Gemt'; break;
+    case 'error':    dot.textContent = '\u2715'; label.textContent = 'Fejl'; break;
+    case 'loading':  dot.textContent = '\u21BB'; label.textContent = 'Henter...'; break;
+    default:         dot.textContent = ''; label.textContent = '';
+  }
+}
+
+function syncToSheet(action, payload) {
+  if (SHEET_API_URL === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') return; // not configured yet
+  const body = JSON.stringify(Object.assign({ action: action }, payload));
+  setSyncStatus('syncing');
+  fetch(SHEET_API_URL, { method: 'POST', body: body, redirect: 'follow' })
+    .then(function(r) { return r.json(); })
+    .then(function(result) {
+      if (result.status === 'ok') {
+        setSyncStatus('synced');
+        clearTimeout(_syncTimeout);
+        _syncTimeout = setTimeout(function() { setSyncStatus('idle'); }, 3000);
+      } else {
+        throw new Error(result.message || 'Sync failed');
+      }
+    })
+    .catch(function(err) {
+      console.warn('Sheet sync error:', err);
+      setSyncStatus('error');
+    });
+}
+
+function loadFromSheet() {
+  if (SHEET_API_URL === 'PASTE_YOUR_APPS_SCRIPT_URL_HERE') return Promise.resolve(null);
+  setSyncStatus('loading');
+  return fetch(SHEET_API_URL)
+    .then(function(r) { return r.json(); })
+    .then(function(result) {
+      if (result.status === 'ok' && result.data) {
+        saveSelections(result.data);
+        setSyncStatus('synced');
+        clearTimeout(_syncTimeout);
+        _syncTimeout = setTimeout(function() { setSyncStatus('idle'); }, 2000);
+        return result.data;
+      }
+      setSyncStatus('error');
+      return null;
+    })
+    .catch(function(err) {
+      console.warn('Failed to load from sheet:', err);
+      setSyncStatus('error');
+      return null;
+    });
+}
+
+function getProductState(name) {
+  const sel = loadSelections();
+  return sel[name] || { video: false, lifestyle: false, sourceUrl: null };
+}
+
+function setProductField(name, field, value) {
+  const sel = loadSelections();
+  if (!sel[name]) sel[name] = { video: false, lifestyle: false, sourceUrl: null };
+  sel[name][field] = value;
+  if (!sel[name].video && !sel[name].lifestyle && !sel[name].sourceUrl) {
+    delete sel[name];
+  }
+  saveSelections(sel);
+  syncToSheet('update', { product: name, field: field, value: value });
+}
+
+function encodeAttr(s) {
+  return s.replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/'/g,'&#39;').replace(/</g,'&lt;');
+}
+function decodeAttr(s) {
+  const el = document.createElement('span');
+  el.innerHTML = s;
+  return el.textContent;
+}
+
+/* ===== LINK HELPERS ===== */
+function shopLink(name, overrideUrl) {
+  const url = overrideUrl || PRODUCT_URLS[name] || '';
+  if (url) return '<td class="link-cell"><a href="' + url + '" target="_blank">Link \u2197</a></td>';
+  return '<td class="link-cell"><span class="no-link">\u2014</span></td>';
+}
+
+function srcLink(name, overrideUrl) {
+  const state = getProductState(name);
+  const url = state.sourceUrl || overrideUrl || PRODUCT_SOURCES[name] || '';
+  const safeName = encodeAttr(name);
+  if (url) {
+    return '<td class="link-cell kilde-cell"><span class="kilde-inner"><a href="' + url + '" target="_blank">Link \u2197</a>' +
+      '<button class="edit-link-btn" onclick="event.stopPropagation(); editKilde(\'' + safeName.replace(/'/g, "\\'") + '\')" title="Rediger kilde">\u270E</button></span></td>';
+  }
+  return '<td class="link-cell kilde-cell"><button class="add-link-btn" onclick="event.stopPropagation(); editKilde(\'' + safeName.replace(/'/g, "\\'") + '\')">+ Tilf\u00f8j</button></td>';
+}
+
+function editKilde(safeName) {
+  const name = decodeAttr(safeName);
+  const state = getProductState(name);
+  const currentUrl = state.sourceUrl || PRODUCT_SOURCES[name] || '';
+  const newUrl = prompt('Indtast leverand\u00f8r-URL for: ' + name, currentUrl);
+  if (newUrl === null) return;
+  setProductField(name, 'sourceUrl', newUrl || null);
+  // Find and update the cell
+  const btns = document.querySelectorAll('.kilde-cell .edit-link-btn, .kilde-cell .add-link-btn');
+  for (const btn of btns) {
+    const onclick = btn.getAttribute('onclick');
+    if (onclick && onclick.includes(safeName.replace(/'/g, "\\'"))) {
+      const cell = btn.closest('.kilde-cell');
+      const finalUrl = newUrl || PRODUCT_SOURCES[name] || '';
+      if (finalUrl) {
+        cell.innerHTML = '<span class="kilde-inner"><a href="' + finalUrl + '" target="_blank">Link \u2197</a>' +
+          '<button class="edit-link-btn" onclick="event.stopPropagation(); editKilde(\'' + safeName.replace(/'/g, "\\'") + '\')" title="Rediger kilde">\u270E</button></span>';
+      } else {
+        cell.innerHTML = '<button class="add-link-btn" onclick="event.stopPropagation(); editKilde(\'' + safeName.replace(/'/g, "\\'") + '\')">+ Tilf\u00f8j</button>';
+      }
+      break;
+    }
+  }
+  updateSelectionSummary();
+}
+
+/* ===== TOGGLE HELPERS ===== */
+function videoToggle(name) {
+  const state = getProductState(name);
+  const cls = state.video ? 'toggle-btn active' : 'toggle-btn';
+  const icon = state.video ? '\u2713' : '\u2014';
+  const label = state.video ? 'Valgt' : 'V\u00e6lg';
+  return '<td class="toggle-cell"><button class="' + cls + '" data-product="' + encodeAttr(name) + '" data-field="video" onclick="handleToggle(this)">' +
+    '<span class="toggle-icon">' + icon + '</span><span class="toggle-label">' + label + '</span></button></td>';
+}
+
+function lifestyleToggle(name) {
+  const state = getProductState(name);
+  const cls = state.lifestyle ? 'toggle-btn active' : 'toggle-btn';
+  const icon = state.lifestyle ? '\u2713' : '\u2014';
+  const label = state.lifestyle ? 'Valgt' : 'V\u00e6lg';
+  return '<td class="toggle-cell"><button class="' + cls + '" data-product="' + encodeAttr(name) + '" data-field="lifestyle" onclick="handleToggle(this)">' +
+    '<span class="toggle-icon">' + icon + '</span><span class="toggle-label">' + label + '</span></button></td>';
+}
+
+function handleToggle(btn) {
+  event.stopPropagation();
+  const name = decodeAttr(btn.getAttribute('data-product'));
+  const field = btn.getAttribute('data-field');
+  const state = getProductState(name);
+  const newValue = !state[field];
+  setProductField(name, field, newValue);
+  if (newValue) {
+    btn.classList.add('active');
+    btn.querySelector('.toggle-icon').textContent = '\u2713';
+    btn.querySelector('.toggle-label').textContent = 'Valgt';
+  } else {
+    btn.classList.remove('active');
+    btn.querySelector('.toggle-icon').textContent = '\u2014';
+    btn.querySelector('.toggle-label').textContent = 'V\u00e6lg';
+  }
+  updateSelectionSummary();
+}
+
+/* ===== DATE HELPER ===== */
+function dateClass(d) {
+  const parts = d.split('.');
+  const y = parseInt(parts[2]);
+  if (y >= 2025) return 'date-recent';
+  if (y <= 2021) return 'date-old';
+  return '';
+}
+
+/* ===== RENDER SOLD CATEGORY ===== */
+function renderCategory(cat) {
+  let id = 0;
+  let rows = '';
+  for (const sub of cat.subs) {
+    const sid = cat.title.replace(/\s/g,'') + '_' + (id++);
+    rows += `<tr class="sub-row" data-target="${sid}" onclick="toggleSub('${sid}', this)">
+      <td><span class="chevron">\u25B6</span><span class="sub-name">${sub.name}</span></td>
+      <td class="r">${sub.products}</td>
+      <td class="r">${sub.units}</td>
+      <td class="r">${sub.revenue} kr</td>
+    </tr>`;
+    rows += `<tr class="product-rows" id="${sid}"><td colspan="4" style="padding:0!important;border-bottom:1px solid var(--border-subtle)"><div class="product-inner"><div class="product-list"><table>
+      <thead><tr><th>Produkt</th><th class="r">Pris</th><th class="r">Solgt</th><th class="r">Oms\u00e6tning</th><th class="r">Sidst solgt</th><th>Shop</th><th>Kilde</th><th>Video</th><th>Lifestyle Foto</th></tr></thead>
+      <tbody>${sub.items.map(i => `<tr><td class="p-name">${i.n}</td><td class="r">${i.price.toLocaleString('da-DK')} kr</td><td class="r">${i.sold}</td><td class="r">${i.rev} kr</td><td class="r ${dateClass(i.date)}">${i.date}</td>${shopLink(i.n, i.url)}${srcLink(i.n, i.src)}${videoToggle(i.n)}${lifestyleToggle(i.n)}</tr>`).join('')}</tbody>
+    </table></div></div></td></tr>`;
+  }
+
+  return `<section class="category-section">
+    <div class="category-header">
+      <span class="category-icon">${cat.icon}</span>
+      <h3 class="category-title">${cat.title}</h3>
+      <span class="category-count">${cat.totalProducts} produkter</span>
+    </div>
+    <div class="sub-table"><table>
+      <thead><tr><th>Underkategori</th><th class="r">Produkter</th><th class="r">Solgt</th><th class="r">Oms\u00e6tning</th></tr></thead>
+      <tbody>${rows}</tbody>
+      <tfoot><tr><td>Total ${cat.title}</td><td class="r">${cat.totalProducts}</td><td class="r">${cat.totalUnits}</td><td class="r">${cat.totalRevenue} kr</td></tr></tfoot>
+    </table></div>
+  </section>`;
+}
+
+/* ===== RENDER ZERO SALES ===== */
+function renderZero() {
+  let id = 0;
+  let rows = '';
+  for (const z of ZERO) {
+    const sid = 'zero_' + (id++);
+    rows += `<tr class="sub-row" data-target="${sid}" onclick="toggleSub('${sid}', this)">
+      <td><span class="chevron">\u25B6</span>${z.cat}</td>
+      <td class="r">${z.count}</td>
+    </tr>`;
+    rows += `<tr class="product-rows" id="${sid}"><td colspan="2" style="padding:0!important;border-bottom:1px solid var(--border-subtle)"><div class="product-inner"><div class="product-list"><table>
+      <thead><tr><th>Produkt</th><th class="r">Pris</th><th class="r">Oprettet</th><th>Shop</th><th>Kilde</th><th>Video</th><th>Lifestyle Foto</th></tr></thead>
+      <tbody>${z.items.map(i => `<tr><td class="p-name">${i.n}</td><td class="r">${i.price.toLocaleString('da-DK')} kr</td><td class="r">${i.created}</td>${shopLink(i.n, i.url)}${srcLink(i.n, i.src)}${videoToggle(i.n)}${lifestyleToggle(i.n)}</tr>`).join('')}</tbody>
+    </table></div></div></td></tr>`;
+  }
+
+  return `<section class="zero-section">
+    <div class="zero-header">
+      <span class="zero-icon">\u2717</span>
+      <h3 class="zero-title">Aldrig solgt</h3>
+      <span class="zero-badge">46 produkter</span>
+    </div>
+    <div class="zero-table"><table>
+      <thead><tr><th>Kategori</th><th class="r">Antal</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </section>`;
+}
+
+/* ===== TOGGLE ===== */
+function toggleSub(id, row) {
+  const detail = document.getElementById(id);
+  const isOpen = detail.classList.contains('open');
+  detail.classList.toggle('open');
+  row.classList.toggle('expanded');
+}
+
+/* ===== SUMMARY PANEL ===== */
+function updateSelectionSummary() {
+  const sel = loadSelections();
+  let videoCount = 0, lifestyleCount = 0, kildeCount = 0;
+  for (const key in sel) {
+    if (sel[key].video) videoCount++;
+    if (sel[key].lifestyle) lifestyleCount++;
+    if (sel[key].sourceUrl) kildeCount++;
+  }
+  const cv = document.getElementById('count-video');
+  const cl = document.getElementById('count-lifestyle');
+  const ck = document.getElementById('count-kilde');
+  if (cv) cv.textContent = videoCount;
+  if (cl) cl.textContent = lifestyleCount;
+  if (ck) ck.textContent = kildeCount;
+}
+
+function togglePanel() {
+  const body = document.getElementById('panel-body');
+  const btn = document.querySelector('.panel-toggle');
+  body.classList.toggle('collapsed');
+  btn.innerHTML = body.classList.contains('collapsed') ? '+' : '\u2212';
+}
+
+function exportSelections() {
+  const sel = loadSelections();
+  const lines = ['Produkt\tVideo\tLifestyle Foto\tKilde (redigeret)'];
+  const allProducts = [];
+  for (const catKey in DATA) {
+    for (const sub of DATA[catKey].subs) {
+      for (const item of sub.items) allProducts.push(item.n);
+    }
+  }
+  for (const z of ZERO) {
+    for (const item of z.items) allProducts.push(item.n);
+  }
+  let hasSelections = false;
+  for (const name of allProducts) {
+    const s = sel[name];
+    if (!s) continue;
+    if (!s.video && !s.lifestyle && !s.sourceUrl) continue;
+    hasSelections = true;
+    lines.push([name, s.video ? 'Ja' : 'Nej', s.lifestyle ? 'Ja' : 'Nej', s.sourceUrl || ''].join('\t'));
+  }
+  if (!hasSelections) { alert('Ingen valg at eksportere endnu.'); return; }
+  const blob = new Blob([lines.join('\n')], { type: 'text/tab-separated-values' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'hattemanden-valg-' + new Date().toISOString().slice(0,10) + '.tsv';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function clearSelections() {
+  if (!confirm('Er du sikker? Alle valg nulstilles.')) return;
+  localStorage.removeItem(LS_KEY);
+  syncToSheet('clear', {});
+  renderAll();
+}
+
+/* ===== INIT ===== */
+const app = document.getElementById('app');
+
+function renderAll() {
+  app.innerHTML =
+    renderCategory(DATA.herrehatte) +
+    renderCategory(DATA.damehatte) +
+    renderCategory(DATA.festtoej) +
+    renderCategory(DATA.diverse) +
+    renderZero();
+  updateSelectionSummary();
+}
+
+// Render immediately from localStorage (instant, no waiting)
+renderAll();
+
+/* Floating selection panel with sync indicator */
+document.body.insertAdjacentHTML('beforeend', `
+  <div class="selection-panel">
+    <div class="panel-header">
+      <span class="panel-title">Dine valg</span>
+      <div class="sync-indicator" id="sync-indicator">
+        <span class="sync-dot"></span>
+        <span class="sync-label"></span>
+      </div>
+      <button class="panel-toggle" onclick="togglePanel()">\u2212</button>
+    </div>
+    <div id="panel-body" class="panel-body">
+      <div class="panel-counts">
+        <div class="panel-count"><span id="count-video">0</span> Video</div>
+        <div class="panel-count"><span id="count-lifestyle">0</span> Lifestyle</div>
+        <div class="panel-count"><span id="count-kilde">0</span> Kilde</div>
+      </div>
+      <div class="panel-actions">
+        <button class="export-btn" onclick="exportSelections()">Eksporter valg \u2193</button>
+        <button class="clear-btn" onclick="clearSelections()">Nulstil</button>
+      </div>
+    </div>
+  </div>
+`);
+updateSelectionSummary();
+
+// Load from Google Sheets (async, non-blocking)
+loadFromSheet().then(function(data) {
+  if (data && Object.keys(data).length > 0) {
+    renderAll(); // re-render with sheet data
+  }
+});
+</script>
+
+</body>
+</html>
