@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hattemanden — Leverandør-link Sammenligning</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #8b6914;
+            --primary-dark: #6d5310;
+            --primary-light: #b8922a;
+            --primary-glow: rgba(139, 105, 20, 0.15);
+            --bg-base: #f1eee9;
+            --bg-elevated: #faf8f5;
+            --bg-surface: #ffffff;
+            --text-primary: #3f1e1f;
+            --text-secondary: #3c3737;
+            --text-muted: #6b5c5d;
+            --border-subtle: rgba(63, 30, 31, 0.08);
+            --border-default: rgba(63, 30, 31, 0.12);
+            --shadow-sm: 0 1px 2px rgba(63, 30, 31, 0.08), 0 1px 3px rgba(63, 30, 31, 0.04);
+            --shadow-md: 0 4px 6px rgba(63, 30, 31, 0.08), 0 2px 4px rgba(63, 30, 31, 0.04);
+            --shadow-lg: 0 10px 15px rgba(63, 30, 31, 0.1), 0 4px 6px rgba(63, 30, 31, 0.05);
+            --font-heading: 'Playfair Display', Georgia, serif;
+            --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            --radius-sm: 6px;
+            --radius-md: 10px;
+            --radius-lg: 14px;
+            --radius-xl: 20px;
+            --green: #2d7a3a;
+            --green-bg: rgba(45, 122, 58, 0.08);
+            --red: #b5342a;
+            --red-bg: rgba(181, 52, 42, 0.06);
+            --orange: #c27a1a;
+            --orange-bg: rgba(194, 122, 26, 0.08);
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { font-size: 16px; -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-body);
+            color: var(--text-primary);
+            background: var(--bg-base);
+            line-height: 1.5;
+        }
+
+        /* ── Header ────────────────────────────── */
+        .header {
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border-default);
+            padding: 16px 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        .header-stats {
+            display: flex;
+            gap: 16px;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+        }
+        .header-stats span { white-space: nowrap; }
+        .header-stats .count { font-weight: 600; color: var(--text-primary); }
+
+        /* ── Controls bar ──────────────────────── */
+        .controls {
+            max-width: 1400px;
+            margin: 16px auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        .filter-btn {
+            padding: 6px 14px;
+            border: 1px solid var(--border-default);
+            border-radius: 20px;
+            background: var(--bg-surface);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .filter-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+        .filter-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .filter-btn .badge {
+            display: inline-block;
+            background: rgba(0,0,0,0.12);
+            border-radius: 10px;
+            padding: 0 6px;
+            font-size: 0.72rem;
+            margin-left: 4px;
+        }
+        .filter-btn.active .badge { background: rgba(255,255,255,0.3); }
+
+        .spacer { flex: 1; }
+
+        .action-btn {
+            padding: 8px 18px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .action-btn.export {
+            background: var(--primary);
+            color: #fff;
+        }
+        .action-btn.export:hover { background: var(--primary-dark); }
+        .action-btn.secondary {
+            background: var(--bg-surface);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-default);
+        }
+        .action-btn.secondary:hover { border-color: var(--primary-light); }
+
+        /* ── Category section ──────────────────── */
+        .category-section {
+            max-width: 1400px;
+            margin: 24px auto;
+            padding: 0 24px;
+        }
+        .category-header {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--primary-dark);
+            padding: 10px 0;
+            border-bottom: 2px solid var(--primary-glow);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .category-header .cat-count {
+            font-family: var(--font-body);
+            font-size: 0.78rem;
+            font-weight: 400;
+            color: var(--text-muted);
+        }
+
+        /* ── Product comparison card ───────────── */
+        .product-card {
+            background: var(--bg-surface);
+            border: 2px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            margin-bottom: 14px;
+            overflow: hidden;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .product-card:hover { box-shadow: var(--shadow-md); }
+        .product-card.mismatch {
+            border-color: var(--red);
+            background: var(--red-bg);
+        }
+        .product-card.confirmed {
+            border-color: var(--green);
+            background: var(--green-bg);
+        }
+        .product-card.no-supplier {
+            border-color: var(--orange);
+            opacity: 0.7;
+        }
+
+        .card-inner {
+            display: grid;
+            grid-template-columns: 1fr 60px 1fr;
+            gap: 0;
+            align-items: stretch;
+        }
+
+        .img-side {
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .img-side.left { background: var(--bg-elevated); }
+        .img-side.right { background: var(--bg-surface); }
+
+        .img-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+        .img-side.left .img-label { color: var(--primary); }
+
+        .img-container {
+            width: 180px;
+            height: 180px;
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: #f5f3f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border-subtle);
+        }
+        .img-container img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+        .img-container .placeholder {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .product-name {
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+            color: var(--text-primary);
+            max-width: 200px;
+            word-break: break-word;
+        }
+        .product-link {
+            font-size: 0.7rem;
+            color: var(--primary);
+            text-decoration: none;
+            text-align: center;
+            max-width: 200px;
+            word-break: break-all;
+        }
+        .product-link:hover { text-decoration: underline; }
+
+        .product-meta {
+            font-size: 0.72rem;
+            color: var(--text-muted);
+        }
+
+        /* ── Middle action column ──────────────── */
+        .action-col {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 4px;
+            border-left: 1px solid var(--border-subtle);
+            border-right: 1px solid var(--border-subtle);
+        }
+
+        .verdict-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--border-default);
+            background: var(--bg-surface);
+            cursor: pointer;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .verdict-btn:hover { transform: scale(1.1); }
+        .verdict-btn.ok {
+            border-color: var(--green);
+            color: var(--green);
+        }
+        .verdict-btn.ok.active {
+            background: var(--green);
+            color: #fff;
+        }
+        .verdict-btn.wrong {
+            border-color: var(--red);
+            color: var(--red);
+        }
+        .verdict-btn.wrong.active {
+            background: var(--red);
+            color: #fff;
+        }
+        .verdict-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            text-align: center;
+        }
+
+        /* ── Correction input row ──────────────── */
+        .correction-row {
+            display: none;
+            padding: 10px 14px;
+            border-top: 1px solid var(--border-subtle);
+            background: var(--red-bg);
+            gap: 8px;
+            align-items: center;
+        }
+        .product-card.mismatch .correction-row { display: flex; }
+        .correction-row label {
+            font-size: 0.78rem;
+            font-weight: 500;
+            white-space: nowrap;
+            color: var(--red);
+        }
+        .correction-row input {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+        }
+        .correction-row input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px var(--primary-glow);
+        }
+        .correction-row .note-input {
+            width: 200px;
+            flex: none;
+        }
+
+        /* ── Export modal ──────────────────────── */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-overlay.visible { display: flex; }
+        .modal {
+            background: var(--bg-surface);
+            border-radius: var(--radius-xl);
+            padding: 24px;
+            max-width: 700px;
+            width: 90%;
+            max-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow-lg);
+        }
+        .modal h2 {
+            font-family: var(--font-heading);
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: var(--primary);
+        }
+        .modal textarea {
+            flex: 1;
+            min-height: 300px;
+            padding: 12px;
+            border: 1px solid var(--border-default);
+            border-radius: var(--radius-md);
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.8rem;
+            resize: vertical;
+        }
+        .modal-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+            margin-top: 12px;
+        }
+
+        /* ── Responsive ────────────────────────── */
+        @media (max-width: 700px) {
+            .card-inner {
+                grid-template-columns: 1fr;
+            }
+            .action-col {
+                flex-direction: row;
+                border-left: none;
+                border-right: none;
+                border-top: 1px solid var(--border-subtle);
+                border-bottom: 1px solid var(--border-subtle);
+                padding: 8px;
+            }
+            .img-container { width: 140px; height: 140px; }
+            .correction-row { flex-wrap: wrap; }
+            .correction-row .note-input { width: 100%; }
+        }
+
+        /* ── Nav link ─────────────────────────── */
+        .header-nav {
+            font-size: 0.8rem;
+        }
+        .header-nav a {
+            color: var(--primary);
+            text-decoration: none;
+            padding: 4px 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border-default);
+            transition: all 0.2s;
+        }
+        .header-nav a:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* ── Sync indicator ────────────────────── */
+        .sync-indicator {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            padding: 3px 10px;
+            border-radius: 12px;
+            background: var(--bg-elevated);
+        }
+        .sync-dot {
+            font-size: 0.85rem;
+            line-height: 1;
+        }
+        .sync-syncing .sync-dot { animation: spin 1s linear infinite; }
+        .sync-synced { color: var(--green); }
+        .sync-error { color: var(--red); }
+        .sync-loading .sync-dot { animation: spin 1s linear infinite; }
+
+        /* ── Loading state ─────────────────────── */
+        .loading {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--text-muted);
+            font-size: 1rem;
+        }
+        .loading .spinner {
+            display: inline-block;
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-default);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 12px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="header-inner">
+        <h1>Leverandør-link Sammenligning</h1>
+        <nav class="header-nav">
+            <a href="hat-sales-overview.html">&larr; Salgsoversigt</a>
+        </nav>
+        <div class="header-stats">
+            <span>Produkter: <span class="count" id="stat-total">—</span></span>
+            <span>Bekræftet: <span class="count" id="stat-ok" style="color:var(--green)">0</span></span>
+            <span>Fejl: <span class="count" id="stat-wrong" style="color:var(--red)">0</span></span>
+            <span>Ubehandlet: <span class="count" id="stat-pending">—</span></span>
+            <div class="sync-indicator" id="sync-indicator">
+                <span class="sync-dot"></span>
+                <span class="sync-label"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="controls" id="controls">
+    <!-- filter buttons inserted by JS -->
+</div>
+
+<div id="app">
+    <div class="loading">
+        <div class="spinner"></div>
+        <div>Indlæser data...</div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="modal">
+    <div class="modal">
+        <h2>Eksportér korrektioner</h2>
+        <textarea id="export-text" readonly></textarea>
+        <div class="modal-actions">
+            <button class="action-btn secondary" onclick="closeModal()">Luk</button>
+            <button class="action-btn export" onclick="copyExport()">Kopiér til udklipsholder</button>
+        </div>
+    </div>
+</div>
+
+<script>
+/* ===== STATE ===== */
+const LS_KEY = 'supplier_compare_state';
+let DATA = null;
+let state = {}; // { productName: { verdict: 'ok'|'wrong'|null, correctedUrl: '', note: '' } }
+let activeFilter = 'all';
+
+function loadState() {
+    try { state = JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
+    catch(e) { state = {}; }
+}
+function saveState() {
+    localStorage.setItem(LS_KEY, JSON.stringify(state));
+}
+function getState(name) {
+    return state[name] || { verdict: null, correctedUrl: '', note: '' };
+}
+function setState(name, updates) {
+    state[name] = Object.assign(getState(name), updates);
+    saveState();
+    updateStats();
+
+    // Sync verdict to Google Sheets
+    const s = state[name];
+    if (updates.verdict !== undefined) {
+        if (s.verdict === 'ok') {
+            // Find current supplier URL from DATA
+            const product = DATA ? DATA.products.find(p => p.name === name) : null;
+            const currentUrl = product ? product.supplierUrl : '';
+            syncToSheet('update', { product: name, field: 'verified', value: 'ok' });
+            if (currentUrl) {
+                syncToSheet('update', { product: name, field: 'sourceUrl', value: currentUrl });
+            }
+        } else if (s.verdict === 'wrong') {
+            syncToSheet('update', { product: name, field: 'verified', value: 'wrong' });
+        } else {
+            // Verdict cleared
+            syncToSheet('update', { product: name, field: 'verified', value: '' });
+        }
+    }
+    // Sync corrected URL to Sheets
+    if (updates.correctedUrl !== undefined && s.verdict === 'wrong' && s.correctedUrl) {
+        syncToSheet('update', { product: name, field: 'sourceUrl', value: s.correctedUrl });
+        syncToSheet('update', { product: name, field: 'verified', value: 'wrong' });
+    }
+}
+
+/* ===== GOOGLE SHEETS SYNC ===== */
+const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbwvwajvewy3XFl2kL4OxPi3grMba0a1cxsdYU1G56PXhuGKQuUyYfDM8D0Y3CSqruRWmA/exec';
+let _syncTimeout = null;
+
+function setSyncStatus(status) {
+    const indicator = document.getElementById('sync-indicator');
+    if (!indicator) return;
+    const dot = indicator.querySelector('.sync-dot');
+    const label = indicator.querySelector('.sync-label');
+    indicator.className = 'sync-indicator sync-' + status;
+    switch (status) {
+        case 'syncing':  dot.textContent = '\u21BB'; label.textContent = 'Gemmer...'; break;
+        case 'synced':   dot.textContent = '\u2713'; label.textContent = 'Gemt'; break;
+        case 'error':    dot.textContent = '\u2715'; label.textContent = 'Fejl'; break;
+        case 'loading':  dot.textContent = '\u21BB'; label.textContent = 'Henter...'; break;
+        default:         dot.textContent = ''; label.textContent = '';
+    }
+}
+
+function syncToSheet(action, payload) {
+    const body = JSON.stringify(Object.assign({ action: action }, payload));
+    setSyncStatus('syncing');
+    fetch(SHEET_API_URL, { method: 'POST', body: body, redirect: 'follow' })
+        .then(function(r) { return r.json(); })
+        .then(function(result) {
+            if (result.status === 'ok') {
+                setSyncStatus('synced');
+                clearTimeout(_syncTimeout);
+                _syncTimeout = setTimeout(function() { setSyncStatus('idle'); }, 3000);
+            } else {
+                throw new Error(result.message || 'Sync failed');
+            }
+        })
+        .catch(function(err) {
+            console.warn('Sheet sync error:', err);
+            setSyncStatus('error');
+        });
+}
+
+function loadFromSheet() {
+    setSyncStatus('loading');
+    return fetch(SHEET_API_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(result) {
+            if (result.status === 'ok' && result.data) {
+                setSyncStatus('synced');
+                clearTimeout(_syncTimeout);
+                _syncTimeout = setTimeout(function() { setSyncStatus('idle'); }, 2000);
+                return result.data;
+            }
+            setSyncStatus('error');
+            return null;
+        })
+        .catch(function(err) {
+            console.warn('Failed to load from sheet:', err);
+            setSyncStatus('error');
+            return null;
+        });
+}
+
+/* ===== DATA LOADING ===== */
+async function loadData() {
+    try {
+        const res = await fetch('comparison-data.json');
+        DATA = await res.json();
+        loadState();
+        render();
+
+        // Load from Google Sheets and merge verdicts (Sheet wins for products with no local verdict)
+        loadFromSheet().then(function(sheetData) {
+            if (!sheetData) return;
+            let merged = false;
+            for (const name in sheetData) {
+                const remote = sheetData[name];
+                if (remote.verified) {
+                    const local = getState(name);
+                    if (!local.verdict) {
+                        // Sheet has a verdict, local doesn't — adopt it
+                        state[name] = Object.assign(local, {
+                            verdict: remote.verified === 'ok' ? 'ok' : remote.verified === 'wrong' ? 'wrong' : null,
+                            correctedUrl: remote.verified === 'wrong' && remote.sourceUrl ? remote.sourceUrl : (local.correctedUrl || '')
+                        });
+                        merged = true;
+                    }
+                }
+            }
+            if (merged) {
+                saveState();
+                render();
+            }
+        });
+    } catch(e) {
+        document.getElementById('app').innerHTML =
+            '<div class="loading" style="color:var(--red)">Kunne ikke indlæse comparison-data.json<br><br>' +
+            '<small>Kør først: <code>node scrape-comparison-data.mjs</code></small></div>';
+    }
+}
+
+/* ===== RENDERING ===== */
+function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function safeName(s) {
+    return s.replace(/[^a-zA-Z0-9æøåÆØÅ]/g, '_');
+}
+
+function render() {
+    renderFilters();
+    renderProducts();
+    updateStats();
+}
+
+function renderFilters() {
+    const cats = {};
+    for (const p of DATA.products) {
+        const key = p.subcategory || p.category;
+        if (!cats[key]) cats[key] = 0;
+        cats[key]++;
+    }
+
+    let html = '<button class="filter-btn active" data-filter="all">Alle <span class="badge">' + DATA.products.length + '</span></button>';
+    html += '<button class="filter-btn" data-filter="pending">Ubehandlet</button>';
+    html += '<button class="filter-btn" data-filter="wrong">Kun fejl</button>';
+    html += '<button class="filter-btn" data-filter="ok">Kun bekræftet</button>';
+    html += '<button class="filter-btn" data-filter="no-supplier">Mangler leverandør</button>';
+    html += '<span class="spacer"></span>';
+    html += '<button class="action-btn secondary" onclick="resetAll()">Nulstil alt</button>';
+    html += '<button class="action-btn export" onclick="exportCorrections()">Eksportér korrektioner</button>';
+
+    document.getElementById('controls').innerHTML = html;
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            activeFilter = this.dataset.filter;
+            renderProducts();
+        });
+    });
+}
+
+function renderProducts() {
+    // Group by subcategory within category
+    const groups = {};
+    for (const p of DATA.products) {
+        const key = p.category + ' › ' + p.subcategory;
+        if (!groups[key]) groups[key] = [];
+        groups[key].push(p);
+    }
+
+    let html = '';
+    for (const [groupName, products] of Object.entries(groups)) {
+        const filtered = products.filter(p => matchesFilter(p));
+        if (filtered.length === 0) continue;
+
+        html += '<div class="category-section">';
+        html += '<div class="category-header">' + esc(groupName) +
+                ' <span class="cat-count">(' + filtered.length + ' produkter)</span></div>';
+
+        for (const p of filtered) {
+            html += renderCard(p);
+        }
+        html += '</div>';
+    }
+
+    if (!html) {
+        html = '<div class="loading">Ingen produkter matcher filteret</div>';
+    }
+
+    document.getElementById('app').innerHTML = html;
+    attachCardListeners();
+}
+
+function matchesFilter(p) {
+    const s = getState(p.name);
+    switch (activeFilter) {
+        case 'all': return true;
+        case 'pending': return !s.verdict;
+        case 'wrong': return s.verdict === 'wrong';
+        case 'ok': return s.verdict === 'ok';
+        case 'no-supplier': return !p.supplierUrl;
+        default: return true;
+    }
+}
+
+function renderCard(p) {
+    const s = getState(p.name);
+    const sn = safeName(p.name);
+    let cls = 'product-card';
+    if (s.verdict === 'wrong') cls += ' mismatch';
+    else if (s.verdict === 'ok') cls += ' confirmed';
+    if (!p.supplierUrl) cls += ' no-supplier';
+
+    let hmImg = p.hattemandenImage
+        ? '<img src="' + esc(p.hattemandenImage) + '" alt="' + esc(p.name) + '" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=placeholder>Billede ikke tilgængeligt</div>\'">'
+        : '<div class="placeholder">Intet billede</div>';
+
+    let supImg = p.supplierImage
+        ? '<img src="' + esc(p.supplierImage) + '" alt="Leverandør" loading="lazy" onerror="this.parentNode.innerHTML=\'<div class=placeholder>Billede ikke tilgængeligt</div>\'">'
+        : '<div class="placeholder">' + (p.supplierUrl ? 'Billede kunne ikke hentes' : 'Ingen leverandør-URL') + '</div>';
+
+    let supLink = p.supplierUrl
+        ? '<a class="product-link" href="' + esc(p.supplierUrl) + '" target="_blank" title="' + esc(p.supplierUrl) + '">' + esc(p.supplierName || 'Leverandør') + ' ↗</a>'
+        : '<span class="product-meta">Ingen leverandør-URL</span>';
+
+    let hmLink = p.hattemandenUrl
+        ? '<a class="product-link" href="' + esc(p.hattemandenUrl) + '" target="_blank">hattemanden.dk ↗</a>'
+        : '';
+
+    return '<div class="' + cls + '" data-product="' + esc(p.name) + '">' +
+        '<div class="card-inner">' +
+            '<div class="img-side left">' +
+                '<span class="img-label">Hattemanden.dk</span>' +
+                '<div class="img-container">' + hmImg + '</div>' +
+                '<div class="product-name">' + esc(p.name) + '</div>' +
+                '<div class="product-meta">' + p.sold + ' solgt · ' + esc(p.revenue) + ' DKK</div>' +
+                hmLink +
+            '</div>' +
+            '<div class="action-col">' +
+                '<button class="verdict-btn ok' + (s.verdict==='ok'?' active':'') + '" data-name="' + esc(p.name) + '" data-v="ok" title="Korrekt match">✓</button>' +
+                '<button class="verdict-btn wrong' + (s.verdict==='wrong'?' active':'') + '" data-name="' + esc(p.name) + '" data-v="wrong" title="Forkert match">✗</button>' +
+            '</div>' +
+            '<div class="img-side right">' +
+                '<span class="img-label">Leverandør</span>' +
+                '<div class="img-container">' + supImg + '</div>' +
+                '<div class="product-name">' + esc(p.supplierName || '—') + '</div>' +
+                supLink +
+            '</div>' +
+        '</div>' +
+        '<div class="correction-row">' +
+            '<label>Korrekt URL:</label>' +
+            '<input type="text" placeholder="https://www.euroaccessories.co.uk/..." value="' + esc(s.correctedUrl || '') + '" data-name="' + esc(p.name) + '" data-field="correctedUrl">' +
+            '<input type="text" class="note-input" placeholder="Note (valgfrit)" value="' + esc(s.note || '') + '" data-name="' + esc(p.name) + '" data-field="note">' +
+        '</div>' +
+    '</div>';
+}
+
+function attachCardListeners() {
+    // Verdict buttons
+    document.querySelectorAll('.verdict-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const name = this.dataset.name;
+            const verdict = this.dataset.v;
+            const current = getState(name).verdict;
+            // Toggle: clicking active button clears it
+            setState(name, { verdict: current === verdict ? null : verdict });
+            renderProducts();
+        });
+    });
+
+    // Correction inputs
+    document.querySelectorAll('.correction-row input').forEach(input => {
+        input.addEventListener('change', function() {
+            setState(this.dataset.name, { [this.dataset.field]: this.value });
+        });
+    });
+}
+
+/* ===== STATS ===== */
+function updateStats() {
+    if (!DATA) return;
+    const total = DATA.products.length;
+    let ok = 0, wrong = 0;
+    for (const p of DATA.products) {
+        const s = getState(p.name);
+        if (s.verdict === 'ok') ok++;
+        if (s.verdict === 'wrong') wrong++;
+    }
+    document.getElementById('stat-total').textContent = total;
+    document.getElementById('stat-ok').textContent = ok;
+    document.getElementById('stat-wrong').textContent = wrong;
+    document.getElementById('stat-pending').textContent = total - ok - wrong;
+}
+
+/* ===== EXPORT ===== */
+function exportCorrections() {
+    const corrections = [];
+    for (const p of DATA.products) {
+        const s = getState(p.name);
+        if (s.verdict === 'wrong') {
+            corrections.push({
+                product: p.name,
+                category: p.category + ' › ' + p.subcategory,
+                currentSupplierUrl: p.supplierUrl || null,
+                correctedUrl: s.correctedUrl || null,
+                note: s.note || '',
+            });
+        }
+    }
+
+    const summary = {
+        exported: new Date().toISOString(),
+        totalReviewed: DATA.products.filter(p => getState(p.name).verdict).length,
+        totalCorrections: corrections.length,
+        corrections: corrections,
+    };
+
+    document.getElementById('export-text').value = JSON.stringify(summary, null, 2);
+    document.getElementById('modal').classList.add('visible');
+}
+
+function closeModal() {
+    document.getElementById('modal').classList.remove('visible');
+}
+
+function copyExport() {
+    const ta = document.getElementById('export-text');
+    ta.select();
+    navigator.clipboard.writeText(ta.value).then(() => {
+        const btn = document.querySelector('.modal-actions .export');
+        btn.textContent = 'Kopieret!';
+        setTimeout(() => { btn.textContent = 'Kopiér til udklipsholder'; }, 1500);
+    });
+}
+
+/* ===== RESET ===== */
+function resetAll() {
+    if (!confirm('Nulstil alle markeringer? Dette kan ikke fortrydes.')) return;
+    // Clear verified from Sheet for each product that had a verdict
+    for (const name in state) {
+        if (state[name].verdict) {
+            syncToSheet('update', { product: name, field: 'verified', value: '' });
+        }
+    }
+    state = {};
+    saveState();
+    render();
+}
+
+/* ===== PASSWORD GATE ===== */
+function checkAuth() {
+    if (sessionStorage.getItem('hm-demo-auth') === 'ok') return true;
+    // Check if running locally (no auth needed)
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return true;
+    // Redirect to index.html for password
+    const currentPage = location.pathname.split('/').pop();
+    if (currentPage !== 'index.html') {
+        sessionStorage.setItem('hm-redirect', currentPage);
+        location.href = 'index.html';
+        return false;
+    }
+    return false;
+}
+
+/* ===== INIT ===== */
+if (checkAuth()) {
+    loadData();
+}
+</script>
+</body>
+</html>

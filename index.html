@@ -184,7 +184,9 @@
 
             if (checkPassword(input.value)) {
                 sessionStorage.setItem('hm-demo-auth', 'ok');
-                window.location.href = 'hat-carousel-demo.html';
+                var redirect = sessionStorage.getItem('hm-redirect') || 'hat-carousel-demo.html';
+                sessionStorage.removeItem('hm-redirect');
+                window.location.href = redirect;
             } else {
                 input.classList.add('error');
                 error.classList.add('visible');
@@ -203,7 +205,9 @@
 
         // If already authenticated, redirect
         if (sessionStorage.getItem('hm-demo-auth') === 'ok') {
-            window.location.href = 'hat-carousel-demo.html';
+            var redirect = sessionStorage.getItem('hm-redirect') || 'hat-carousel-demo.html';
+            sessionStorage.removeItem('hm-redirect');
+            window.location.href = redirect;
         }
     </script>
 </body>

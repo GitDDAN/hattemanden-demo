@@ -496,6 +496,25 @@
             border-style: solid;
         }
 
+        /* ===== VERIFIED BADGE ===== */
+        .verified-badge {
+            display: inline-block;
+            font-size: 0.7rem;
+            padding: 1px 5px;
+            border-radius: 8px;
+            margin-left: 4px;
+            font-weight: 600;
+            vertical-align: middle;
+        }
+        .verified-badge.ok {
+            background: var(--green-bg);
+            color: var(--green);
+        }
+        .verified-badge.wrong {
+            background: rgba(194, 122, 26, 0.12);
+            color: #c27a1a;
+        }
+
         /* ===== CATEGORY TOTAL ROW ===== */
         .sub-table tfoot td {
             font-size: 0.875rem;
@@ -756,6 +775,7 @@
                 <a href="hat-rotation-demo.html">360&deg; Visning</a>
                 <a href="hat-images-demo.html">Billeder</a>
                 <a href="hat-sales-overview.html" class="active">Salgsoversigt</a>
+                <a href="supplier-link-compare.html">Link-verificering</a>
                 <a href="https://hattemanden-dashboard.onrender.com" target="_blank">Dashboard &#8599;</a>
             </nav>
         </div>
@@ -1418,14 +1438,14 @@ function loadFromSheet() {
 
 function getProductState(name) {
   const sel = loadSelections();
-  return sel[name] || { video: false, lifestyle: false, sourceUrl: null };
+  return sel[name] || { video: false, lifestyle: false, sourceUrl: null, verified: null };
 }
 
 function setProductField(name, field, value) {
   const sel = loadSelections();
-  if (!sel[name]) sel[name] = { video: false, lifestyle: false, sourceUrl: null };
+  if (!sel[name]) sel[name] = { video: false, lifestyle: false, sourceUrl: null, verified: null };
   sel[name][field] = value;
-  if (!sel[name].video && !sel[name].lifestyle && !sel[name].sourceUrl) {
+  if (!sel[name].video && !sel[name].lifestyle && !sel[name].sourceUrl && !sel[name].verified) {
     delete sel[name];
   }
   saveSelections(sel);
@@ -1452,8 +1472,14 @@ function srcLink(name, overrideUrl) {
   const state = getProductState(name);
   const url = state.sourceUrl || overrideUrl || PRODUCT_SOURCES[name] || '';
   const safeName = encodeAttr(name);
+  let badge = '';
+  if (state.verified === 'ok') {
+    badge = '<span class="verified-badge ok" title="Verificeret korrekt">\u2713</span>';
+  } else if (state.verified === 'wrong') {
+    badge = '<span class="verified-badge wrong" title="Markeret som forkert">\u26A0</span>';
+  }
   if (url) {
-    return '<td class="link-cell kilde-cell"><span class="kilde-inner"><a href="' + url + '" target="_blank">Link \u2197</a>' +
+    return '<td class="link-cell kilde-cell"><span class="kilde-inner"><a href="' + url + '" target="_blank">Link \u2197</a>' + badge +
       '<button class="edit-link-btn" onclick="event.stopPropagation(); editKilde(\'' + safeName.replace(/'/g, "\\'") + '\')" title="Rediger kilde">\u270E</button></span></td>';
   }
   return '<td class="link-cell kilde-cell"><button class="add-link-btn" onclick="event.stopPropagation(); editKilde(\'' + safeName.replace(/'/g, "\\'") + '\')">+ Tilf\u00f8j</button></td>';
@@ -1604,18 +1630,21 @@ function toggleSub(id, row) {
 /* ===== SUMMARY PANEL ===== */
 function updateSelectionSummary() {
   const sel = loadSelections();
-  let videoCount = 0, lifestyleCount = 0, kildeCount = 0;
+  let videoCount = 0, lifestyleCount = 0, kildeCount = 0, verifiedCount = 0;
   for (const key in sel) {
     if (sel[key].video) videoCount++;
     if (sel[key].lifestyle) lifestyleCount++;
     if (sel[key].sourceUrl) kildeCount++;
+    if (sel[key].verified === 'ok') verifiedCount++;
   }
   const cv = document.getElementById('count-video');
   const cl = document.getElementById('count-lifestyle');
   const ck = document.getElementById('count-kilde');
+  const cvr = document.getElementById('count-verified');
   if (cv) cv.textContent = videoCount;
   if (cl) cl.textContent = lifestyleCount;
   if (ck) ck.textContent = kildeCount;
+  if (cvr) cvr.textContent = verifiedCount;
 }
 
 function togglePanel() {
@@ -1694,6 +1723,7 @@ document.body.insertAdjacentHTML('beforeend', `
         <div class="panel-count"><span id="count-video">0</span> Video</div>
         <div class="panel-count"><span id="count-lifestyle">0</span> Lifestyle</div>
         <div class="panel-count"><span id="count-kilde">0</span> Kilde</div>
+        <div class="panel-count"><span id="count-verified">0</span> Verificeret</div>
       </div>
       <div class="panel-actions">
         <button class="export-btn" onclick="exportSelections()">Eksporter valg \u2193</button>
