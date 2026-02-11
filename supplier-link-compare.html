@@ -343,6 +343,25 @@
             width: 200px;
             flex: none;
         }
+        .correction-row .save-url-btn {
+            padding: 6px 16px;
+            border: none;
+            border-radius: var(--radius-sm);
+            background: var(--primary);
+            color: #fff;
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        .correction-row .save-url-btn:hover {
+            background: var(--primary-dark);
+        }
+        .correction-row .save-url-btn.saved {
+            background: var(--green);
+        }
 
         /* ── Export modal ──────────────────────── */
         .modal-overlay {
@@ -787,6 +806,7 @@ function renderCard(p) {
         '<div class="correction-row">' +
             '<label>Korrekt URL:</label>' +
             '<input type="text" placeholder="https://www.euroaccessories.co.uk/..." value="' + esc(s.correctedUrl || '') + '" data-name="' + esc(p.name) + '" data-field="correctedUrl">' +
+            '<button class="save-url-btn" data-name="' + esc(p.name) + '">Gem</button>' +
             '<input type="text" class="note-input" placeholder="Note (valgfrit)" value="' + esc(s.note || '') + '" data-name="' + esc(p.name) + '" data-field="note">' +
         '</div>' +
     '</div>';
@@ -805,10 +825,27 @@ function attachCardListeners() {
         });
     });
 
-    // Correction inputs
+    // Correction inputs (also save on change for tab/click-away)
     document.querySelectorAll('.correction-row input').forEach(input => {
         input.addEventListener('change', function() {
             setState(this.dataset.name, { [this.dataset.field]: this.value });
+        });
+    });
+
+    // Save URL buttons
+    document.querySelectorAll('.save-url-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const name = this.dataset.name;
+            const row = this.closest('.correction-row');
+            const urlInput = row.querySelector('input[data-field="correctedUrl"]');
+            const noteInput = row.querySelector('input[data-field="note"]');
+            // Save both fields
+            setState(name, { correctedUrl: urlInput.value, note: noteInput.value });
+            // Visual feedback
+            this.textContent = 'Gemt ✓';
+            this.classList.add('saved');
+            const self = this;
+            setTimeout(function() { self.textContent = 'Gem'; self.classList.remove('saved'); }, 2000);
         });
     });
 }
