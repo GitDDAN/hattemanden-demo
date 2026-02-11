@@ -572,6 +572,10 @@ function setState(name, updates) {
         syncToSheet('update', { product: name, field: 'sourceUrl', value: s.correctedUrl });
         syncToSheet('update', { product: name, field: 'verified', value: 'wrong' });
     }
+    // Sync notes to Sheets
+    if (updates.note !== undefined) {
+        syncToSheet('update', { product: name, field: 'notes', value: s.note || '' });
+    }
 }
 
 /* ===== GOOGLE SHEETS SYNC ===== */
@@ -648,13 +652,14 @@ async function loadData() {
             let merged = false;
             for (const name in sheetData) {
                 const remote = sheetData[name];
-                if (remote.verified) {
+                if (remote.verified || remote.notes) {
                     const local = getState(name);
                     if (!local.verdict) {
-                        // Sheet has a verdict, local doesn't — adopt it
+                        // Sheet has data, local doesn't — adopt it
                         state[name] = Object.assign(local, {
                             verdict: remote.verified === 'ok' ? 'ok' : remote.verified === 'wrong' ? 'wrong' : null,
-                            correctedUrl: remote.verified === 'wrong' && remote.sourceUrl ? remote.sourceUrl : (local.correctedUrl || '')
+                            correctedUrl: remote.verified === 'wrong' && remote.sourceUrl ? remote.sourceUrl : (local.correctedUrl || ''),
+                            note: remote.notes || local.note || ''
                         });
                         merged = true;
                     }
