@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 340" width="240" height="340">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&amp;family=Cormorant+Garamond:wght@300;400;500&amp;display=swap');
+    </style>
+  </defs>
+  <!-- Deco frame -->
+  <rect x="4" y="4" width="232" height="332" fill="none" stroke="#5a4510" stroke-width="2"/>
+  <path d="M12,12 L228,12 L228,328 L12,328 Z" fill="none" stroke="#c4a747" stroke-width="0.5"/>
+  <!-- Deco corners -->
+  <path d="M12,12 L28,12 L28,16 L16,16 L16,28 L12,28" fill="none" stroke="#c4a747" stroke-width="1.2"/>
+  <path d="M228,12 L212,12 L212,16 L224,16 L224,28 L228,28" fill="none" stroke="#c4a747" stroke-width="1.2"/>
+  <path d="M12,328 L28,328 L28,324 L16,324 L16,312 L12,312" fill="none" stroke="#c4a747" stroke-width="1.2"/>
+  <path d="M228,328 L212,328 L212,324 L224,324 L224,312 L228,312" fill="none" stroke="#c4a747" stroke-width="1.2"/>
+  <!-- Deco sunburst at top -->
+  <g transform="translate(120, 40)" stroke="#c4a747" stroke-width="0.4" stroke-opacity="0.4">
+    <line x1="0" y1="-15" x2="0" y2="-8"/>
+    <line x1="-8" y1="-13" x2="-5" y2="-7"/>
+    <line x1="8" y1="-13" x2="5" y2="-7"/>
+    <line x1="-14" y1="-7" x2="-8" y2="-4"/>
+    <line x1="14" y1="-7" x2="8" y2="-4"/>
+  </g>
+  <!-- Art Deco hat centered -->
+  <g transform="translate(72, 45)">
+    <polygon points="28,8 68,8 72,10 72,60 24,60 24,10" fill="none" stroke="#5a4510" stroke-width="1.8" stroke-linejoin="miter"/>
+    <line x1="28" y1="8" x2="68" y2="8" stroke="#5a4510" stroke-width="2.5"/>
+    <rect x="24" y="48" width="48" height="12" fill="#c4a747" fill-opacity="0.25" stroke="#c4a747" stroke-width="0.8"/>
+    <polygon points="48,48 53,54 48,60 43,54" fill="none" stroke="#5a4510" stroke-width="1"/>
+    <circle cx="48" cy="54" r="1.5" fill="#5a4510"/>
+    <path d="M6,66 L90,66" stroke="#5a4510" stroke-width="2.5"/>
+    <path d="M10,70 L86,70" stroke="#5a4510" stroke-width="1"/>
+    <path d="M14,73 L82,73" stroke="#5a4510" stroke-width="0.5"/>
+  </g>
+  <!-- Deco separator -->
+  <g transform="translate(120, 140)">
+    <line x1="-55" y1="0" x2="-15" y2="0" stroke="#c4a747" stroke-width="0.8"/>
+    <polygon points="0,-4 4,0 0,4 -4,0" fill="#c4a747"/>
+    <line x1="15" y1="0" x2="55" y2="0" stroke="#c4a747" stroke-width="0.8"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="120" y="180" text-anchor="middle" font-family="'Cinzel', 'Times New Roman', serif" font-weight="700" font-size="28" fill="#3d2e0a" letter-spacing="5">HATTE</text>
+  <text x="120" y="212" text-anchor="middle" font-family="'Cinzel', 'Times New Roman', serif" font-weight="700" font-size="28" fill="#3d2e0a" letter-spacing="5">MANDEN</text>
+  <text x="120" y="236" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="16" fill="#8b6914">.dk</text>
+  <!-- Deco separator -->
+  <g transform="translate(120, 252)">
+    <line x1="-55" y1="0" x2="-15" y2="0" stroke="#c4a747" stroke-width="0.8"/>
+    <polygon points="0,-4 4,0 0,4 -4,0" fill="#c4a747"/>
+    <line x1="15" y1="0" x2="55" y2="0" stroke="#c4a747" stroke-width="0.8"/>
+  </g>
+  <!-- Tagline -->
+  <text x="120" y="278" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="300" font-size="11" fill="#5a4510" letter-spacing="2.5">DANSK HATTETRADITION</text>
+  <!-- Location -->
+  <text x="120" y="300" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="9" fill="#8b6914" letter-spacing="2">KOLDING · ANNO 2000</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 100" width="440" height="100">
+  <title>Hattemanden.dk Logo - The Gentleman's Mark Gold</title>
+  <desc>Elegant emblem-style logo with top hat in a shield shape and refined typography</desc>
+  <defs>
+    <linearGradient id="goldG4" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c49b26;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b6914;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Shield/Badge emblem -->
+  <g id="emblem" transform="translate(6, 4)">
+    <!-- Shield outline -->
+    <path d="M42,4 L78,14 L78,52 Q78,80 42,92 Q6,80 6,52 L6,14 Z" fill="none" stroke="#8b6914" stroke-width="2" />
+    <!-- Inner border -->
+    <path d="M42,10 L72,18 L72,50 Q72,74 42,85 Q12,74 12,50 L12,18 Z" fill="none" stroke="#c49b26" stroke-width="0.8" />
+    <!-- Top hat inside shield -->
+    <g transform="translate(18, 20)">
+      <ellipse cx="24" cy="44" rx="24" ry="6" fill="url(#goldG4)" />
+      <rect x="8" y="8" width="32" height="36" rx="2" fill="url(#goldG4)" />
+      <ellipse cx="24" cy="8" rx="16" ry="4" fill="#c49b26" />
+      <rect x="8" y="33" width="32" height="4.5" fill="#5a4510" />
+      <rect x="20" y="32" width="8" height="6.5" rx="1" fill="none" stroke="#c49b26" stroke-width="1" />
+    </g>
+  </g>
+  <!-- Typography -->
+  <g id="text" transform="translate(100, 0)">
+    <!-- Decorative line above -->
+    <line x1="0" y1="20" x2="80" y2="20" stroke="#c49b26" stroke-width="0.6" />
+    <line x1="240" y1="20" x2="330" y2="20" stroke="#c49b26" stroke-width="0.6" />
+    <text x="165" y="28" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="10" font-weight="400" fill="#8b6914" text-anchor="middle" letter-spacing="6">
+      EST. KOLDING
+    </text>
+    <!-- Main name -->
+    <text x="165" y="58" font-family="'Playfair Display', 'Georgia', serif" font-size="34" font-weight="700" fill="#3d2e0a" text-anchor="middle" letter-spacing="2">
+      Hattemanden
+    </text>
+    <text x="165" y="76" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="16" font-weight="300" fill="#8b6914" text-anchor="middle" letter-spacing="1">
+      .dk
+    </text>
+    <!-- Decorative line below -->
+    <line x1="60" y1="86" x2="270" y2="86" stroke="#c49b26" stroke-width="0.6" />
+  </g>
+</svg>

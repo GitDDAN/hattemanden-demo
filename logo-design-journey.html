@@ -1,0 +1,3084 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hattemanden.dk — Logo Design Journey</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c4a747;
+    --gold-dark: #8b6914;
+    --taupe: #88754a;
+    --charcoal: #1a1a1a;
+    --cream: #f5f0e8;
+    --warm-bg: #faf6ef;
+    --text: #3d2e0a;
+    --text-light: #6b5c3e;
+    --border: #e0d7c8;
+    --card: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--warm-bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  .header {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 4rem 2rem;
+    text-align: center;
+    position: relative;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(196,167,71,0.03) 2px,
+      rgba(196,167,71,0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  .header .client-badge {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.3rem 1.2rem;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+    opacity: 0.7;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 2px;
+  }
+
+  .header .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  .header .fine-rule {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.5rem auto;
+    opacity: 0.3;
+  }
+
+  .header .prepared {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    opacity: 0.4;
+  }
+
+  /* Timeline */
+  .timeline {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .timeline h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+
+  .round-card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem 2.5rem;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.2s;
+  }
+
+  .round-card:hover {
+    box-shadow: 0 6px 24px rgba(61,46,10,0.08);
+  }
+
+  .round-card .round-num {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: var(--warm-bg);
+    color: var(--taupe);
+    padding: 0.2rem 0.8rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+  }
+
+  .round-card .round-num.active {
+    background: var(--taupe);
+    color: var(--cream);
+    border-color: var(--taupe);
+  }
+
+  .round-card .round-num.upcoming {
+    background: var(--warm-bg);
+    color: #bbb;
+    border-color: #ddd;
+  }
+
+  .round-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.3rem;
+  }
+
+  .round-card .round-date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    color: var(--taupe);
+    margin-bottom: 0.8rem;
+  }
+
+  .round-card p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 0.8rem;
+  }
+
+  .round-card .concepts {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+
+  .round-card .concept-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-light);
+    background: var(--cream);
+  }
+
+  .round-card .feedback {
+    background: var(--cream);
+    padding: 0.8rem 1.2rem;
+    border-radius: 6px;
+    border-left: 3px solid var(--gold);
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin: 1rem 0;
+  }
+
+  .round-card .feedback strong {
+    color: var(--text);
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .round-card a.view-btn {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--cream);
+    background: var(--taupe);
+    padding: 0.5rem 1.5rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .round-card a.view-btn:hover {
+    background: var(--text);
+  }
+
+  .round-card a.view-btn.outline {
+    background: transparent;
+    color: var(--taupe);
+    border: 1px solid var(--taupe);
+  }
+
+  .round-card a.view-btn.outline:hover {
+    background: var(--taupe);
+    color: var(--cream);
+  }
+
+  .round-card.upcoming-card {
+    opacity: 0.5;
+    border-style: dashed;
+  }
+
+  /* Connector line between cards */
+  .connector {
+    display: flex;
+    justify-content: center;
+    margin: -0.5rem 0;
+    position: relative;
+    z-index: -1;
+  }
+
+  .connector .line {
+    width: 1px;
+    height: 2rem;
+    background: var(--border);
+  }
+
+  /* Brand context section */
+  .brand-context {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .brand-context .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem 2.5rem;
+  }
+
+  .brand-context h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .brand-context .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+  }
+
+  .brand-context .item {
+    padding: 1rem;
+    background: var(--cream);
+    border-radius: 6px;
+  }
+
+  .brand-context .item .label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+  }
+
+  .brand-context .item .value {
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  /* Research section */
+  .research {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .research h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .research .section-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .research h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+  }
+
+  .research h3 .era-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    border: 1px solid var(--taupe);
+    padding: 0.15rem 0.6rem;
+    border-radius: 2px;
+    vertical-align: middle;
+    margin-left: 0.8rem;
+    font-weight: 400;
+  }
+
+  .brand-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .brand-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .brand-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(61,46,10,0.1);
+  }
+
+  .brand-card .brand-preview {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .brand-card .brand-preview .brand-name-display {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  .brand-card .brand-preview .est {
+    position: absolute;
+    bottom: 8px;
+    right: 12px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    opacity: 0.5;
+  }
+
+  .brand-card .brand-preview.lock-style {
+    background: #faf8f5;
+    border-bottom: 2px solid #06402b;
+  }
+  .brand-card .brand-preview.lock-style .brand-name-display { color: #06402b; }
+  .brand-card .brand-preview.lock-style .est { color: #06402b; }
+
+  .brand-card .brand-preview.christys-style {
+    background: #1a1a2e;
+    border-bottom: 2px solid #c4a35a;
+  }
+  .brand-card .brand-preview.christys-style .brand-name-display { color: #c4a35a; letter-spacing: 4px; font-size: 1.4rem; }
+  .brand-card .brand-preview.christys-style .est { color: #c4a35a; }
+
+  .brand-card .brand-preview.borsalino-style {
+    background: #fcfaf7;
+    border-bottom: 2px solid #1e1e1e;
+  }
+  .brand-card .brand-preview.borsalino-style .brand-name-display { color: #1e1e1e; font-style: italic; letter-spacing: 3px; }
+  .brand-card .brand-preview.borsalino-style .est { color: #777; }
+
+  .brand-card .brand-preview.stetson-style {
+    background: #2c1810;
+    border-bottom: 2px solid #c4a747;
+  }
+  .brand-card .brand-preview.stetson-style .brand-name-display { color: #f5f0e8; letter-spacing: 5px; text-transform: uppercase; font-size: 1.3rem; }
+  .brand-card .brand-preview.stetson-style .est { color: #c4a747; }
+
+  .brand-card .brand-preview.muehlbauer-style {
+    background: #f0ede8;
+    border-bottom: 2px solid #333;
+  }
+  .brand-card .brand-preview.muehlbauer-style .brand-name-display { color: #333; font-family: 'Inter', sans-serif; font-weight: 300; letter-spacing: 6px; text-transform: uppercase; font-size: 1.1rem; }
+  .brand-card .brand-preview.muehlbauer-style .est { color: #666; }
+
+  .brand-card .brand-preview.herbert-style {
+    background: #f8f5ef;
+    border-bottom: 2px solid #8b6914;
+  }
+  .brand-card .brand-preview.herbert-style .brand-name-display { color: #3d2e0a; font-size: 1.4rem; }
+  .brand-card .brand-preview.herbert-style .est { color: #8b6914; }
+
+  .brand-card .brand-preview.kangol-style {
+    background: #d32f2f;
+    border-bottom: 2px solid #1a1a1a;
+  }
+  .brand-card .brand-preview.kangol-style .brand-name-display { color: #fff; font-family: 'Inter', sans-serif; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; }
+  .brand-card .brand-preview.kangol-style .est { color: rgba(255,255,255,0.6); }
+
+  .brand-card .brand-preview.optimo-style {
+    background: #1a1a1a;
+    border-bottom: 2px solid #c4a747;
+  }
+  .brand-card .brand-preview.optimo-style .brand-name-display { color: #c4a747; letter-spacing: 3px; }
+  .brand-card .brand-preview.optimo-style .est { color: #c4a747; }
+
+  .brand-body {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .brand-body .brand-meta {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .brand-body .brand-meta span {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    color: var(--taupe);
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+  }
+
+  .brand-body .brand-desc {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    line-height: 1.6;
+    margin-bottom: 0.8rem;
+  }
+
+  .brand-body .brand-links {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .brand-body .brand-links a {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    color: var(--taupe);
+    text-decoration: none;
+    padding: 0.25rem 0.7rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    transition: all 0.2s;
+    letter-spacing: 0.5px;
+  }
+
+  .brand-body .brand-links a:hover {
+    background: var(--taupe);
+    color: var(--cream);
+    border-color: var(--taupe);
+  }
+
+  /* Era timeline */
+  .era-timeline {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    margin-bottom: 3rem;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .era-block {
+    flex: 1;
+    padding: 1.2rem 0.8rem;
+    text-align: center;
+    position: relative;
+    min-width: 0;
+  }
+
+  .era-block .era-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+  }
+
+  .era-block .era-years {
+    font-size: 0.68rem;
+    opacity: 0.7;
+  }
+
+  .era-block .era-brands {
+    font-size: 0.62rem;
+    margin-top: 0.4rem;
+    opacity: 0.6;
+    line-height: 1.4;
+  }
+
+  .era-block:nth-child(1) { background: #f5f0e8; color: #5a4510; }
+  .era-block:nth-child(2) { background: #e8dcc8; color: #3d2e0a; }
+  .era-block:nth-child(3) { background: #d4c4a0; color: #3d2e0a; }
+  .era-block:nth-child(4) { background: #c4a747; color: #3d2e0a; }
+  .era-block:nth-child(5) { background: #88754a; color: #f5f0e8; }
+  .era-block:nth-child(6) { background: #5a4510; color: #f5f0e8; }
+  .era-block:nth-child(7) { background: #3d2e0a; color: #c4a747; }
+
+  /* Visual refs grid */
+  .ref-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .ref-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.2rem;
+    text-align: center;
+  }
+
+  .ref-card .ref-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.6rem;
+    opacity: 0.7;
+  }
+
+  .ref-card .ref-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .ref-card .ref-desc {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    line-height: 1.5;
+    margin-bottom: 0.6rem;
+  }
+
+  .ref-card a {
+    font-size: 0.72rem;
+    color: var(--taupe);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--taupe);
+  }
+
+  .ref-card a:hover { color: var(--text); border-color: var(--text); }
+
+  /* Concept mapping */
+  .concept-map {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 3rem;
+  }
+
+  .concept-map h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+
+  .map-row {
+    display: grid;
+    grid-template-columns: 160px 1fr 1fr;
+    gap: 1rem;
+    padding: 0.8rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: center;
+  }
+
+  .map-row:last-child { border-bottom: none; }
+
+  .map-concept {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--text);
+  }
+
+  .map-era {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    color: var(--taupe);
+  }
+
+  .map-refs {
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+
+  .map-refs a {
+    color: var(--taupe);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--taupe);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 3rem 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    color: #999;
+  }
+
+  .footer .org {
+    font-size: 0.95rem;
+    color: var(--taupe);
+    margin-bottom: 0.3rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* FINAL SELECTION                                       */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .final-selection {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .final-selection h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .final-selection .section-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Hero Logo Display */
+  .logo-hero {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 3rem;
+    text-align: center;
+    margin-bottom: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold), var(--gold-dark));
+  }
+
+  .logo-hero .hero-badge {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.68rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    border: 1px solid var(--gold);
+    padding: 0.25rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 2rem;
+    background: rgba(196,167,71,0.08);
+  }
+
+  .logo-hero .seal-container {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+  }
+
+  .logo-hero .seal-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
+  }
+
+  .logo-hero .seal-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #b89830 40%, #9a7d1e 70%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow:
+      0 0 0 6px var(--cream),
+      0 0 0 8px var(--gold),
+      0 4px 20px rgba(139,105,20,0.2);
+    position: relative;
+  }
+
+  .logo-hero .seal-placeholder::after {
+    content: 'Place logo at logos/final/seal-icon.png';
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    color: rgba(255,255,255,0.7);
+    text-align: center;
+    padding: 1rem;
+    line-height: 1.4;
+  }
+
+  .logo-hero .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-bottom: 0.3rem;
+  }
+
+  .logo-hero .hero-tagline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    color: var(--taupe);
+    letter-spacing: 2px;
+    font-weight: 300;
+  }
+
+  .logo-hero .hero-desc {
+    max-width: 520px;
+    margin: 1.5rem auto 0;
+    font-size: 0.88rem;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  /* Selection Rationale */
+  .selection-rationale {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .rationale-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .rationale-card .rationale-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.6rem;
+    opacity: 0.6;
+  }
+
+  .rationale-card .rationale-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.92rem;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text);
+  }
+
+  .rationale-card .rationale-desc {
+    font-size: 0.78rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* LOGO VARIATIONS                                       */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .variations-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .variation-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .variation-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(61,46,10,0.08);
+  }
+
+  .variation-card .var-preview {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .variation-card .var-preview.on-cream { background: var(--cream); }
+  .variation-card .var-preview.on-dark { background: var(--charcoal); }
+  .variation-card .var-preview.on-white { background: #fff; }
+
+  .variation-card .var-preview img {
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+  }
+
+  .variation-card .var-preview .var-placeholder {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+    color: var(--taupe);
+    text-align: center;
+    opacity: 0.6;
+    border: 1px dashed var(--border);
+    padding: 0.8rem 1.2rem;
+    border-radius: 4px;
+  }
+
+  .variation-card .var-preview.on-dark .var-placeholder {
+    color: rgba(196,167,71,0.5);
+    border-color: rgba(196,167,71,0.3);
+  }
+
+  .variation-card .var-info {
+    padding: 1rem 1.2rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .variation-card .var-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.88rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    color: var(--text);
+  }
+
+  .variation-card .var-desc {
+    font-size: 0.72rem;
+    color: var(--text-light);
+  }
+
+  .variation-card .var-status {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.62rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 0.15rem 0.5rem;
+    border-radius: 2px;
+    margin-top: 0.4rem;
+  }
+
+  .variation-card .var-status.ready {
+    background: rgba(76,175,80,0.1);
+    color: #2e7d32;
+    border: 1px solid rgba(76,175,80,0.3);
+  }
+
+  .variation-card .var-status.needed {
+    background: rgba(255,152,0,0.1);
+    color: #e65100;
+    border: 1px solid rgba(255,152,0,0.3);
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* CONTEXT MOCKUPS                                       */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .mockups-section {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .mockups-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .mockups-section .section-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .mockup-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .mockup-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+  }
+
+  .mockup-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    font-weight: 600;
+    padding: 0.8rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+    background: var(--cream);
+  }
+
+  .mockup-content {
+    padding: 0;
+    position: relative;
+  }
+
+  /* Website Header Mockup */
+  .mock-website-header {
+    background: var(--charcoal);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .mock-website-header .mock-logo-area {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .mock-website-header .mock-seal {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .mock-website-header .mock-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-website-header .mock-brand {
+    font-family: 'Playfair Display', serif;
+    color: var(--cream);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .mock-website-header .mock-nav {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .mock-website-header .mock-nav span {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    color: rgba(245,240,232,0.5);
+    letter-spacing: 0.5px;
+  }
+
+  .mock-website-body {
+    background: var(--cream);
+    padding: 3rem 2rem;
+    text-align: center;
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .mock-website-body .mock-page-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--text);
+  }
+
+  .mock-website-body .mock-page-desc {
+    font-size: 0.78rem;
+    color: var(--text-light);
+  }
+
+  /* Browser Tab Mockup */
+  .mock-browser {
+    background: #e8e8e8;
+    border-radius: 0;
+  }
+
+  .mock-browser-tabs {
+    display: flex;
+    align-items: flex-end;
+    padding: 0.5rem 0.5rem 0;
+    gap: 2px;
+  }
+
+  .mock-browser-tab {
+    background: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 6px 6px 0 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: 220px;
+    border: 1px solid #ddd;
+    border-bottom: none;
+  }
+
+  .mock-browser-tab .tab-favicon {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .mock-browser-tab .tab-favicon img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-browser-tab .tab-title {
+    font-size: 0.65rem;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: system-ui, sans-serif;
+  }
+
+  .mock-browser-tab-inactive {
+    background: #ddd;
+    padding: 0.35rem 0.8rem;
+    border-radius: 6px 6px 0 0;
+    font-size: 0.6rem;
+    color: #888;
+    font-family: system-ui, sans-serif;
+  }
+
+  .mock-browser-address {
+    background: #fff;
+    padding: 0.4rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .mock-browser-address .address-bar {
+    flex: 1;
+    background: #f5f5f5;
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.68rem;
+    color: #555;
+    font-family: system-ui, sans-serif;
+  }
+
+  .mock-browser-address .address-lock {
+    color: #2e7d32;
+    font-size: 0.62rem;
+  }
+
+  .mock-browser-page {
+    background: var(--cream);
+    padding: 2rem;
+    text-align: center;
+    font-size: 0.72rem;
+    color: var(--text-light);
+    min-height: 60px;
+  }
+
+  /* Business Card Mockup */
+  .mock-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: #e8e0d0;
+  }
+
+  .mock-bcard {
+    aspect-ratio: 1.75 / 1;
+    border-radius: 6px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  .mock-bcard-front {
+    background: var(--cream);
+    gap: 0.6rem;
+  }
+
+  .mock-bcard-front .bcard-seal {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    overflow: hidden;
+  }
+
+  .mock-bcard-front .bcard-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-bcard-front .bcard-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .mock-bcard-front .bcard-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.62rem;
+    letter-spacing: 2px;
+    color: var(--taupe);
+    text-transform: uppercase;
+  }
+
+  .mock-bcard-back {
+    background: var(--charcoal);
+    gap: 0.4rem;
+  }
+
+  .mock-bcard-back .bcard-url {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    font-weight: 500;
+  }
+
+  .mock-bcard-back .bcard-owner {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.62rem;
+    color: rgba(245,240,232,0.5);
+    letter-spacing: 0.5px;
+  }
+
+  .mock-bcard-back .bcard-email {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.58rem;
+    color: rgba(245,240,232,0.35);
+  }
+
+  .mock-bcard .side-label {
+    position: absolute;
+    bottom: 6px;
+    right: 8px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.55rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    opacity: 0.3;
+  }
+
+  .mock-bcard-front .side-label { color: var(--text); }
+  .mock-bcard-back .side-label { color: var(--cream); }
+
+  /* Social Avatar Mockup */
+  .mock-social {
+    display: flex;
+    gap: 2rem;
+    padding: 2rem;
+    background: #f0f0f0;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .mock-avatar-set {
+    text-align: center;
+  }
+
+  .mock-avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 0.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+  }
+
+  .mock-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .mock-avatar.size-lg { width: 80px; height: 80px; }
+  .mock-avatar.size-md { width: 48px; height: 48px; }
+  .mock-avatar.size-sm { width: 32px; height: 32px; }
+  .mock-avatar.size-xs { width: 16px; height: 16px; }
+
+  .mock-avatar-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.62rem;
+    color: #888;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  /* Hatbox Mockup */
+  .mock-hatbox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 2rem;
+    background: linear-gradient(135deg, #3d2e0a 0%, #1a1a1a 100%);
+    position: relative;
+  }
+
+  .mock-hatbox-lid {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    box-shadow:
+      0 0 0 3px #c4a747,
+      0 0 0 6px var(--cream),
+      0 0 0 8px #8b6914,
+      0 8px 32px rgba(0,0,0,0.4);
+    padding: 1.5rem;
+  }
+
+  .mock-hatbox-lid .hatbox-seal {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    overflow: hidden;
+  }
+
+  .mock-hatbox-lid .hatbox-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-hatbox-lid .hatbox-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.72rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .mock-hatbox-lid .hatbox-est {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.58rem;
+    letter-spacing: 2px;
+    color: var(--taupe);
+    text-transform: uppercase;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* BRAND GUIDELINES                                      */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .guidelines-section {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .guidelines-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+
+  .guidelines-section .section-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    text-align: center;
+    color: var(--text-light);
+    font-size: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .guide-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .guide-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Color Palette */
+  .color-palette {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1rem;
+  }
+
+  .color-swatch {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+
+  .color-swatch .swatch-color {
+    height: 70px;
+  }
+
+  .color-swatch .swatch-info {
+    padding: 0.6rem 0.8rem;
+    background: #fff;
+  }
+
+  .color-swatch .swatch-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+
+  .color-swatch .swatch-hex {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.62rem;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* Typography */
+  .type-specimens {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .type-specimen {
+    padding: 1.5rem;
+    background: var(--cream);
+    border-radius: 8px;
+  }
+
+  .type-specimen .type-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+  }
+
+  .type-specimen .type-sample {
+    margin-bottom: 0.5rem;
+    color: var(--text);
+  }
+
+  .type-specimen .type-name {
+    font-size: 0.72rem;
+    color: var(--text-light);
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* File Formats */
+  .file-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 0.8rem;
+  }
+
+  .file-item {
+    padding: 1rem;
+    background: var(--cream);
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .file-item .file-ext {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--cream);
+    background: var(--taupe);
+    padding: 0.3rem 0.5rem;
+    border-radius: 3px;
+    min-width: 40px;
+    text-align: center;
+  }
+
+  .file-item .file-desc {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    line-height: 1.4;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* EMAIL SIGNATURE MOCKUP                                 */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .mock-email-sig {
+    background: #fff;
+    padding: 2rem;
+  }
+
+  .mock-email-body {
+    max-width: 500px;
+    margin: 0 auto;
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+
+  .mock-email-to {
+    font-size: 0.72rem;
+    color: #888;
+    margin-bottom: 0.3rem;
+  }
+
+  .mock-email-subject {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mock-email-text {
+    font-size: 0.78rem;
+    color: #555;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .mock-sig-divider {
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    margin-bottom: 1rem;
+  }
+
+  .mock-sig {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .mock-sig-seal {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .mock-sig-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-sig-info {
+    font-size: 0.72rem;
+    line-height: 1.6;
+  }
+
+  .mock-sig-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text);
+    margin-bottom: 0.1rem;
+  }
+
+  .mock-sig-title {
+    color: var(--taupe);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.3rem;
+  }
+
+  .mock-sig-details {
+    color: #888;
+    font-size: 0.68rem;
+  }
+
+  .mock-sig-details a {
+    color: var(--gold-dark);
+    text-decoration: none;
+  }
+
+  .mock-sig-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+    margin-top: 0.3rem;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* WEBSITE FOOTER MOCKUP                                  */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .mock-footer-wrap {
+    background: var(--charcoal);
+    color: var(--cream);
+  }
+
+  .mock-footer {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 2rem 1rem;
+    display: grid;
+    grid-template-columns: 1.2fr 1fr 1fr;
+    gap: 2rem;
+  }
+
+  .mock-footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .mock-footer-brand .footer-seal {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    overflow: hidden;
+  }
+
+  .mock-footer-brand .footer-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-footer-brand .footer-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .mock-footer-brand .footer-desc {
+    font-size: 0.62rem;
+    color: rgba(245,240,232,0.4);
+    line-height: 1.5;
+  }
+
+  .mock-footer-col h4 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+
+  .mock-footer-col ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .mock-footer-col li {
+    font-size: 0.68rem;
+    color: rgba(245,240,232,0.5);
+    margin-bottom: 0.3rem;
+  }
+
+  .mock-footer-bottom {
+    text-align: center;
+    padding: 0.8rem 2rem;
+    border-top: 1px solid rgba(245,240,232,0.1);
+    font-size: 0.58rem;
+    color: rgba(245,240,232,0.25);
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 1px;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* HAT LABEL / TAG MOCKUP                                 */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .mock-hat-label-wrap {
+    background: linear-gradient(145deg, #2a1f0a, #1a1508);
+    padding: 3rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+  }
+
+  .mock-hat-inner-label {
+    width: 180px;
+    height: 100px;
+    background: var(--cream);
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 0.8rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    position: relative;
+  }
+
+  .mock-hat-inner-label::before {
+    content: 'Inner Label';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.58rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(196,167,71,0.5);
+  }
+
+  .mock-hat-inner-label .label-seal {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .mock-hat-inner-label .label-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-hat-inner-label .label-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+    line-height: 1.4;
+  }
+
+  .mock-hat-inner-label .label-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.52rem;
+    letter-spacing: 1px;
+    color: var(--taupe);
+    text-transform: uppercase;
+  }
+
+  .mock-hat-woven-tag {
+    width: 50px;
+    height: 80px;
+    background: var(--charcoal);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    position: relative;
+    border: 1px solid rgba(196,167,71,0.2);
+  }
+
+  .mock-hat-woven-tag::before {
+    content: 'Woven Tag';
+    position: absolute;
+    top: -20px;
+    left: 0;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.58rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(196,167,71,0.5);
+  }
+
+  .mock-hat-woven-tag .tag-seal {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    overflow: hidden;
+  }
+
+  .mock-hat-woven-tag .tag-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-hat-woven-tag .tag-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.42rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    text-align: center;
+  }
+
+  .mock-hat-sticker {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+    position: relative;
+    border: 2px solid var(--gold);
+  }
+
+  .mock-hat-sticker::before {
+    content: 'Brim Sticker';
+    position: absolute;
+    top: -20px;
+    left: -10px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.58rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(196,167,71,0.5);
+    white-space: nowrap;
+  }
+
+  .mock-hat-sticker .sticker-seal {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    overflow: hidden;
+  }
+
+  .mock-hat-sticker .sticker-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-hat-sticker .sticker-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.38rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text);
+    font-weight: 600;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* INVOICE / DOCUMENT HEADER MOCKUP                       */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .mock-invoice {
+    background: #fff;
+    padding: 2rem;
+  }
+
+  .mock-invoice-inner {
+    max-width: 500px;
+    margin: 0 auto;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .mock-invoice-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    border-bottom: 2px solid var(--gold);
+  }
+
+  .mock-invoice-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .mock-invoice-logo .inv-seal {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .mock-invoice-logo .inv-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-invoice-logo .inv-brand {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+
+  .mock-invoice-logo .inv-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.62rem;
+    color: var(--taupe);
+    letter-spacing: 1px;
+  }
+
+  .mock-invoice-type {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+  }
+
+  .mock-invoice-body {
+    padding: 1.2rem 1.5rem;
+  }
+
+  .mock-invoice-meta {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid #eee;
+  }
+
+  .mock-invoice-meta div {
+    font-size: 0.65rem;
+    color: #999;
+    line-height: 1.6;
+  }
+
+  .mock-invoice-meta strong {
+    color: #555;
+  }
+
+  .mock-invoice-lines {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.65rem;
+  }
+
+  .mock-invoice-lines th {
+    text-align: left;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #ddd;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    font-weight: 600;
+  }
+
+  .mock-invoice-lines td {
+    padding: 0.4rem 0;
+    color: #555;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .mock-invoice-lines .inv-total {
+    font-weight: 700;
+    color: var(--text);
+    border-top: 2px solid var(--gold);
+    border-bottom: none;
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* SHOP SIGNAGE MOCKUP                                    */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .mock-shop-wrap {
+    background: linear-gradient(180deg, #87CEEB 0%, #b0d4e8 40%, #8a8a7a 40.5%, #6a6a5a 100%);
+    padding: 2.5rem 2rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-height: 220px;
+  }
+
+  .mock-shop-building {
+    background: #d4c8a8;
+    width: 320px;
+    border-radius: 4px 4px 0 0;
+    padding: 0;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .mock-shop-sign {
+    background: var(--charcoal);
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    border: 2px solid var(--gold);
+    margin: 1rem 1rem 0;
+    border-radius: 2px;
+  }
+
+  .mock-shop-sign .sign-seal {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #d4b84a, #9a7d1e);
+    flex-shrink: 0;
+    overflow: hidden;
+  }
+
+  .mock-shop-sign .sign-seal img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .mock-shop-sign .sign-text {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--cream);
+  }
+
+  .mock-shop-window {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .mock-shop-pane {
+    flex: 1;
+    background: rgba(100,120,140,0.3);
+    height: 65px;
+    border-radius: 2px;
+    border: 1px solid #b8ad95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.55rem;
+    color: rgba(245,240,232,0.3);
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 1px;
+  }
+
+  .mock-shop-door {
+    width: 50px;
+    background: #5a4a30;
+    height: 65px;
+    border-radius: 2px 2px 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mock-shop-door-knob {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 2rem; }
+    .round-card { padding: 1.5rem; }
+    .brand-context .grid { grid-template-columns: 1fr; }
+    .brand-grid { grid-template-columns: 1fr; }
+    .era-timeline { flex-direction: column; }
+    .map-row { grid-template-columns: 1fr; gap: 0.3rem; }
+    .ref-grid { grid-template-columns: 1fr 1fr; }
+    .selection-rationale { grid-template-columns: 1fr; }
+    .variations-grid { grid-template-columns: 1fr; }
+    .mock-cards { grid-template-columns: 1fr; }
+    .mock-website-header { flex-direction: column; gap: 0.8rem; }
+    .mock-website-header .mock-nav { display: none; }
+    .type-specimens { grid-template-columns: 1fr; }
+    .logo-hero .seal-container { width: 160px; height: 160px; }
+    .logo-hero .hero-name { font-size: 1.3rem; letter-spacing: 4px; }
+    .mock-hatbox-lid { width: 180px; height: 180px; }
+    .mock-footer { grid-template-columns: 1fr; gap: 1rem; }
+    .mock-hat-label-wrap { gap: 2rem; }
+    .mock-invoice-header { flex-direction: column; gap: 0.5rem; text-align: center; }
+    .mock-shop-building { width: 260px; }
+  }
+</style>
+</head>
+<body>
+<script>if(sessionStorage.getItem('hm-demo-auth')!=='ok')window.location.href='index.html';</script>
+
+<div class="header">
+  <div class="client-badge">Client Presentation</div>
+  <h1>Logo Design Journey</h1>
+  <div class="subtitle">Hattemanden.dk &mdash; Dansk Hattetradition</div>
+  <div class="fine-rule"></div>
+  <div class="prepared">Prepared by AAE Digital &middot; February 2026</div>
+</div>
+
+<!-- Brand Context -->
+<section class="brand-context">
+  <div class="card">
+    <h2>Brand Foundation</h2>
+    <div class="grid">
+      <div class="item">
+        <div class="label">Founder</div>
+        <div class="value">Svend Erik &ldquo;Pepino&rdquo; Kj&aelig;r</div>
+      </div>
+      <div class="item">
+        <div class="label">Established</div>
+        <div class="value">2000, Kolding</div>
+      </div>
+      <div class="item">
+        <div class="label">Current Owner</div>
+        <div class="value">Kim (son-in-law)</div>
+      </div>
+      <div class="item">
+        <div class="label">Design Direction</div>
+        <div class="value">&ldquo;Classic Gentleman&rdquo; &mdash; Peaky Blinders vintage aesthetic</div>
+      </div>
+      <div class="item">
+        <div class="label">Reference</div>
+        <div class="value">Lock &amp; Co. Hatters, London (est. 1676)</div>
+      </div>
+      <div class="item">
+        <div class="label">Color Story</div>
+        <div class="value">Aged gold, cognac, warm cream, deep charcoal</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Timeline -->
+<section class="timeline">
+  <h2>Design Rounds</h2>
+
+  <!-- Round 1 -->
+  <div class="round-card">
+    <div class="round-num">Round 1</div>
+    <h3>Initial Exploration</h3>
+    <div class="round-date">February 2026</div>
+    <p>Four initial concepts exploring different approaches: combination marks, lettermarks, minimalism, and emblems. Tested the project's color palette across gold and dark palettes with multiple layout formats (horizontal, vertical, icon-only).</p>
+    <div class="concepts">
+      <span class="concept-tag">1. Classic Elegance</span>
+      <span class="concept-tag">2. Heritage Monogram</span>
+      <span class="concept-tag">3. Danish Minimalism</span>
+      <span class="concept-tag">4. Gentleman's Mark</span>
+    </div>
+    <div class="feedback">
+      <strong>Client Feedback</strong>
+      &ldquo;Feels too much like an old school computer game. We want vintage &mdash; the style they used back in the day when they would wear these type of hats.&rdquo; Client referenced Lock &amp; Co. Hatters as design inspiration.
+    </div>
+    <a href="logo-presentation.html" class="view-btn outline">View Round 1 Concepts</a>
+  </div>
+
+  <div class="connector"><div class="line"></div></div>
+
+  <!-- Round 2 -->
+  <div class="round-card">
+    <div class="round-num">Round 2</div>
+    <h3>Vintage Direction</h3>
+    <div class="round-date">February 2026</div>
+    <p>Five refined concepts embracing authentic vintage aesthetics &mdash; Victorian hatbox labels, 1920s Art Deco signage, Lock &amp; Co.&rsquo;s institutional restraint, wax seal trade marks, and a founder tribute design. Shifted to muted warm tones, hand-crafted detail, ornamental borders, and serif typography with character.</p>
+    <div class="concepts">
+      <span class="concept-tag">A. Hatter's Label</span>
+      <span class="concept-tag">B. Art Deco</span>
+      <span class="concept-tag">C. Refined Wordmark</span>
+      <span class="concept-tag">D. Gentleman's Seal</span>
+      <span class="concept-tag">E. Pepino's Legacy</span>
+    </div>
+    <div class="feedback">
+      <strong>Client Feedback</strong>
+      Likes the old-school style where &ldquo;people who know will know&rdquo; &mdash; it tells a story. But must be immediately clear to anyone that it&rsquo;s a hat shop. Carry forward: A (Victorian Label), D (Gentleman&rsquo;s Seal), borrow readability from C.
+    </div>
+    <a href="logo-round2.html" class="view-btn outline">View Round 2 Concepts</a>
+  </div>
+
+  <div class="connector"><div class="line"></div></div>
+
+  <!-- Round 3 -->
+  <div class="round-card">
+    <div class="round-num">Round 3</div>
+    <h3>Refinement &mdash; &ldquo;Rewarding Depth, Instant Clarity&rdquo;</h3>
+    <div class="round-date">February 2026</div>
+    <p>Six refined variations merging the best of Concepts A, C &amp; D. Exploring the full spectrum from maximum heritage detail to maximum modern clarity, with each variation making a different trade-off. Heritage details for hat enthusiasts, instant readability for everyone.</p>
+    <div class="concepts">
+      <span class="concept-tag">1. Heritage Label Evolved</span>
+      <span class="concept-tag">2. Seal Refined</span>
+      <span class="concept-tag">3. Frame &amp; Seal</span>
+      <span class="concept-tag">4. Hat First</span>
+      <span class="concept-tag">5. Clean Stamp</span>
+      <span class="concept-tag">6. Signature</span>
+    </div>
+    <a href="logo-round3.html" class="view-btn">View Round 3 Variations</a>
+  </div>
+
+  <div class="connector"><div class="line"></div></div>
+
+  <!-- Round 4: Final Selection -->
+  <div class="round-card">
+    <div class="round-num active">Final Selection</div>
+    <h3>The Gentleman&rsquo;s Seal &mdash; AI-Generated Illustration</h3>
+    <div class="round-date">February 2026</div>
+    <p>Combining the best of Round 2&rsquo;s Concept D (Gentleman&rsquo;s Seal) with the Frame &amp; Seal refinement direction from Round 3. The final mark was generated using AI illustration (Gemini Pro) from detailed prompts capturing our Victorian wax-seal aesthetic &mdash; then paired with hand-set typography for the wordmark lockups.</p>
+    <div class="concepts">
+      <span class="concept-tag">Victorian Wax Seal</span>
+      <span class="concept-tag">Engraving Hatching</span>
+      <span class="concept-tag">Gold &amp; Brown Palette</span>
+      <span class="concept-tag">Scalloped Edge</span>
+    </div>
+    <div class="feedback">
+      <strong>Design Principle</strong>
+      &ldquo;Rewarding depth, instant clarity&rdquo; &mdash; A detailed engraved top hat in a scalloped wax seal. Hat enthusiasts see the craft; everyone sees a hat shop. The logo tells a story at close range while reading clearly at any size.
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- FINAL SELECTION — THE SELECTED MARK                   -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="final-selection">
+  <h2>The Selected Mark</h2>
+  <p class="section-subtitle">The Gentleman&rsquo;s Seal &mdash; where Victorian craft meets Danish hat tradition</p>
+
+  <!-- Hero Display -->
+  <div class="logo-hero">
+    <div class="hero-badge">Final Logo</div>
+    <div class="seal-container">
+      <img src="logos/final/seal-icon.png" alt="Hattemanden Seal Logo"
+           onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+      <div class="seal-placeholder" style="display:none;"></div>
+    </div>
+    <div class="hero-name">Hattemanden</div>
+    <div class="hero-tagline">Dansk Hattetradition &middot; Kolding</div>
+    <p class="hero-desc">A hand-engraved top hat set within a Victorian wax seal. The scalloped edge evokes authenticity &mdash; like a mark pressed into a hatbox lid. Rich in detail for those who look closely, unmistakably a hat shop at any distance.</p>
+  </div>
+
+  <!-- Why This Design -->
+  <div class="selection-rationale">
+    <div class="rationale-card">
+      <div class="rationale-icon">&#x1F3A9;</div>
+      <div class="rationale-title">Instant Recognition</div>
+      <div class="rationale-desc">The detailed top hat reads as &ldquo;hat shop&rdquo; immediately &mdash; no explanation needed, even at small sizes.</div>
+    </div>
+    <div class="rationale-card">
+      <div class="rationale-icon">&#x1F58B;</div>
+      <div class="rationale-title">Rewarding Depth</div>
+      <div class="rationale-desc">Engraving-style hatching reveals craft and detail up close &mdash; &ldquo;people who know, will know.&rdquo;</div>
+    </div>
+    <div class="rationale-card">
+      <div class="rationale-icon">&#x2696;</div>
+      <div class="rationale-title">Heritage Authority</div>
+      <div class="rationale-desc">The wax seal format signals established quality, connecting Hattemanden to centuries of hat-making tradition.</div>
+    </div>
+  </div>
+
+  <!-- Logo Variations -->
+  <h2 style="font-family:'Playfair Display',serif; font-size:1.4rem; text-align:center; margin-bottom:1.5rem;">Logo Variations</h2>
+
+  <div class="variations-grid">
+    <div class="variation-card">
+      <div class="var-preview on-cream">
+        <img src="logos/final/seal-icon.png" alt="Seal Icon" style="max-height:100px;"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=var-placeholder>Seal Icon</div>';">
+      </div>
+      <div class="var-info">
+        <div class="var-name">Seal Icon</div>
+        <div class="var-desc">Primary mark &mdash; favicon, avatars, stamps</div>
+        <div class="var-status ready">Ready</div>
+      </div>
+    </div>
+
+    <div class="variation-card">
+      <div class="var-preview on-cream" style="gap:0.8rem;">
+        <img src="logos/final/horizontal-warm.png" alt="Horizontal Lockup"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=var-placeholder>Seal + HATTEMANDEN<br>Horizontal</div>';">
+      </div>
+      <div class="var-info">
+        <div class="var-name">Horizontal Lockup</div>
+        <div class="var-desc">Website header, email signature, invoices</div>
+        <div class="var-status ready">Ready</div>
+      </div>
+    </div>
+
+    <div class="variation-card">
+      <div class="var-preview on-cream">
+        <img src="logos/final/vertical-warm.png" alt="Vertical Lockup"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=var-placeholder>Seal<br>+<br>HATTEMANDEN<br>Stacked</div>';">
+      </div>
+      <div class="var-info">
+        <div class="var-name">Vertical / Stacked</div>
+        <div class="var-desc">Packaging labels, social media, print</div>
+        <div class="var-status ready">Ready</div>
+      </div>
+    </div>
+
+    <div class="variation-card">
+      <div class="var-preview on-dark">
+        <img src="logos/final/seal-icon-dark.png" alt="Seal on Dark"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=var-placeholder>Seal on Dark</div>';">
+      </div>
+      <div class="var-info">
+        <div class="var-name">Dark Background</div>
+        <div class="var-desc">Dark website sections, dark packaging</div>
+        <div class="var-status ready">Ready</div>
+      </div>
+    </div>
+
+    <div class="variation-card">
+      <div class="var-preview on-dark">
+        <img src="logos/final/horizontal-dark.png" alt="Horizontal Dark"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=var-placeholder>Horizontal on Dark</div>';">
+      </div>
+      <div class="var-info">
+        <div class="var-name">Horizontal &mdash; Dark</div>
+        <div class="var-desc">Dark headers, dark print materials</div>
+        <div class="var-status ready">Ready</div>
+      </div>
+    </div>
+
+    <div class="variation-card">
+      <div class="var-preview on-white">
+        <img src="logos/final/seal-mono.png" alt="Monochrome Seal"
+             onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=var-placeholder>Single Color<br>Monochrome</div>';">
+      </div>
+      <div class="var-info">
+        <div class="var-name">Monochrome</div>
+        <div class="var-desc">Embossing, watermarks, single-color print</div>
+        <div class="var-status ready">Ready</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- CONTEXT MOCKUPS                                        -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="mockups-section">
+  <h2>In Context</h2>
+  <p class="section-subtitle">How the logo will appear across touchpoints</p>
+
+  <div class="mockup-grid">
+
+    <!-- Website Header -->
+    <div class="mockup-item">
+      <div class="mockup-label">Website Header</div>
+      <div class="mockup-content">
+        <div class="mock-website-header">
+          <div class="mock-logo-area">
+            <div class="mock-seal">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="mock-brand">Hattemanden</div>
+          </div>
+          <div class="mock-nav">
+            <span>Kasketter</span>
+            <span>Hatte</span>
+            <span>Sixpence</span>
+            <span>Om os</span>
+          </div>
+        </div>
+        <div class="mock-website-body">
+          <div class="mock-page-title">Dansk Hattetradition siden 2000</div>
+          <div class="mock-page-desc">Kvalitetshoveddele fra Kolding til hele Danmark</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Browser Tab -->
+    <div class="mockup-item">
+      <div class="mockup-label">Browser Tab &amp; Favicon</div>
+      <div class="mockup-content">
+        <div class="mock-browser">
+          <div class="mock-browser-tabs">
+            <div class="mock-browser-tab">
+              <div class="tab-favicon">
+                <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+              </div>
+              <div class="tab-title">Hattemanden.dk &mdash; Dansk Hattetradition</div>
+            </div>
+            <div class="mock-browser-tab-inactive">Google &mdash; hatt...</div>
+            <div class="mock-browser-tab-inactive">Mail</div>
+          </div>
+          <div class="mock-browser-address">
+            <span class="address-lock">&#x1F512;</span>
+            <div class="address-bar">hattemanden.dk</div>
+          </div>
+          <div class="mock-browser-page">
+            hattemanden.dk &mdash; homepage content area
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Card -->
+    <div class="mockup-item">
+      <div class="mockup-label">Business Card</div>
+      <div class="mockup-content">
+        <div class="mock-cards">
+          <div class="mock-bcard mock-bcard-front">
+            <div class="bcard-seal">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="bcard-name">Hattemanden</div>
+            <div class="bcard-sub">Dansk Hattetradition &middot; Kolding</div>
+            <div class="side-label">Front</div>
+          </div>
+          <div class="mock-bcard mock-bcard-back">
+            <div class="bcard-url">hattemanden.dk</div>
+            <div class="bcard-owner">Kim Kj&aelig;r</div>
+            <div class="bcard-email">info@hattemanden.dk</div>
+            <div class="side-label">Back</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hatbox Label -->
+    <div class="mockup-item">
+      <div class="mockup-label">Hatbox / Packaging</div>
+      <div class="mockup-content">
+        <div class="mock-hatbox">
+          <div class="mock-hatbox-lid">
+            <div class="hatbox-seal">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="hatbox-brand">Hattemanden</div>
+            <div class="hatbox-est">Kolding &middot; Est. 2000</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Social Media -->
+    <div class="mockup-item">
+      <div class="mockup-label">Social Media &amp; Favicon Sizes</div>
+      <div class="mockup-content">
+        <div class="mock-social">
+          <div class="mock-avatar-set">
+            <div class="mock-avatar size-lg">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="mock-avatar-label">Profile 80px</div>
+          </div>
+          <div class="mock-avatar-set">
+            <div class="mock-avatar size-md">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="mock-avatar-label">Avatar 48px</div>
+          </div>
+          <div class="mock-avatar-set">
+            <div class="mock-avatar size-sm">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="mock-avatar-label">Favicon 32px</div>
+          </div>
+          <div class="mock-avatar-set">
+            <div class="mock-avatar size-xs">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="mock-avatar-label">Tiny 16px</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Signature -->
+    <div class="mockup-item">
+      <div class="mockup-label">Email Signature</div>
+      <div class="mockup-content">
+        <div class="mock-email-sig">
+          <div class="mock-email-body">
+            <div class="mock-email-to">Til: kunde@example.dk</div>
+            <div class="mock-email-subject">Re: Ordre #3247 &mdash; Stetson Stratoliner</div>
+            <div class="mock-email-text">
+              Hej Lars,<br><br>
+              Tak for din bestilling! Din Stetson Stratoliner i st&oslash;rrelse 58 er klar til afhentning i butikken i Kolding, eller vi sender den med DAO i morgen.<br><br>
+              Venlig hilsen,
+            </div>
+            <div class="mock-sig-divider"></div>
+            <div class="mock-sig">
+              <div class="mock-sig-seal">
+                <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+              </div>
+              <div class="mock-sig-info">
+                <div class="mock-sig-name">Kim Kj&aelig;r</div>
+                <div class="mock-sig-title">Indehaver</div>
+                <div class="mock-sig-brand">Hattemanden</div>
+                <div class="mock-sig-details">
+                  <a href="#">hattemanden.dk</a> &middot; +45 XX XX XX XX<br>
+                  Kolding &middot; Danmark
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Website Footer -->
+    <div class="mockup-item">
+      <div class="mockup-label">Website Footer</div>
+      <div class="mockup-content">
+        <div class="mock-footer-wrap">
+          <div class="mock-footer">
+            <div class="mock-footer-brand">
+              <div class="footer-seal">
+                <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+              </div>
+              <div class="footer-name">Hattemanden</div>
+              <div class="footer-desc">Dansk hattetradition siden 2000. Kvalitetshoveddele fra Kolding til hele Danmark.</div>
+            </div>
+            <div class="mock-footer-col">
+              <h4>Kategorier</h4>
+              <ul>
+                <li>Kasketter</li>
+                <li>Hatte</li>
+                <li>Sixpence</li>
+                <li>Beanies</li>
+                <li>Accessories</li>
+              </ul>
+            </div>
+            <div class="mock-footer-col">
+              <h4>Information</h4>
+              <ul>
+                <li>Om os</li>
+                <li>Kontakt</li>
+                <li>Levering</li>
+                <li>Returpolitik</li>
+                <li>Handelsbetingelser</li>
+              </ul>
+            </div>
+          </div>
+          <div class="mock-footer-bottom">
+            &copy; 2026 Hattemanden &middot; CVR: XX XX XX XX &middot; Kolding, Danmark
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hat Label / Tags -->
+    <div class="mockup-item">
+      <div class="mockup-label">Hat Labels &amp; Tags (Physical Product)</div>
+      <div class="mockup-content">
+        <div class="mock-hat-label-wrap">
+          <div class="mock-hat-inner-label">
+            <div class="label-seal">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div>
+              <div class="label-text">Hattemanden</div>
+              <div class="label-sub">Kolding &middot; Danmark</div>
+            </div>
+          </div>
+          <div class="mock-hat-woven-tag">
+            <div class="tag-seal">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="tag-text">Hatte&shy;manden</div>
+          </div>
+          <div class="mock-hat-sticker">
+            <div class="sticker-seal">
+              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+            </div>
+            <div class="sticker-text">Hattemanden</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Invoice / Document Header -->
+    <div class="mockup-item">
+      <div class="mockup-label">Invoice / Document Header</div>
+      <div class="mockup-content">
+        <div class="mock-invoice">
+          <div class="mock-invoice-inner">
+            <div class="mock-invoice-header">
+              <div class="mock-invoice-logo">
+                <div class="inv-seal">
+                  <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+                </div>
+                <div>
+                  <div class="inv-brand">Hattemanden</div>
+                  <div class="inv-sub">Kolding &middot; Danmark</div>
+                </div>
+              </div>
+              <div class="mock-invoice-type">Faktura</div>
+            </div>
+            <div class="mock-invoice-body">
+              <div class="mock-invoice-meta">
+                <div>
+                  <strong>Faktura nr.:</strong> 2026-0412<br>
+                  <strong>Dato:</strong> 16. februar 2026
+                </div>
+                <div style="text-align:right;">
+                  <strong>Kunde:</strong> Lars Hansen<br>
+                  Vejlevej 12, 6000 Kolding
+                </div>
+              </div>
+              <table class="mock-invoice-lines">
+                <thead>
+                  <tr><th>Beskrivelse</th><th style="text-align:right;">Antal</th><th style="text-align:right;">Pris</th></tr>
+                </thead>
+                <tbody>
+                  <tr><td>Stetson Stratoliner, str. 58</td><td style="text-align:right;">1</td><td style="text-align:right;">1.699,00</td></tr>
+                  <tr><td>Levering (DAO)</td><td style="text-align:right;">&mdash;</td><td style="text-align:right;">49,00</td></tr>
+                  <tr><td class="inv-total">Total inkl. moms</td><td class="inv-total"></td><td class="inv-total" style="text-align:right;">1.748,00 DKK</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Shop Signage -->
+    <div class="mockup-item">
+      <div class="mockup-label">Shop Signage / Facade</div>
+      <div class="mockup-content">
+        <div class="mock-shop-wrap">
+          <div class="mock-shop-building">
+            <div class="mock-shop-sign">
+              <div class="sign-seal">
+                <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+              </div>
+              <div class="sign-text">Hattemanden</div>
+            </div>
+            <div class="mock-shop-window">
+              <div class="mock-shop-pane">Hatte</div>
+              <div class="mock-shop-door"><div class="mock-shop-door-knob"></div></div>
+              <div class="mock-shop-pane">Kasketter</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- BRAND GUIDELINES                                       -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="guidelines-section">
+  <h2>Brand Guidelines</h2>
+  <p class="section-subtitle">Color, typography, and usage rules for the Hattemanden identity</p>
+
+  <!-- Color Palette -->
+  <div class="guide-card">
+    <h3>Color Palette</h3>
+    <div class="color-palette">
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#c4a747;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Gold</div>
+          <div class="swatch-hex">#c4a747</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#8b6914;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Dark Gold</div>
+          <div class="swatch-hex">#8b6914</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#8b4513;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Cognac</div>
+          <div class="swatch-hex">#8b4513</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#88754a;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Taupe</div>
+          <div class="swatch-hex">#88754a</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#1a1a1a;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Charcoal</div>
+          <div class="swatch-hex">#1a1a1a</div>
+        </div>
+      </div>
+      <div class="color-swatch">
+        <div class="swatch-color" style="background:#f5f0e8;"></div>
+        <div class="swatch-info">
+          <div class="swatch-name">Cream</div>
+          <div class="swatch-hex">#f5f0e8</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Typography -->
+  <div class="guide-card">
+    <h3>Typography</h3>
+    <div class="type-specimens">
+      <div class="type-specimen">
+        <div class="type-role">Headlines &amp; Logo</div>
+        <div class="type-sample" style="font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700;">Hattemanden</div>
+        <div class="type-sample" style="font-family:'Playfair Display',serif; font-size:1rem; font-style:italic;">Dansk Hattetradition</div>
+        <div class="type-name">Playfair Display &mdash; Regular, Italic, Bold</div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-role">Accents &amp; Labels</div>
+        <div class="type-sample" style="font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:300; letter-spacing:3px;">ESTABLISHED 2000</div>
+        <div class="type-sample" style="font-family:'Cormorant Garamond',serif; font-size:1rem;">Kvalitet &amp; Tradition</div>
+        <div class="type-name">Cormorant Garamond &mdash; Light, Regular, SemiBold</div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-role">Body Text</div>
+        <div class="type-sample" style="font-family:'Inter',sans-serif; font-size:0.9rem; line-height:1.7;">Vi har Danmarks st&oslash;rste udvalg af kvalitetshatte, kasketter og sixpence fra de bedste leverand&oslash;rer i Europa.</div>
+        <div class="type-name">Inter &mdash; Light, Regular, Medium</div>
+      </div>
+      <div class="type-specimen">
+        <div class="type-role">Usage</div>
+        <div class="type-sample" style="font-size:0.82rem; color:var(--text-light); line-height:1.8;">
+          <strong style="color:var(--text);">Logo wordmark:</strong> Playfair Display Bold<br>
+          <strong style="color:var(--text);">Taglines:</strong> Cormorant Garamond Light<br>
+          <strong style="color:var(--text);">Navigation:</strong> Inter Medium<br>
+          <strong style="color:var(--text);">Body copy:</strong> Inter Regular
+        </div>
+        <div class="type-name">Consistent hierarchy across all touchpoints</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Deliverable Files -->
+  <div class="guide-card">
+    <h3>Production Deliverables</h3>
+    <div class="file-grid">
+      <div class="file-item">
+        <div class="file-ext">PNG</div>
+        <div class="file-desc">High-res raster &mdash; 1024px, 512px, 256px, 128px</div>
+      </div>
+      <div class="file-item">
+        <div class="file-ext">SVG</div>
+        <div class="file-desc">Scalable vector for web and print</div>
+      </div>
+      <div class="file-item">
+        <div class="file-ext">ICO</div>
+        <div class="file-desc">Favicon &mdash; 16px, 32px, 48px</div>
+      </div>
+      <div class="file-item">
+        <div class="file-ext">OG</div>
+        <div class="file-desc">Social sharing &mdash; 1200&times;630px</div>
+      </div>
+      <div class="file-item">
+        <div class="file-ext">PDF</div>
+        <div class="file-desc">Brand guidelines one-pager</div>
+      </div>
+      <div class="file-item">
+        <div class="file-ext">PRINT</div>
+        <div class="file-desc">CMYK-ready for business cards, labels</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════ -->
+<!-- RESEARCH & INSPIRATION                                -->
+<!-- ═══════════════════════════════════════════════════════ -->
+<section class="research">
+  <h2>Research &amp; Inspiration</h2>
+  <p class="section-subtitle">The heritage brands, eras, and visual traditions that informed our Round 2 concepts</p>
+
+  <!-- Era Timeline -->
+  <h3>The Eras of Hatmaking</h3>
+  <div class="era-timeline">
+    <div class="era-block">
+      <div class="era-name">Stuart</div>
+      <div class="era-years">1676</div>
+      <div class="era-brands">Lock & Co.</div>
+    </div>
+    <div class="era-block">
+      <div class="era-name">Georgian</div>
+      <div class="era-years">1773</div>
+      <div class="era-brands">Christy's</div>
+    </div>
+    <div class="era-block">
+      <div class="era-name">Victorian</div>
+      <div class="era-years">1857&ndash;1889</div>
+      <div class="era-brands">Borsalino, Stetson, Herbert Johnson</div>
+    </div>
+    <div class="era-block">
+      <div class="era-name">Edwardian</div>
+      <div class="era-years">1900&ndash;1910</div>
+      <div class="era-brands">M&uuml;hlbauer, Dobbs</div>
+    </div>
+    <div class="era-block">
+      <div class="era-name">Art Deco</div>
+      <div class="era-years">1920&ndash;1935</div>
+      <div class="era-brands">Peak hat-wearing era</div>
+    </div>
+    <div class="era-block">
+      <div class="era-name">Mid-Century</div>
+      <div class="era-years">1938&ndash;1960</div>
+      <div class="era-brands">Kangol</div>
+    </div>
+    <div class="era-block">
+      <div class="era-name">Revival</div>
+      <div class="era-years">1995&ndash;now</div>
+      <div class="era-brands">Optimo</div>
+    </div>
+  </div>
+
+  <!-- Heritage Brands -->
+  <h3>Heritage Hat Brands <span class="era-tag">Our References</span></h3>
+  <div class="brand-grid">
+
+    <!-- Lock & Co. -->
+    <div class="brand-card">
+      <div class="brand-preview lock-style">
+        <div class="brand-name-display">Lock &amp; Co.<br>Hatters</div>
+        <div class="est">Est. 1676</div>
+      </div>
+      <div class="brand-body">
+        <div class="brand-meta">
+          <span>&#9679; London, England</span>
+          <span>&#9679; Royal Warrant Holder</span>
+        </div>
+        <p class="brand-desc">The world's oldest hat shop. Invented the bowler hat in 1849. Their restrained, institutional identity &mdash; deep forest green, serif wordmark, generous whitespace &mdash; was our primary reference for <strong>Concept C</strong> (Refined Wordmark).</p>
+        <div class="brand-links">
+          <a href="https://www.lockhatters.com/" target="_blank" rel="noopener">Website</a>
+          <a href="https://www.lockhatters.com/pages/heritage" target="_blank" rel="noopener">Heritage Page</a>
+          <a href="https://www.deep.co.uk/projects/lock-co/" target="_blank" rel="noopener">Brand Design by Deep</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Christy's -->
+    <div class="brand-card">
+      <div class="brand-preview christys-style">
+        <div class="brand-name-display">CHRISTY'S</div>
+        <div class="est">Est. 1773</div>
+      </div>
+      <div class="brand-body">
+        <div class="brand-meta">
+          <span>&#9679; London, England</span>
+          <span>&#9679; Royal Supplier since 1850s</span>
+        </div>
+        <p class="brand-desc">Britain's foremost hat manufacturer since Prince Albert began wearing Christy's top hats. Their hatbox labels and trade cards from the 1890s&ndash;1920s directly inspired <strong>Concept A</strong> (Hatter's Label) and <strong>Concept D</strong> (Gentleman's Seal).</p>
+        <div class="brand-links">
+          <a href="https://www.christys-hats.com/" target="_blank" rel="noopener">Website</a>
+          <a href="https://www.christys-hats.com/our-heritage" target="_blank" rel="noopener">Heritage Page</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Borsalino -->
+    <div class="brand-card">
+      <div class="brand-preview borsalino-style">
+        <div class="brand-name-display">Borsalino</div>
+        <div class="est">Est. 1857</div>
+      </div>
+      <div class="brand-body">
+        <div class="brand-meta">
+          <span>&#9679; Alessandria, Italy</span>
+          <span>&#9679; Grand Prix, Paris Exposition</span>
+        </div>
+        <p class="brand-desc">Italian luxury fedoras &mdash; inseparable from Bogart in <em>Casablanca</em>. Their 1920s poster art by Marcello Dudovich and Leonetto Cappiello epitomize Art Deco hat advertising and inspired <strong>Concept B</strong> (Copenhagen Art Deco).</p>
+        <div class="brand-links">
+          <a href="https://www.borsalino.com/" target="_blank" rel="noopener">Website</a>
+          <a href="https://www.borsalino.com/en/history" target="_blank" rel="noopener">History</a>
+          <a href="https://artvee.com/collection/advertising-posters-by-leonetto-cappiello/" target="_blank" rel="noopener">Cappiello Posters</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stetson -->
+    <div class="brand-card">
+      <div class="brand-preview stetson-style">
+        <div class="brand-name-display">STETSON</div>
+        <div class="est">Est. 1865</div>
+      </div>
+      <div class="brand-body">
+        <div class="brand-meta">
+          <span>&#9679; Philadelphia, USA</span>
+          <span>&#9679; "Boss of the Plains"</span>
+        </div>
+        <p class="brand-desc">Creator of the cowboy hat. By 1886, the world's largest hat company. Their iconic 1920s poster <em>&ldquo;The Last Drop from His Stetson&rdquo;</em> by Lon Megargee is still used in hat linings today. Referenced for American rugged heritage character.</p>
+        <div class="brand-links">
+          <a href="https://stetson.com/" target="_blank" rel="noopener">Website</a>
+          <a href="https://stetson.com/pages/about-us" target="_blank" rel="noopener">About</a>
+          <a href="https://stetson-europe.com/history/" target="_blank" rel="noopener">History (EU)</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Herbert Johnson -->
+    <div class="brand-card">
+      <div class="brand-preview herbert-style">
+        <div class="brand-name-display">Herbert Johnson</div>
+        <div class="est">Est. 1889</div>
+      </div>
+      <div class="brand-body">
+        <div class="brand-meta">
+          <span>&#9679; London, England</span>
+          <span>&#9679; Indiana Jones' Hatter</span>
+        </div>
+        <p class="brand-desc">Founded on the advice of the Prince of Wales. Made Indiana Jones' fedora, David Bowie's hat in <em>The Man Who Fell to Earth</em>, and the Joker's hat in <em>Batman</em>. Their Victorian-era craftsmanship and adventure spirit informed <strong>Concept E</strong> (Pepino's Legacy).</p>
+        <div class="brand-links">
+          <a href="https://herbertjohnson.co.uk/" target="_blank" rel="noopener">Website</a>
+          <a href="https://herbertjohnson.co.uk/pages/history" target="_blank" rel="noopener">History</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- M&uuml;hlbauer -->
+    <div class="brand-card">
+      <div class="brand-preview muehlbauer-style">
+        <div class="brand-name-display">M&Uuml;HLBAUER</div>
+        <div class="est">Est. 1903</div>
+      </div>
+      <div class="brand-body">
+        <div class="brand-meta">
+          <span>&#9679; Vienna, Austria</span>
+          <span>&#9679; 4th Generation</span>
+        </div>
+        <p class="brand-desc">Viennese minimalism meets traditional craft. Founded by Julianna M&uuml;hlbauer &mdash; a rare female entrepreneur in 1903. Their modern-clean approach with heritage roots shows how vintage craft can feel contemporary. General palette reference.</p>
+        <div class="brand-links">
+          <a href="https://www.muehlbauer.at/en" target="_blank" rel="noopener">Website</a>
+          <a href="https://www.muehlbauer.at/en/history" target="_blank" rel="noopener">History</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Kangol -->
+    <div class="brand-card">
+      <div class="brand-preview kangol-style">
+        <div class="brand-name-display">KANGOL</div>
+        <div class="est">Est. 1938</div>
+      </div>
+      <div class="brand-body">
+        <div class="brand-meta">
+          <span>&#9679; Cumbria, England</span>
+          <span>&#9679; silK + ANGora + woOL</span>
+        </div>
+        <p class="brand-desc">From WWII military berets to Beatles licensing to hip-hop culture (LL Cool J, Notorious B.I.G.). Shows how a heritage brand can cross eras and audiences. Their bold branding with Union Jack tags represents a different approach &mdash; studied as contrast.</p>
+        <div class="brand-links">
+          <a href="https://kangol.com/" target="_blank" rel="noopener">Website</a>
+          <a href="https://kangol.com/pages/our-story" target="_blank" rel="noopener">Our Story</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Optimo -->
+    <div class="brand-card">
+      <div class="brand-preview optimo-style">
+        <div class="brand-name-display">Optimo Hats</div>
+        <div class="est">Est. 1995</div>
+      </div>
+      <div class="brand-body">
+        <div class="brand-meta">
+          <span>&#9679; Chicago, USA</span>
+          <span>&#9679; Museum-Quality Bespoke</span>
+        </div>
+        <p class="brand-desc">Modern revival of Golden Age hatmaking. Graham Thompson apprenticed under legendary Chicago hatmaker Johnny Tyus, then spent decades recovering the lost art. Their workshop is a &ldquo;working museum&rdquo; of rare hatmaking tools. Shows that vintage craft can be a living tradition.</p>
+        <div class="brand-links">
+          <a href="https://optimo.com/" target="_blank" rel="noopener">Website</a>
+          <a href="https://optimo.com/the-optimo-story/" target="_blank" rel="noopener">The Story</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Visual References -->
+  <h3>Visual Reference Sources <span class="era-tag">Advertising &amp; Ephemera</span></h3>
+  <div class="ref-grid">
+    <div class="ref-card">
+      <div class="ref-icon">&#x1F3A9;</div>
+      <div class="ref-title">Victorian Hatbox Labels</div>
+      <div class="ref-desc">Ornate serif typography, scrollwork, and detailed borders from 1800s haberdashery. The direct inspiration for Concept A.</div>
+      <a href="https://recollections.biz/blog/a-brief-history-of-hat-boxes/" target="_blank" rel="noopener">Hatbox History &rarr;</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-icon">&#x1F48E;</div>
+      <div class="ref-title">Art Deco Poster Art</div>
+      <div class="ref-desc">Bold geometric forms, stepped corners, and monumental typography from the 1920s&ndash;30s. The inspiration for Concept B.</div>
+      <a href="https://www.internationalposter.com/style-primers/art-deco-posters/" target="_blank" rel="noopener">Art Deco Primers &rarr;</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-icon">&#x1F3A8;</div>
+      <div class="ref-title">Borsalino Vintage Posters</div>
+      <div class="ref-desc">Commissioned from poster masters Dudovich and Cappiello. Defined the visual language of luxury hats in the 1920s.</div>
+      <a href="https://artvee.com/collection/advertising-posters-by-leonetto-cappiello/" target="_blank" rel="noopener">Cappiello Collection &rarr;</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-icon">&#x1F58B;</div>
+      <div class="ref-title">Stetson &ldquo;Last Drop&rdquo;</div>
+      <div class="ref-desc">Lon Megargee's iconic 1920s advertising poster. Still used in Stetson hat linings and box covers today.</div>
+      <a href="https://stetson-europe.com/history/" target="_blank" rel="noopener">Stetson Heritage &rarr;</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-icon">&#x1F3DB;</div>
+      <div class="ref-title">Lock &amp; Co. Brand Design</div>
+      <div class="ref-desc">Redesign by agency Deep: forest green, taupe-brown accents, serif wordmark, maximum restraint. Our Concept C reference.</div>
+      <a href="https://www.deep.co.uk/projects/lock-co/" target="_blank" rel="noopener">Deep Case Study &rarr;</a>
+    </div>
+    <div class="ref-card">
+      <div class="ref-icon">&#x2696;</div>
+      <div class="ref-title">Victorian Wax Seals</div>
+      <div class="ref-desc">Circular trade marks with curved text, dot borders, and central illustrations. The direct reference for Concept D.</div>
+      <a href="https://www.1stdibs.com/buy/antique-hat-boxes/" target="_blank" rel="noopener">Antique Hat Boxes &rarr;</a>
+    </div>
+  </div>
+
+  <!-- Concept to Reference Mapping -->
+  <div class="concept-map">
+    <h4>How Our Concepts Connect to the Research</h4>
+    <div class="map-row" style="border-bottom: 2px solid var(--border); padding-bottom: 0.5rem; margin-bottom: 0.3rem;">
+      <div class="map-concept" style="font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--taupe); font-weight: 600;">Concept</div>
+      <div class="map-era" style="font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--taupe); font-weight: 600;">Era &amp; Style</div>
+      <div class="map-refs" style="font-family: 'Cormorant Garamond', serif; font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase; color: var(--taupe); font-weight: 600;">Primary References</div>
+    </div>
+    <div class="map-row">
+      <div class="map-concept">A. Hatter's Label</div>
+      <div class="map-era">Victorian 1890s &mdash; trade label style</div>
+      <div class="map-refs"><a href="https://www.christys-hats.com/our-heritage" target="_blank">Christy's</a> hatbox labels, Victorian haberdashery signage</div>
+    </div>
+    <div class="map-row">
+      <div class="map-concept">B. Art Deco</div>
+      <div class="map-era">1920s&ndash;1930s &mdash; geometric elegance</div>
+      <div class="map-refs"><a href="https://www.borsalino.com/en/history" target="_blank">Borsalino</a> poster art, Copenhagen Art Deco hotels, Peaky Blinders era</div>
+    </div>
+    <div class="map-row">
+      <div class="map-concept">C. Refined Wordmark</div>
+      <div class="map-era">Timeless &mdash; institutional restraint</div>
+      <div class="map-refs"><a href="https://www.lockhatters.com/" target="_blank">Lock &amp; Co.</a> brand identity, <a href="https://www.deep.co.uk/projects/lock-co/" target="_blank">Deep agency</a> redesign</div>
+    </div>
+    <div class="map-row">
+      <div class="map-concept">D. Gentleman's Seal</div>
+      <div class="map-era">Victorian &mdash; wax seal / trade mark</div>
+      <div class="map-refs">Victorian correspondence seals, <a href="https://www.christys-hats.com/our-heritage" target="_blank">Christy's</a> &amp; <a href="https://herbertjohnson.co.uk/pages/history" target="_blank">Herbert Johnson</a> trade marks</div>
+    </div>
+    <div class="map-row">
+      <div class="map-concept">E. Pepino's Legacy</div>
+      <div class="map-era">Edwardian &mdash; trade card style</div>
+      <div class="map-refs"><a href="https://herbertjohnson.co.uk/" target="_blank">Herbert Johnson</a> adventure spirit, vintage Danish haberdashery ephemera</div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">
+  <div class="org">AAE Digital</div>
+  Hattemanden.dk Logo Design Project &middot; February 2026
+</div>
+
+</body>
+</html>

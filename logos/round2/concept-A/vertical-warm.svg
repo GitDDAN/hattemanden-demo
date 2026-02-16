@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 320" width="280" height="320">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Cormorant+Garamond:wght@300;400;500&amp;display=swap');
+    </style>
+  </defs>
+  <!-- Ornamental frame -->
+  <rect x="8" y="8" width="264" height="304" rx="3" fill="none" stroke="#5a4510" stroke-width="1.5"/>
+  <rect x="12" y="12" width="256" height="296" rx="2" fill="none" stroke="#8b6914" stroke-width="0.5"/>
+  <!-- Corner ornaments -->
+  <g stroke="#8b6914" stroke-width="0.8" fill="none">
+    <path d="M18,18 L28,18 M18,18 L18,28"/>
+    <path d="M262,18 L252,18 M262,18 L262,28"/>
+    <path d="M18,302 L28,302 M18,302 L18,292"/>
+    <path d="M262,302 L252,302 M262,302 L262,292"/>
+    <circle cx="18" cy="18" r="1.5" fill="#8b6914"/>
+    <circle cx="262" cy="18" r="1.5" fill="#8b6914"/>
+    <circle cx="18" cy="302" r="1.5" fill="#8b6914"/>
+    <circle cx="262" cy="302" r="1.5" fill="#8b6914"/>
+  </g>
+  <!-- Centered top hat -->
+  <g transform="translate(92, 30)" fill="none" stroke="#5a4510">
+    <path d="M20,85 L20,30 C20,26 23,21 32,19 L65,19 C74,21 77,26 77,30 L77,85" stroke-width="2"/>
+    <path d="M3,85 C3,79 13,74 20,74 L77,74 C84,74 94,79 94,85 C94,91 84,96 77,96 L20,96 C13,96 3,91 3,85Z" stroke-width="2"/>
+    <rect x="20" y="63" width="57" height="11" rx="1" stroke-width="1.2" fill="#c4a747" fill-opacity="0.3"/>
+    <rect x="43" y="64.5" width="11" height="8" rx="1" stroke-width="0.8"/>
+    <circle cx="48.5" cy="68.5" r="2" fill="#5a4510"/>
+    <line x1="32" y1="21" x2="32" y2="63" stroke-width="0.3" stroke-dasharray="1,3"/>
+    <line x1="48" y1="19" x2="48" y2="63" stroke-width="0.3" stroke-dasharray="1,3"/>
+    <line x1="65" y1="21" x2="65" y2="63" stroke-width="0.3" stroke-dasharray="1,3"/>
+  </g>
+  <!-- Decorative rule below hat -->
+  <line x1="50" y1="145" x2="100" y2="145" stroke="#c4a747" stroke-width="0.5"/>
+  <circle cx="140" cy="145" r="2" fill="#c4a747"/>
+  <line x1="180" y1="145" x2="230" y2="145" stroke="#c4a747" stroke-width="0.5"/>
+  <!-- Main wordmark -->
+  <text x="140" y="185" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="30" fill="#3d2e0a" letter-spacing="3">HATTE</text>
+  <text x="140" y="218" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="30" fill="#3d2e0a" letter-spacing="3">MANDEN</text>
+  <!-- .dk -->
+  <text x="140" y="240" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="16" fill="#8b6914">.dk</text>
+  <!-- Decorative rule -->
+  <line x1="60" y1="252" x2="220" y2="252" stroke="#c4a747" stroke-width="0.5"/>
+  <!-- Tagline -->
+  <text x="140" y="270" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="300" font-size="11" fill="#5a4510" letter-spacing="2.5">DANSK HATTETRADITION</text>
+  <!-- Location -->
+  <text x="140" y="290" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="9" fill="#8b6914" letter-spacing="2">KOLDING · SIDEN 2000</text>
+</svg>

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 210" width="300" height="210">
+  <title>Hattemanden.dk Logo - Classic Elegance Gold Vertical</title>
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c49b26;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b6914;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <g id="hat-icon" transform="translate(112, 10)">
+    <ellipse cx="38" cy="74" rx="36" ry="8" fill="url(#goldGrad)" />
+    <path d="M14,22 L12,74 L64,74 L62,22 Z" fill="url(#goldGrad)" />
+    <ellipse cx="38" cy="22" rx="24" ry="5.5" fill="#d4a82a" />
+    <rect x="13" y="58" width="50" height="6" fill="#5a4510" />
+    <rect x="32" y="56.5" width="12" height="9" rx="1.5" fill="none" stroke="#d4a82a" stroke-width="1.4" />
+  </g>
+  <text x="150" y="130" font-family="'Playfair Display', 'Georgia', serif" font-size="32" font-weight="700" fill="#3d2e0a" text-anchor="middle">Hattemanden</text>
+  <text x="150" y="160" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="22" font-weight="300" fill="#8b6914" text-anchor="middle">.dk</text>
+  <line x1="100" y1="172" x2="200" y2="172" stroke="#c49b26" stroke-width="0.6" />
+</svg>

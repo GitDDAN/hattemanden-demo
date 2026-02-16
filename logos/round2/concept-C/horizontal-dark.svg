@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 140" width="480" height="140">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Cormorant+Garamond:wght@300;400;500;600&amp;display=swap');
+    </style>
+  </defs>
+  <rect width="480" height="140" fill="#1a1a1a"/>
+  <line x1="20" y1="20" x2="460" y2="20" stroke="#88754a" stroke-width="0.5" stroke-opacity="0.5"/>
+  <text x="240" y="68" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="42" fill="#f5f0e8" letter-spacing="5">HATTEMANDEN</text>
+  <text x="240" y="88" text-anchor="middle" font-family="'Cormorant Garamond', 'Times New Roman', serif" font-weight="400" font-size="18" fill="#c4a747" letter-spacing="1">.dk</text>
+  <line x1="120" y1="98" x2="210" y2="98" stroke="#88754a" stroke-width="0.4" stroke-opacity="0.4"/>
+  <circle cx="218" cy="98" r="1.2" fill="#88754a" fill-opacity="0.5"/>
+  <circle cx="240" cy="98" r="1.8" fill="none" stroke="#88754a" stroke-width="0.6" stroke-opacity="0.5"/>
+  <circle cx="262" cy="98" r="1.2" fill="#88754a" fill-opacity="0.5"/>
+  <line x1="270" y1="98" x2="360" y2="98" stroke="#88754a" stroke-width="0.4" stroke-opacity="0.4"/>
+  <text x="240" y="116" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="11" fill="#88754a" fill-opacity="0.7" letter-spacing="3">SØNDERGADE · KOLDING</text>
+  <line x1="20" y1="128" x2="460" y2="128" stroke="#88754a" stroke-width="0.5" stroke-opacity="0.5"/>
+</svg>

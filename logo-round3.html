@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hattemanden.dk — Logo Round 3: Refinement</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=Cinzel:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c4a747;
+    --gold-dark: #8b6914;
+    --cognac: #8b4513;
+    --taupe: #88754a;
+    --charcoal: #1a1a1a;
+    --cream: #f5f0e8;
+    --warm-bg: #faf6ef;
+    --text: #3d2e0a;
+    --text-light: #6b5c3e;
+    --border: #e0d7c8;
+    --card: #ffffff;
+    --deep-brown: #5a4510;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--warm-bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* Header */
+  .header {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 3.5rem 2rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 2px,
+      rgba(196,167,71,0.03) 2px, rgba(196,167,71,0.03) 4px
+    );
+    pointer-events: none;
+  }
+
+  .header .round-badge {
+    display: inline-block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.3rem 1rem;
+    border-radius: 2px;
+    margin-bottom: 1.2rem;
+    opacity: 0.8;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.6rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+  }
+
+  .header .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: 1.15rem;
+    opacity: 0.7;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+  }
+
+  .header .fine-rule {
+    width: 120px;
+    height: 1px;
+    background: var(--gold);
+    margin: 1.5rem auto 1rem;
+    opacity: 0.4;
+  }
+
+  .header .context {
+    font-size: 0.78rem;
+    opacity: 0.4;
+    letter-spacing: 1px;
+  }
+
+  /* Back link */
+  .back-link {
+    display: inline-block;
+    margin: 1.5rem 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--taupe);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--text); }
+
+  /* Design principle banner */
+  .principle {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    padding: 2rem 2.5rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    text-align: center;
+  }
+
+  .principle .quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--text);
+    margin-bottom: 0.8rem;
+    line-height: 1.4;
+  }
+
+  .principle .quote em {
+    color: var(--gold-dark);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  .principle p {
+    font-size: 0.88rem;
+    color: var(--text-light);
+    max-width: 550px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  /* Direction note */
+  .direction {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    padding: 2rem;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+
+  .direction h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    margin-bottom: 0.8rem;
+    color: var(--text);
+  }
+
+  .direction p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    line-height: 1.7;
+    margin-bottom: 0.5rem;
+  }
+
+  .direction .source-tags {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .direction .source-tag {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.72rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    border: 1px solid var(--border);
+    padding: 0.2rem 0.7rem;
+    border-radius: 3px;
+    background: var(--cream);
+  }
+
+  /* Navigation */
+  .nav {
+    position: sticky;
+    top: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 2rem;
+    display: flex;
+    gap: 0.4rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(61,46,10,0.06);
+  }
+
+  .nav button {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    padding: 0.45rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+
+  .nav button:hover { border-color: var(--taupe); color: var(--taupe); }
+  .nav button.active { background: var(--taupe); color: var(--cream); border-color: var(--taupe); }
+
+  /* Variation sections */
+  .variation-section {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .variation-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .variation-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+  }
+
+  .variation-header .badge {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    border: 1px solid var(--taupe);
+    padding: 0.2rem 0.7rem;
+    border-radius: 2px;
+  }
+
+  .variation-header .source-badge {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.65rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    border: 1px solid var(--gold);
+    padding: 0.15rem 0.6rem;
+    border-radius: 2px;
+    background: rgba(196,167,71,0.08);
+  }
+
+  .variation-desc {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    max-width: 700px;
+    line-height: 1.7;
+  }
+
+  .variation-rationale {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--taupe);
+    margin-bottom: 2rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--gold);
+  }
+
+  /* Logo grid */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .logo-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .logo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(61,46,10,0.08);
+  }
+
+  .logo-card.wide { grid-column: span 2; }
+
+  .logo-preview {
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 180px;
+  }
+
+  .logo-preview.cream-bg { background: var(--cream); }
+  .logo-preview.dark-bg { background: var(--charcoal); }
+  .logo-preview.white-bg { background: #ffffff; }
+
+  .logo-preview img, .logo-preview svg {
+    max-width: 100%;
+    max-height: 160px;
+    height: auto;
+  }
+
+  .logo-info {
+    padding: 0.8rem 1.2rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo-info .label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .logo-info .variant {
+    font-size: 0.68rem;
+    color: #999;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Divider */
+  .divider {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .divider-inner {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .divider-inner .line { flex: 1; height: 1px; background: var(--border); }
+  .divider-inner .dot { width: 6px; height: 6px; border-radius: 50%; border: 1px solid var(--gold); }
+
+  /* Recommendation section */
+  .recommendation {
+    max-width: 900px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .recommendation h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .rec-card {
+    background: var(--card);
+    border: 2px solid var(--border);
+    border-radius: 10px;
+    padding: 1.5rem;
+    text-align: center;
+    transition: all 0.2s;
+  }
+
+  .rec-card.recommended {
+    border-color: var(--gold);
+    box-shadow: 0 4px 20px rgba(196,167,71,0.15);
+  }
+
+  .rec-card .rec-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 0.6rem;
+    font-weight: 600;
+  }
+
+  .rec-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .rec-card p {
+    font-size: 0.82rem;
+    color: var(--text-light);
+    line-height: 1.6;
+  }
+
+  /* Comparison table */
+  .comparison {
+    max-width: 1000px;
+    margin: 3rem auto;
+    padding: 0 2rem 4rem;
+  }
+
+  .comparison h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .comparison table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+
+  .comparison th {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--taupe);
+    text-align: left;
+    padding: 0.8rem 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+
+  .comparison td {
+    padding: 0.6rem 0.5rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-light);
+    vertical-align: top;
+  }
+
+  .comparison td:first-child {
+    font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
+  }
+
+  .comparison .star {
+    color: var(--gold-dark);
+    font-weight: 700;
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    font-family: 'Cormorant Garamond', serif;
+    color: #999;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  .footer a {
+    color: var(--taupe);
+    text-decoration: none;
+  }
+  .footer a:hover { text-decoration: underline; }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.8rem; }
+    .principle .quote { font-size: 1.2rem; }
+    .logo-grid { grid-template-columns: 1fr; }
+    .logo-card.wide { grid-column: span 1; }
+    .variation-section { padding: 0 1rem; }
+    .comparison table { font-size: 0.75rem; }
+    .comparison th, .comparison td { padding: 0.4rem 0.3rem; }
+    .rec-grid { grid-template-columns: 1fr; }
+    .nav button { font-size: 0.75rem; padding: 0.35rem 0.7rem; }
+  }
+</style>
+</head>
+<body>
+<script>if(sessionStorage.getItem('hm-demo-auth')!=='ok')window.location.href='index.html';</script>
+
+<div class="header">
+  <div class="round-badge">Round 3 &middot; Refinement</div>
+  <h1>Hattemanden.dk</h1>
+  <div class="subtitle">Six refined variations merging the best of Concepts A, C &amp; D &mdash; heritage depth for hat enthusiasts, instant clarity for everyone.</div>
+  <div class="fine-rule"></div>
+  <div class="context">6 Variations &middot; Warm &amp; Dark Palettes &middot; February 2026</div>
+</div>
+
+<a href="logo-design-journey.html" class="back-link">&larr; Back to Design Journey</a>
+
+<div style="max-width:1000px; margin:0 auto; padding:0 2rem;">
+  <div class="principle">
+    <div class="quote">&ldquo;<em>Rewarding depth</em>, <em>instant clarity</em>&rdquo;</div>
+    <p>Heritage details for those who recognise them &mdash; unmistakably a hat shop to everyone. People who know, will know. But nobody has to guess.</p>
+  </div>
+
+  <div class="direction">
+    <h2>Round 3 Direction</h2>
+    <p>Based on client feedback from Round 2, we&rsquo;re carrying forward the strongest elements from three concepts:</p>
+    <p><strong>From A (Hatter&rsquo;s Label):</strong> The ornamental framing, Victorian trade label warmth, and detailed hat illustration with engraving-style lines.</p>
+    <p><strong>From C (Refined Wordmark):</strong> Maximum readability, clean typography hierarchy, Lock &amp; Co.&rsquo;s institutional restraint, and the bold hat silhouette that reads at any size.</p>
+    <p><strong>From D (Gentleman&rsquo;s Seal):</strong> The circular seal format, curved text authority, dot accents, and standalone stamp versatility.</p>
+    <div class="source-tags">
+      <span class="source-tag">A &rarr; Heritage Detail</span>
+      <span class="source-tag">C &rarr; Readability</span>
+      <span class="source-tag">D &rarr; Seal Authority</span>
+    </div>
+  </div>
+</div>
+
+<nav class="nav">
+  <button class="active" onclick="navTo('v1')">1. Heritage Label</button>
+  <button onclick="navTo('v2')">2. Seal Refined</button>
+  <button onclick="navTo('v3')">3. Frame &amp; Seal</button>
+  <button onclick="navTo('v4')">4. Hat First</button>
+  <button onclick="navTo('v5')">5. Clean Stamp</button>
+  <button onclick="navTo('v6')">6. Signature</button>
+  <button onclick="navTo('comparison')">Compare</button>
+  <button onclick="navTo('recommendation')">Recommendation</button>
+</nav>
+
+<!-- VARIATION 1 — Heritage Label Evolved -->
+<section class="variation-section" id="v1">
+  <div class="variation-header">
+    <h2>1. Heritage Label Evolved</h2>
+    <span class="badge">Victorian Trade Label</span>
+    <span class="source-badge">From Concept A</span>
+  </div>
+  <p class="variation-desc">
+    Concept A refined for clarity. The ornamental frame is simplified to a single elegant border with subtle corner accents. The hat illustration is bolder and cleaner &mdash; immediately recognisable even at small sizes. Typography has more breathing room with stronger hierarchy.
+  </p>
+  <p class="variation-rationale">What changed: single border (was double), bolder hat strokes, larger wordmark, simplified corner ornaments. The feel of a premium hatbox label, modernised for legibility.</p>
+
+  <div class="logo-grid">
+    <div class="logo-card wide">
+      <div class="logo-preview cream-bg">
+        <img src="logos/round3/v1-heritage-label/horizontal-warm.svg" alt="V1 Horizontal Warm">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Warm Cream</span>
+      </div>
+    </div>
+    <div class="logo-card wide">
+      <div class="logo-preview dark-bg">
+        <img src="logos/round3/v1-heritage-label/horizontal-dark.svg" alt="V1 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Dark / Reversed</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview white-bg">
+        <img src="logos/round3/v1-heritage-label/icon.svg" alt="V1 Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Icon / Favicon</span>
+        <span class="variant">Framed Hat</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-inner"><div class="line"></div><div class="dot"></div><div class="line"></div></div></div>
+
+<!-- VARIATION 2 — Seal Refined -->
+<section class="variation-section" id="v2">
+  <div class="variation-header">
+    <h2>2. The Hatter&rsquo;s Seal</h2>
+    <span class="badge">Wax Seal / Trade Mark</span>
+    <span class="source-badge">From Concept D</span>
+  </div>
+  <p class="variation-desc">
+    Concept D refined for readability. The outer rings are bolder, the accent dots reduced from 12 to 8 for a cleaner rhythm. The central hat is larger and the curved text is bigger &mdash; readable even on business cards. The adjacent wordmark is more prominent.
+  </p>
+  <p class="variation-rationale">What changed: thicker rings, fewer dots, larger hat, bigger curved text, bolder wordmark. Still feels like a quality stamp inside a hat &mdash; but now reads at a glance.</p>
+
+  <div class="logo-grid">
+    <div class="logo-card wide">
+      <div class="logo-preview cream-bg">
+        <img src="logos/round3/v2-seal-refined/horizontal-warm.svg" alt="V2 Horizontal Warm">
+      </div>
+      <div class="logo-info">
+        <span class="label">Seal + Wordmark</span>
+        <span class="variant">Warm Cream</span>
+      </div>
+    </div>
+    <div class="logo-card wide">
+      <div class="logo-preview dark-bg">
+        <img src="logos/round3/v2-seal-refined/horizontal-dark.svg" alt="V2 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Seal + Wordmark</span>
+        <span class="variant">Dark / Gold</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview white-bg">
+        <img src="logos/round3/v2-seal-refined/icon.svg" alt="V2 Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Compact Seal</span>
+        <span class="variant">Favicon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-inner"><div class="line"></div><div class="dot"></div><div class="line"></div></div></div>
+
+<!-- VARIATION 3 — Frame & Seal -->
+<section class="variation-section" id="v3">
+  <div class="variation-header">
+    <h2>3. Frame &amp; Seal</h2>
+    <span class="badge">A + D Hybrid</span>
+    <span class="source-badge">Best of Both</span>
+  </div>
+  <p class="variation-desc">
+    The richest variation &mdash; Concept A&rsquo;s elegant frame containing Concept D&rsquo;s seal as the primary icon, with a clean wordmark alongside. The frame gives the trade-label authority, the seal provides the standalone icon. A thin vertical rule separates the two halves.
+  </p>
+  <p class="variation-rationale">Why combine? The frame establishes context (heritage trade), the seal works independently (favicons, stamps, watermarks). Together they create the most complete brand system.</p>
+
+  <div class="logo-grid">
+    <div class="logo-card wide">
+      <div class="logo-preview cream-bg">
+        <img src="logos/round3/v3-frame-and-seal/horizontal-warm.svg" alt="V3 Horizontal Warm">
+      </div>
+      <div class="logo-info">
+        <span class="label">Frame + Seal + Wordmark</span>
+        <span class="variant">Warm Cream</span>
+      </div>
+    </div>
+    <div class="logo-card wide">
+      <div class="logo-preview dark-bg">
+        <img src="logos/round3/v3-frame-and-seal/horizontal-dark.svg" alt="V3 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Frame + Seal + Wordmark</span>
+        <span class="variant">Dark / Gold</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview white-bg">
+        <img src="logos/round3/v3-frame-and-seal/icon.svg" alt="V3 Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Frame + Seal Icon</span>
+        <span class="variant">Favicon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-inner"><div class="line"></div><div class="dot"></div><div class="line"></div></div></div>
+
+<!-- VARIATION 4 — Hat First -->
+<section class="variation-section" id="v4">
+  <div class="variation-header">
+    <h2>4. Hat First</h2>
+    <span class="badge">Hat as Hero</span>
+    <span class="source-badge">A Detail + C Restraint</span>
+  </div>
+  <p class="variation-desc">
+    The hat IS the logo. A large, prominent, beautifully drawn top hat with A&rsquo;s engraving-style detail paired with C&rsquo;s clean typography and restraint. No ornamental frame &mdash; the hat speaks for itself. A thin vertical rule separates illustration from type. Maximum impact, zero clutter.
+  </p>
+  <p class="variation-rationale">The simplest way to say &ldquo;hat shop&rdquo; &mdash; let the illustration do the talking. For clients who want the strongest possible hat icon with clean, readable type alongside.</p>
+
+  <div class="logo-grid">
+    <div class="logo-card wide">
+      <div class="logo-preview cream-bg">
+        <img src="logos/round3/v4-hat-first/horizontal-warm.svg" alt="V4 Horizontal Warm">
+      </div>
+      <div class="logo-info">
+        <span class="label">Hat + Wordmark</span>
+        <span class="variant">Warm Cream</span>
+      </div>
+    </div>
+    <div class="logo-card wide">
+      <div class="logo-preview dark-bg">
+        <img src="logos/round3/v4-hat-first/horizontal-dark.svg" alt="V4 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Hat + Wordmark</span>
+        <span class="variant">Dark / Gold</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview white-bg">
+        <img src="logos/round3/v4-hat-first/icon.svg" alt="V4 Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Hat Icon</span>
+        <span class="variant">Favicon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-inner"><div class="line"></div><div class="dot"></div><div class="line"></div></div></div>
+
+<!-- VARIATION 5 — Clean Stamp -->
+<section class="variation-section" id="v5">
+  <div class="variation-header">
+    <h2>5. The Clean Stamp</h2>
+    <span class="badge">D + C Fusion</span>
+    <span class="source-badge">Modern Seal</span>
+  </div>
+  <p class="variation-desc">
+    Concept D&rsquo;s circular seal stripped to essentials using C&rsquo;s minimalist approach. A bold outer ring, a clean solid hat silhouette (not line-drawn), and curved text in Playfair Display (not Cormorant). No fussy dots or diamonds &mdash; just the essential shapes. Maximum favicon readability.
+  </p>
+  <p class="variation-rationale">The &ldquo;modern heritage&rdquo; option. The bold silhouette hat reads at 16px. The thick ring makes it unmistakeable. C&rsquo;s restraint meets D&rsquo;s stamp format.</p>
+
+  <div class="logo-grid">
+    <div class="logo-card wide">
+      <div class="logo-preview cream-bg">
+        <img src="logos/round3/v5-clean-stamp/horizontal-warm.svg" alt="V5 Horizontal Warm">
+      </div>
+      <div class="logo-info">
+        <span class="label">Clean Stamp + Wordmark</span>
+        <span class="variant">Warm Cream</span>
+      </div>
+    </div>
+    <div class="logo-card wide">
+      <div class="logo-preview dark-bg">
+        <img src="logos/round3/v5-clean-stamp/horizontal-dark.svg" alt="V5 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Clean Stamp + Wordmark</span>
+        <span class="variant">Dark / Gold</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview white-bg">
+        <img src="logos/round3/v5-clean-stamp/icon.svg" alt="V5 Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Clean Stamp</span>
+        <span class="variant">Favicon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-inner"><div class="line"></div><div class="dot"></div><div class="line"></div></div></div>
+
+<!-- VARIATION 6 — The Signature -->
+<section class="variation-section" id="v6">
+  <div class="variation-header">
+    <h2>6. The Signature</h2>
+    <span class="badge">Wordmark-Forward</span>
+    <span class="source-badge">C Elegance + D Accent</span>
+  </div>
+  <p class="variation-desc">
+    The most elegant variation &mdash; a large, beautiful wordmark takes centre stage with Concept C&rsquo;s fine-rule sophistication, while a small seal accent from D anchors the left side. The name &ldquo;Hattemanden&rdquo; is the star. Three-dot ornament and horizontal rules create the Lock &amp; Co. institutional feel.
+  </p>
+  <p class="variation-rationale">For clients who want the name front and centre. The small seal provides the hat icon for standalone use, while the wordmark delivers maximum brand name recognition.</p>
+
+  <div class="logo-grid">
+    <div class="logo-card wide">
+      <div class="logo-preview cream-bg">
+        <img src="logos/round3/v6-signature/horizontal-warm.svg" alt="V6 Horizontal Warm">
+      </div>
+      <div class="logo-info">
+        <span class="label">Signature Wordmark</span>
+        <span class="variant">Warm Cream</span>
+      </div>
+    </div>
+    <div class="logo-card wide">
+      <div class="logo-preview dark-bg">
+        <img src="logos/round3/v6-signature/horizontal-dark.svg" alt="V6 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Signature Wordmark</span>
+        <span class="variant">Dark / Gold</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview white-bg">
+        <img src="logos/round3/v6-signature/icon.svg" alt="V6 Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Seal Icon</span>
+        <span class="variant">Favicon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-inner"><div class="line"></div><div class="dot"></div><div class="line"></div></div></div>
+
+<!-- COMPARISON TABLE -->
+<section class="comparison" id="comparison">
+  <h2>Variation Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Aspect</th>
+        <th>1. Heritage Label</th>
+        <th>2. Seal Refined</th>
+        <th>3. Frame &amp; Seal</th>
+        <th>4. Hat First</th>
+        <th>5. Clean Stamp</th>
+        <th>6. Signature</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Source</td>
+        <td>A refined</td>
+        <td>D refined</td>
+        <td>A + D</td>
+        <td>A + C</td>
+        <td>D + C</td>
+        <td>C + D accent</td>
+      </tr>
+      <tr>
+        <td>Heritage depth</td>
+        <td class="star">Very high</td>
+        <td class="star">High</td>
+        <td class="star">Very high</td>
+        <td>Moderate</td>
+        <td>Low</td>
+        <td>Moderate</td>
+      </tr>
+      <tr>
+        <td>Instant clarity</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td class="star">Excellent</td>
+        <td class="star">Excellent</td>
+        <td class="star">Excellent</td>
+      </tr>
+      <tr>
+        <td>Hat visibility</td>
+        <td class="star">Prominent</td>
+        <td>Central</td>
+        <td>Seal center</td>
+        <td class="star">Hero element</td>
+        <td>Silhouette</td>
+        <td>Small accent</td>
+      </tr>
+      <tr>
+        <td>Name readability</td>
+        <td>Strong</td>
+        <td>Strong</td>
+        <td>Strong</td>
+        <td class="star">Very strong</td>
+        <td class="star">Very strong</td>
+        <td class="star">Dominant</td>
+      </tr>
+      <tr>
+        <td>Favicon quality</td>
+        <td>Good</td>
+        <td class="star">Excellent</td>
+        <td>Good</td>
+        <td class="star">Excellent</td>
+        <td class="star">Excellent</td>
+        <td>Good</td>
+      </tr>
+      <tr>
+        <td>Packaging use</td>
+        <td class="star">Excellent</td>
+        <td class="star">Excellent</td>
+        <td class="star">Excellent</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td>Moderate</td>
+      </tr>
+      <tr>
+        <td>Website header</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td>Good</td>
+        <td class="star">Excellent</td>
+        <td>Good</td>
+        <td class="star">Excellent</td>
+      </tr>
+      <tr>
+        <td>Complexity</td>
+        <td>Medium</td>
+        <td>Medium</td>
+        <td>High</td>
+        <td>Low</td>
+        <td>Low</td>
+        <td>Low&ndash;Medium</td>
+      </tr>
+      <tr>
+        <td>Peaky Blinders vibe</td>
+        <td class="star">Strong</td>
+        <td class="star">Strong</td>
+        <td class="star">Strong</td>
+        <td>Moderate</td>
+        <td>Modern</td>
+        <td>Moderate</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"><div class="divider-inner"><div class="line"></div><div class="dot"></div><div class="line"></div></div></div>
+
+<!-- RECOMMENDATION -->
+<section class="recommendation" id="recommendation">
+  <h2>Our Recommendation</h2>
+  <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 2rem; max-width: 700px; line-height: 1.7;">Based on the design principle of &ldquo;rewarding depth, instant clarity&rdquo; and the need for a logo that works everywhere &mdash; from favicon to shop signage &mdash; we recommend narrowing to these three finalists:</p>
+
+  <div class="rec-grid">
+    <div class="rec-card recommended">
+      <div class="rec-label">Top Pick</div>
+      <h3>3. Frame &amp; Seal</h3>
+      <p>Maximum heritage depth with full brand system versatility. The frame for print/packaging, the seal for digital/stamps. Both rewarding and clear.</p>
+    </div>
+    <div class="rec-card recommended">
+      <div class="rec-label">Strong Runner-Up</div>
+      <h3>4. Hat First</h3>
+      <p>Maximum &ldquo;instant clarity&rdquo; &mdash; the hat dominates, the name is unmistakeable. The cleanest, most modern option that still carries heritage detail.</p>
+    </div>
+    <div class="rec-card">
+      <div class="rec-label">Alternative</div>
+      <h3>2. Seal Refined</h3>
+      <p>The strongest standalone icon. If favicon/stamp use is the top priority, this seal is the most recognisable at small sizes.</p>
+    </div>
+  </div>
+
+  <p style="color: var(--text-light); font-size: 0.85rem; font-style: italic; text-align: center;">These are recommendations &mdash; the final choice is yours. Any of the six variations can be taken to production.</p>
+</section>
+
+<div class="footer">
+  Round 3 &middot; February 2026 &middot; Hattemanden.dk Logo Project<br>
+  <a href="logo-design-journey.html">View full design journey</a> &middot; <a href="logo-round2.html">View Round 2</a> &middot; <a href="logo-presentation.html">View Round 1</a>
+</div>
+
+<script>
+function navTo(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+const sections = ['v1','v2','v3','v4','v5','v6','comparison','recommendation'];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = sections.indexOf(entry.target.id);
+      if (idx >= 0) {
+        document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nav button')[idx].classList.add('active');
+      }
+    }
+  });
+}, { threshold: 0.2 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>

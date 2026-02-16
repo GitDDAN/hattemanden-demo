@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Deco frame -->
+  <rect x="4" y="4" width="112" height="112" fill="none" stroke="#5a4510" stroke-width="2"/>
+  <!-- Deco corners -->
+  <path d="M4,4 L18,4 L18,8 L8,8 L8,18 L4,18" fill="none" stroke="#c4a747" stroke-width="1.2"/>
+  <path d="M116,4 L102,4 L102,8 L112,8 L112,18 L116,18" fill="none" stroke="#c4a747" stroke-width="1.2"/>
+  <path d="M4,116 L18,116 L18,112 L8,112 L8,102 L4,102" fill="none" stroke="#c4a747" stroke-width="1.2"/>
+  <path d="M116,116 L102,116 L102,112 L112,112 L112,102 L116,102" fill="none" stroke="#c4a747" stroke-width="1.2"/>
+  <!-- Geometric hat -->
+  <g transform="translate(25, 16)">
+    <polygon points="22,8 48,8 52,10 52,48 18,48 18,10" fill="none" stroke="#5a4510" stroke-width="1.8" stroke-linejoin="miter"/>
+    <line x1="22" y1="8" x2="48" y2="8" stroke="#5a4510" stroke-width="2.5"/>
+    <rect x="18" y="38" width="34" height="10" fill="#c4a747" fill-opacity="0.25" stroke="#c4a747" stroke-width="0.8"/>
+    <polygon points="35,38 39,43 35,48 31,43" fill="none" stroke="#5a4510" stroke-width="0.8"/>
+    <path d="M4,53 L66,53" stroke="#5a4510" stroke-width="2.5"/>
+    <path d="M8,57 L62,57" stroke="#5a4510" stroke-width="1"/>
+  </g>
+  <!-- Deco rays -->
+  <g transform="translate(60, 22)" stroke="#c4a747" stroke-width="0.4" stroke-opacity="0.5">
+    <line x1="0" y1="-8" x2="0" y2="-4"/>
+    <line x1="-6" y1="-6" x2="-3" y2="-3"/>
+    <line x1="6" y1="-6" x2="3" y2="-3"/>
+  </g>
+  <!-- Text -->
+  <text x="60" y="98" text-anchor="middle" font-family="'Cinzel', 'Times New Roman', serif" font-weight="600" font-size="7.5" fill="#3d2e0a" letter-spacing="2.5">HATTEMANDEN</text>
+  <text x="60" y="110" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="6" fill="#8b6914" letter-spacing="1.5">.DK</text>
+</svg>

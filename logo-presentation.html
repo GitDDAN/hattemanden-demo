@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hattemanden.dk — Logo Concepts</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #8b6914;
+    --gold-light: #c49b26;
+    --gold-dark: #5a4510;
+    --navy: #1a1a2e;
+    --navy-light: #2a2a3d;
+    --text: #3d2e0a;
+    --bg: #faf8f4;
+    --card-bg: #ffffff;
+    --border: #e8e2d6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  .header {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+    color: #fff;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+
+  .header p {
+    font-weight: 300;
+    font-size: 1.05rem;
+    opacity: 0.8;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .header .meta {
+    margin-top: 1.5rem;
+    font-size: 0.8rem;
+    opacity: 0.5;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .nav {
+    position: sticky;
+    top: 0;
+    background: var(--card-bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.8rem 2rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+
+  .nav button {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    padding: 0.5rem 1.2rem;
+    border: 1.5px solid var(--border);
+    border-radius: 6px;
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+  }
+
+  .nav button:hover { border-color: var(--gold); color: var(--gold); }
+  .nav button.active { background: var(--gold); color: #fff; border-color: var(--gold); }
+
+  .concept-section {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
+
+  .concept-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .concept-header h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .concept-header .badge {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px solid var(--gold);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+  }
+
+  .concept-desc {
+    color: #666;
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+    max-width: 700px;
+  }
+
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .logo-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .logo-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+
+  .logo-preview {
+    padding: 2.5rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+  }
+
+  .logo-preview.dark-bg {
+    background: var(--navy);
+  }
+
+  .logo-preview.warm-bg {
+    background: #f5f0e8;
+  }
+
+  .logo-preview img, .logo-preview svg {
+    max-width: 100%;
+    max-height: 120px;
+    height: auto;
+  }
+
+  .logo-info {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo-info .label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text);
+  }
+
+  .logo-info .variant {
+    font-size: 0.7rem;
+    color: #999;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  .color-palette {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0 2rem;
+  }
+
+  .color-swatch {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    border: 2px solid var(--border);
+    position: relative;
+    cursor: default;
+  }
+
+  .color-swatch::after {
+    content: attr(data-hex);
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.65rem;
+    color: #999;
+    white-space: nowrap;
+  }
+
+  .tagline-section {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 2rem;
+    margin: 2rem 0 4rem;
+  }
+
+  .tagline-section h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+
+  .tagline-demo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .tagline-demo .example {
+    text-align: center;
+    padding: 1.5rem 2rem;
+    background: var(--bg);
+    border-radius: 8px;
+    flex: 1;
+    min-width: 250px;
+  }
+
+  .tagline-demo .example .name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .tagline-demo .example .dk {
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    color: var(--gold);
+  }
+
+  .tagline-demo .example .tagline {
+    display: block;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 0.4rem;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 4rem 0;
+  }
+
+  .summary {
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 0 2rem 4rem;
+  }
+
+  .summary h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .summary table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .summary th, .summary td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+  }
+
+  .summary th {
+    font-weight: 600;
+    color: var(--gold-dark);
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+
+  @media (max-width: 768px) {
+    .header h1 { font-size: 1.8rem; }
+    .logo-grid { grid-template-columns: 1fr; }
+    .concept-section { padding: 0 1rem; }
+  }
+</style>
+</head>
+<body>
+<script>if(sessionStorage.getItem('hm-demo-auth')!=='ok')window.location.href='index.html';</script>
+
+<div class="header">
+  <h1>Hattemanden.dk</h1>
+  <p>Logo Design Concepts — Round 1</p>
+  <div class="meta">4 Concepts &middot; 2 Color Palettes &middot; Multiple Layouts</div>
+</div>
+
+<nav class="nav">
+  <button class="active" onclick="scrollToConcept('concept-1')">1. Classic Elegance</button>
+  <button onclick="scrollToConcept('concept-2')">2. Heritage Monogram</button>
+  <button onclick="scrollToConcept('concept-3')">3. Danish Minimalism</button>
+  <button onclick="scrollToConcept('concept-4')">4. The Gentleman's Mark</button>
+  <button onclick="scrollToConcept('taglines')">Taglines</button>
+  <button onclick="scrollToConcept('summary')">Summary</button>
+</nav>
+
+<!-- CONCEPT 1 -->
+<section class="concept-section" id="concept-1">
+  <div class="concept-header">
+    <h2>Concept 1: Classic Elegance</h2>
+    <span class="badge">Combination Mark</span>
+  </div>
+  <p class="concept-desc">
+    A refined, solid top hat icon paired with a sophisticated serif wordmark. The hat features gradient depth, a detailed band with buckle, and generous proportions. Best suited for a brand that wants to feel established and premium.
+  </p>
+
+  <div class="color-palette">
+    <div class="color-swatch" style="background:#c49b26" data-hex="#c49b26"></div>
+    <div class="color-swatch" style="background:#8b6914" data-hex="#8b6914"></div>
+    <div class="color-swatch" style="background:#5a4510" data-hex="#5a4510"></div>
+    <div class="color-swatch" style="background:#3d2e0a" data-hex="#3d2e0a"></div>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-card">
+      <div class="logo-preview warm-bg">
+        <img src="logos/concept-1/horizontal-gold.svg" alt="Concept 1 Horizontal Gold">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Gold Palette</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-1/horizontal-dark.svg" alt="Concept 1 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Dark Palette</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview warm-bg">
+        <img src="logos/concept-1/vertical-gold.svg" alt="Concept 1 Vertical Gold">
+      </div>
+      <div class="logo-info">
+        <span class="label">Vertical Lockup</span>
+        <span class="variant">Gold Palette</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-1/icon-gold.svg" alt="Concept 1 Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Icon Only</span>
+        <span class="variant">Favicon / App Icon</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONCEPT 2 -->
+<section class="concept-section" id="concept-2">
+  <div class="concept-header">
+    <h2>Concept 2: Heritage Monogram</h2>
+    <span class="badge">Lettermark</span>
+  </div>
+  <p class="concept-desc">
+    The letter "H" with a top hat integrated into the left stem — the hat becomes part of the letterform itself. Uses uppercase tracking for authority. The monogram works beautifully at small sizes and as a standalone mark inside a circle.
+  </p>
+
+  <div class="color-palette">
+    <div class="color-swatch" style="background:#1a1a2e" data-hex="#1a1a2e"></div>
+    <div class="color-swatch" style="background:#2a2a3d" data-hex="#2a2a3d"></div>
+    <div class="color-swatch" style="background:#8b6914" data-hex="#8b6914"></div>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-2/horizontal-dark.svg" alt="Concept 2 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Navy + Gold Accent</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview warm-bg">
+        <img src="logos/concept-2/horizontal-gold.svg" alt="Concept 2 Horizontal Gold">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Gold Palette</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-2/vertical-dark.svg" alt="Concept 2 Vertical Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Vertical Lockup</span>
+        <span class="variant">Navy</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview dark-bg">
+        <img src="logos/concept-2/icon-dark.svg" style="filter: brightness(0) invert(1);" alt="Concept 2 Monogram Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Monogram in Circle</span>
+        <span class="variant">Reversed / Dark BG</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-2/icon-dark.svg" alt="Concept 2 Monogram Icon Light">
+      </div>
+      <div class="logo-info">
+        <span class="label">Monogram in Circle</span>
+        <span class="variant">Light BG</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONCEPT 3 -->
+<section class="concept-section" id="concept-3">
+  <div class="concept-header">
+    <h2>Concept 3: Danish Minimalism</h2>
+    <span class="badge">Scandinavian</span>
+  </div>
+  <p class="concept-desc">
+    Ultra-clean approach inspired by Nordic design principles. The top hat is rendered as a single-stroke outline — light, airy, modern. Lowercase wordmark in Inter conveys approachability while the gold hat band adds the only touch of warmth. The most "website-native" option.
+  </p>
+
+  <div class="color-palette">
+    <div class="color-swatch" style="background:#8b6914" data-hex="#8b6914"></div>
+    <div class="color-swatch" style="background:#c49b26" data-hex="#c49b26"></div>
+    <div class="color-swatch" style="background:#3d2e0a" data-hex="#3d2e0a"></div>
+    <div class="color-swatch" style="background:#1a1a2e" data-hex="#1a1a2e"></div>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-card">
+      <div class="logo-preview warm-bg">
+        <img src="logos/concept-3/horizontal-gold.svg" alt="Concept 3 Horizontal Gold">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Gold Palette</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-3/horizontal-dark.svg" alt="Concept 3 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Dark Palette</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview warm-bg">
+        <img src="logos/concept-3/vertical-gold.svg" alt="Concept 3 Vertical Gold">
+      </div>
+      <div class="logo-info">
+        <span class="label">Vertical Lockup</span>
+        <span class="variant">Gold Palette</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-3/icon-gold.svg" alt="Concept 3 Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Hat Outline Icon</span>
+        <span class="variant">Minimal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONCEPT 4 -->
+<section class="concept-section" id="concept-4">
+  <div class="concept-header">
+    <h2>Concept 4: The Gentleman's Mark</h2>
+    <span class="badge">Emblem</span>
+  </div>
+  <p class="concept-desc">
+    A heritage emblem approach — the top hat sits inside a shield/crest shape, flanked by "EST. KOLDING" and decorative lines. This is the most prestigious option, evoking old-world craftsmanship and Danish heritage. Works well for signage, packaging, and premium contexts.
+  </p>
+
+  <div class="color-palette">
+    <div class="color-swatch" style="background:#c49b26" data-hex="#c49b26"></div>
+    <div class="color-swatch" style="background:#8b6914" data-hex="#8b6914"></div>
+    <div class="color-swatch" style="background:#5a4510" data-hex="#5a4510"></div>
+    <div class="color-swatch" style="background:#1a1a2e" data-hex="#1a1a2e"></div>
+  </div>
+
+  <div class="logo-grid">
+    <div class="logo-card">
+      <div class="logo-preview warm-bg">
+        <img src="logos/concept-4/horizontal-gold.svg" alt="Concept 4 Horizontal Gold">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Gold + Shield</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-4/horizontal-dark.svg" alt="Concept 4 Horizontal Dark">
+      </div>
+      <div class="logo-info">
+        <span class="label">Horizontal Lockup</span>
+        <span class="variant">Dark Palette</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview warm-bg">
+        <img src="logos/concept-4/vertical-gold.svg" alt="Concept 4 Vertical Gold">
+      </div>
+      <div class="logo-info">
+        <span class="label">Vertical Lockup</span>
+        <span class="variant">Full Emblem</span>
+      </div>
+    </div>
+    <div class="logo-card">
+      <div class="logo-preview">
+        <img src="logos/concept-4/icon-gold.svg" alt="Concept 4 Shield Icon">
+      </div>
+      <div class="logo-info">
+        <span class="label">Shield Icon</span>
+        <span class="variant">Standalone</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- TAGLINE SECTION -->
+<section class="concept-section" id="taglines">
+  <h2 style="font-family:'Playfair Display',serif; font-size:1.8rem; margin-bottom:1rem;">Tagline: Dansk Hattetradition</h2>
+  <p class="concept-desc">The tagline is designed as a separate, optional element. Here's how it integrates with each concept style:</p>
+
+  <div class="tagline-section">
+    <h3>Serif Style (Concepts 1 & 4)</h3>
+    <div class="tagline-demo">
+      <div class="example">
+        <span class="name">Hattemanden<span class="dk">.dk</span></span>
+        <span class="tagline">Dansk Hattetradition</span>
+      </div>
+      <div class="example" style="background:#1a1a2e; color:#fff;">
+        <span class="name" style="color:#fff;">Hattemanden<span class="dk">.dk</span></span>
+        <span class="tagline" style="color:#c49b26;">Dansk Hattetradition</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tagline-section">
+    <h3>Sans-Serif Style (Concepts 2 & 3)</h3>
+    <div class="tagline-demo">
+      <div class="example">
+        <span class="name" style="font-family:'Inter',sans-serif; font-weight:300; letter-spacing:3px; text-transform:uppercase; font-size:1.1rem;">HATTEMANDEN<span class="dk" style="font-weight:600;">.DK</span></span>
+        <span class="tagline" style="font-family:'Inter',sans-serif; letter-spacing:2px; font-size:0.65rem;">DANSK HATTETRADITION</span>
+      </div>
+      <div class="example" style="background:#1a1a2e; color:#fff;">
+        <span class="name" style="font-family:'Inter',sans-serif; font-weight:300; letter-spacing:3px; text-transform:uppercase; font-size:1.1rem; color:#fff;">HATTEMANDEN<span class="dk" style="font-weight:600;">.DK</span></span>
+        <span class="tagline" style="font-family:'Inter',sans-serif; letter-spacing:2px; font-size:0.65rem; color:#c49b26;">DANSK HATTETRADITION</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SUMMARY -->
+<section class="summary" id="summary">
+  <h2>Concept Comparison</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Aspect</th>
+        <th>1. Classic Elegance</th>
+        <th>2. Heritage Mono</th>
+        <th>3. Danish Minimal</th>
+        <th>4. Gentleman's Mark</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Type</strong></td>
+        <td>Combination</td>
+        <td>Lettermark</td>
+        <td>Combination</td>
+        <td>Emblem</td>
+      </tr>
+      <tr>
+        <td><strong>Feel</strong></td>
+        <td>Premium, warm</td>
+        <td>Authoritative, bold</td>
+        <td>Modern, clean</td>
+        <td>Heritage, prestige</td>
+      </tr>
+      <tr>
+        <td><strong>Best for</strong></td>
+        <td>Website header, cards</td>
+        <td>App icon, social</td>
+        <td>Website, digital</td>
+        <td>Signage, packaging</td>
+      </tr>
+      <tr>
+        <td><strong>Small sizes</strong></td>
+        <td>Good (use icon)</td>
+        <td>Excellent</td>
+        <td>Good</td>
+        <td>Fair (complex)</td>
+      </tr>
+      <tr>
+        <td><strong>Typography</strong></td>
+        <td>Playfair Display</td>
+        <td>Playfair + Inter</td>
+        <td>Inter only</td>
+        <td>Playfair + Inter</td>
+      </tr>
+      <tr>
+        <td><strong>Color palette</strong></td>
+        <td>Gold primary</td>
+        <td>Navy + gold accent</td>
+        <td>Both work</td>
+        <td>Gold primary</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div style="text-align:center; padding:2rem; color:#999; font-size:0.8rem;">
+  Round 1 — Generated February 2026 &middot; Hattemanden.dk Logo Project
+</div>
+
+<script>
+function scrollToConcept(id) {
+  document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+// Highlight nav on scroll
+const sections = ['concept-1','concept-2','concept-3','concept-4','taglines','summary'];
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const idx = sections.indexOf(entry.target.id);
+      if (idx >= 0) {
+        document.querySelectorAll('.nav button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.nav button')[idx].classList.add('active');
+      }
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) observer.observe(el);
+});
+</script>
+</body>
+</html>

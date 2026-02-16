@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Ornamental frame -->
+  <rect x="4" y="4" width="112" height="112" rx="2" fill="none" stroke="#5a4510" stroke-width="1.5"/>
+  <rect x="7" y="7" width="106" height="106" rx="1.5" fill="none" stroke="#8b6914" stroke-width="0.4"/>
+  <!-- Corner dots -->
+  <circle cx="10" cy="10" r="1.2" fill="#8b6914"/>
+  <circle cx="110" cy="10" r="1.2" fill="#8b6914"/>
+  <circle cx="10" cy="110" r="1.2" fill="#8b6914"/>
+  <circle cx="110" cy="110" r="1.2" fill="#8b6914"/>
+  <!-- Detailed top hat -->
+  <g transform="translate(22, 15)" fill="none" stroke="#5a4510">
+    <path d="M18,65 L18,22 C18,19 21,15 28,13 L50,13 C57,15 60,19 60,22 L60,65" stroke-width="1.8"/>
+    <path d="M5,65 C5,60 12,56 18,56 L60,56 C66,56 73,60 73,65 C73,70 66,74 60,74 L18,74 C12,74 5,70 5,65Z" stroke-width="1.8"/>
+    <rect x="18" y="47" width="42" height="9" rx="1" stroke-width="1" fill="#c4a747" fill-opacity="0.3"/>
+    <rect x="34" y="48" width="9" height="7" rx="1" stroke-width="0.7"/>
+    <circle cx="38.5" cy="51.5" r="1.5" fill="#5a4510"/>
+  </g>
+  <!-- Small text -->
+  <text x="60" y="102" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="600" font-size="8" fill="#3d2e0a" letter-spacing="2">HATTEMANDEN</text>
+</svg>

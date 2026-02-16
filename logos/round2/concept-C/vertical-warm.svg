@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 240" width="260" height="240">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Cormorant+Garamond:wght@300;400;500;600&amp;display=swap');
+    </style>
+  </defs>
+  <!-- Minimal top hat silhouette — refined, not cartoon -->
+  <g transform="translate(88, 20)" fill="#88754a">
+    <!-- Crown -->
+    <rect x="12" y="0" width="60" height="52" rx="2"/>
+    <!-- Band detail slightly lighter -->
+    <rect x="12" y="40" width="60" height="8" fill="#a0895c"/>
+    <!-- Brim -->
+    <ellipse cx="42" cy="55" rx="42" ry="10"/>
+  </g>
+  <!-- Fine rule -->
+  <line x1="40" y1="98" x2="220" y2="98" stroke="#88754a" stroke-width="0.4"/>
+  <!-- Main wordmark stacked -->
+  <text x="130" y="130" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="32" fill="#3d2e0a" letter-spacing="4">HATTE</text>
+  <text x="130" y="164" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="32" fill="#3d2e0a" letter-spacing="4">MANDEN</text>
+  <text x="130" y="186" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="16" fill="#88754a">.dk</text>
+  <!-- Ornament -->
+  <line x1="60" y1="198" x2="115" y2="198" stroke="#88754a" stroke-width="0.4"/>
+  <circle cx="130" cy="198" r="1.5" fill="none" stroke="#88754a" stroke-width="0.5"/>
+  <line x1="145" y1="198" x2="200" y2="198" stroke="#88754a" stroke-width="0.4"/>
+  <!-- Location -->
+  <text x="130" y="218" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="10" fill="#88754a" letter-spacing="3">SØNDERGADE · KOLDING</text>
+</svg>

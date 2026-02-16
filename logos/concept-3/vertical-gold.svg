@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 160" width="200" height="160">
+  <title>Hattemanden.dk Logo - Danish Minimalism Vertical</title>
+  <!-- Top Hat outline centered -->
+  <g transform="translate(58, 8)" fill="none" stroke="#8b6914" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M18,16 L18,48 L52,48 L52,16" />
+    <path d="M18,16 Q35,8 52,16" />
+    <path d="M4,48 Q11,43 18,48" />
+    <path d="M52,48 Q59,43 66,48" />
+    <line x1="4" y1="48" x2="66" y2="48" />
+    <line x1="18" y1="38" x2="52" y2="38" stroke="#c49b26" stroke-width="1.5" />
+  </g>
+  <!-- Text below -->
+  <text x="100" y="95" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="22" font-weight="300" fill="#3d2e0a" text-anchor="middle" letter-spacing="4">
+    hattemanden
+  </text>
+  <text x="100" y="118" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="18" font-weight="600" fill="#8b6914" text-anchor="middle">
+    .dk
+  </text>
+</svg>

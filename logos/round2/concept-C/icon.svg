@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Refined hat silhouette for favicon -->
+  <g transform="translate(15, 12)" fill="#88754a">
+    <!-- Crown -->
+    <rect x="10" y="0" width="50" height="44" rx="2"/>
+    <!-- Band -->
+    <rect x="10" y="34" width="50" height="7" fill="#a0895c"/>
+    <!-- Brim -->
+    <ellipse cx="35" cy="47" rx="35" ry="9"/>
+  </g>
+  <!-- Fine text -->
+  <text x="50" y="82" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="9" fill="#3d2e0a" letter-spacing="1.5">HATTEMANDEN</text>
+  <text x="50" y="93" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="7" fill="#88754a">.dk</text>
+</svg>

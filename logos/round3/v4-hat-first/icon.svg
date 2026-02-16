@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Hat-first icon: the hat dominates -->
+  <g transform="translate(16, 8)">
+    <path d="M20,68 L22,22 C23,17 29,12 38,10 L52,10 C61,12 67,17 68,22 L70,68" fill="none" stroke="#3d2e0a" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M4,70 C4,63 14,57 22,57 L68,57 C76,57 86,63 86,70 C86,77 76,83 68,83 L22,83 C14,83 4,77 4,70Z" fill="none" stroke="#3d2e0a" stroke-width="2.5"/>
+    <rect x="22" y="48" width="46" height="9" rx="1.5" fill="#c4a747" fill-opacity="0.25" stroke="#3d2e0a" stroke-width="1"/>
+    <rect x="40" y="49.5" width="10" height="6" rx="1" fill="none" stroke="#3d2e0a" stroke-width="0.7"/>
+    <circle cx="45" cy="52.5" r="1.8" fill="#3d2e0a"/>
+  </g>
+  <!-- Name below -->
+  <text x="60" y="102" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="9.5" fill="#3d2e0a" letter-spacing="1.5">HATTEMANDEN</text>
+  <line x1="20" y1="108" x2="100" y2="108" stroke="#c4a747" stroke-width="0.4"/>
+  <text x="60" y="116" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="7" fill="#88754a">.dk</text>
+</svg>

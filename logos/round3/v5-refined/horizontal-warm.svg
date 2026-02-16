@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 160" width="480" height="160">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Cormorant+Garamond:wght@300;400;500;600&amp;display=swap');</style>
+  </defs>
+  <!-- V5 Clean Stamp — Refined: Chapeau Claque silhouette, prominent gold band -->
+  <g transform="translate(75, 80)">
+    <!-- Bold outer ring -->
+    <circle cx="0" cy="0" r="65" fill="none" stroke="#3d2e0a" stroke-width="3"/>
+    <!-- Thin inner ring -->
+    <circle cx="0" cy="0" r="58" fill="none" stroke="#3d2e0a" stroke-width="0.6"/>
+    <!-- Curved HATTEMANDEN -->
+    <path id="r5wTop" d="M-48,-34 A56,56 0 0,1 48,-34" fill="none"/>
+    <text font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="11.5" fill="#3d2e0a" letter-spacing="3">
+      <textPath href="#r5wTop" startOffset="50%" text-anchor="middle">HATTEMANDEN</textPath>
+    </text>
+    <!-- Curved tagline -->
+    <path id="r5wBot" d="M-46,38 A56,56 0 0,0 46,38" fill="none"/>
+    <text font-family="'Cormorant Garamond', serif" font-weight="500" font-size="8.5" fill="#5a4510" letter-spacing="2">
+      <textPath href="#r5wBot" startOffset="50%" text-anchor="middle">DANSK HATTETRADITION</textPath>
+    </text>
+    <!-- Gold dot separators -->
+    <circle cx="-55" cy="0" r="2.2" fill="#c4a747"/>
+    <circle cx="55" cy="0" r="2.2" fill="#c4a747"/>
+    <!-- Chapeau Claque silhouette — tall cylinder, flat top, subtle flare -->
+    <g transform="translate(-22, -26)">
+      <!-- Brim -->
+      <ellipse cx="22" cy="36" rx="24" ry="5" fill="#3d2e0a"/>
+      <!-- Crown — Chapeau Claque: straight sides, flat top, slight outward flare -->
+      <path d="M14,36 C14,24 13.5,12 13.5,2 L30.5,2 C30.5,12 30,24 30,36 Z" fill="#3d2e0a"/>
+      <!-- Gold hatband — full opacity -->
+      <rect x="14" y="32" width="16" height="3.5" rx="0.5" fill="#c4a747"/>
+    </g>
+  </g>
+  <!-- Wordmark -->
+  <text x="165" y="60" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="40" fill="#3d2e0a" letter-spacing="3">Hattemanden</text>
+  <line x1="165" y1="72" x2="465" y2="72" stroke="#88754a" stroke-width="0.4"/>
+  <text x="165" y="92" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="16" fill="#88754a">.dk</text>
+  <text x="165" y="118" font-family="'Cormorant Garamond', serif" font-weight="300" font-size="12" fill="#88754a" letter-spacing="2">Søndergade · Kolding · Siden 2000</text>
+</svg>

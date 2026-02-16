@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 150" width="520" height="150">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Cormorant+Garamond:wght@300;400;500;600&amp;display=swap');</style>
+  </defs>
+  <!-- The Signature: wordmark-forward, small seal accent -->
+  <!-- Top fine rule -->
+  <line x1="20" y1="18" x2="500" y2="18" stroke="#88754a" stroke-width="0.5"/>
+  <!-- Small accent seal on left -->
+  <g transform="translate(52, 75)">
+    <circle cx="0" cy="0" r="36" fill="none" stroke="#5a4510" stroke-width="1.8"/>
+    <circle cx="0" cy="0" r="32" fill="none" stroke="#c4a747" stroke-width="0.4"/>
+    <!-- Tiny clean hat -->
+    <g transform="translate(-12, -14)">
+      <rect x="3" y="0" width="18" height="16" rx="1" fill="#5a4510"/>
+      <rect x="3" y="12" width="18" height="3" fill="#c4a747" fill-opacity="0.3"/>
+      <ellipse cx="12" cy="18" rx="12" ry="4" fill="#5a4510"/>
+    </g>
+  </g>
+  <!-- Main wordmark — elegant, large -->
+  <text x="108" y="56" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="44" fill="#3d2e0a" letter-spacing="4">Hattemanden</text>
+  <!-- .dk inline -->
+  <text x="108" y="78" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="18" fill="#88754a">.dk</text>
+  <!-- Fine mid rule -->
+  <line x1="140" y1="72" x2="500" y2="72" stroke="#88754a" stroke-width="0.35"/>
+  <!-- Centered ornament dots -->
+  <circle cx="290" cy="92" r="1.2" fill="#88754a"/>
+  <circle cx="310" cy="92" r="1.8" fill="none" stroke="#88754a" stroke-width="0.5"/>
+  <circle cx="330" cy="92" r="1.2" fill="#88754a"/>
+  <!-- Tagline -->
+  <text x="310" y="112" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="300" font-size="12" fill="#5a4510" letter-spacing="4">DANSK HATTETRADITION</text>
+  <!-- Bottom rule with location -->
+  <line x1="20" y1="130" x2="200" y2="130" stroke="#88754a" stroke-width="0.5"/>
+  <text x="260" y="134" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="9" fill="#88754a" letter-spacing="2">SØNDERGADE · KOLDING · SIDEN 2000</text>
+  <line x1="320" y1="130" x2="500" y2="130" stroke="#88754a" stroke-width="0.5"/>
+</svg>

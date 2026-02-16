@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&amp;display=swap');</style>
+  </defs>
+  <!-- V5 Clean Stamp — White on transparent (for dark backgrounds) -->
+  <g transform="translate(60, 54)">
+    <circle cx="0" cy="0" r="48" fill="none" stroke="#ffffff" stroke-width="3.5"/>
+    <circle cx="0" cy="0" r="42" fill="none" stroke="#ffffff" stroke-width="0.6"/>
+    <g transform="translate(-14, -20)">
+      <!-- Brim -->
+      <ellipse cx="14" cy="29" rx="18" ry="4" fill="#ffffff"/>
+      <!-- Crown — Chapeau Claque: straight sides, flat top, slight flare -->
+      <path d="M9,29 C9,20 8.5,11 8.5,2 L19.5,2 C19.5,11 19,20 19,29 Z" fill="#ffffff"/>
+      <rect x="9" y="26" width="10" height="2.8" rx="0.5" fill="#ffffff" fill-opacity="0.15"/>
+    </g>
+    <circle cx="-40" cy="0" r="1.8" fill="#ffffff"/>
+    <circle cx="40" cy="0" r="1.8" fill="#ffffff"/>
+  </g>
+  <text x="60" y="112" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="8" fill="#ffffff" letter-spacing="1.5">HATTEMANDEN</text>
+</svg>

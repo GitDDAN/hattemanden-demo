@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160" width="520" height="160">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Cormorant+Garamond:wght@300;400;500;600&amp;display=swap');</style>
+  </defs>
+  <!-- Hat-first: the hat IS the logo. C's restraint + A's hat detail -->
+  <!-- Large, prominent refined hat -->
+  <g transform="translate(40, 18)">
+    <path d="M24,90 L27,26 C28,20 35,14 48,12 L70,12 C83,14 90,20 91,26 L94,90" fill="none" stroke="#3d2e0a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M5,93 C5,84 16,76 27,76 L91,76 C102,76 113,84 113,93 C113,102 102,109 91,109 L27,109 C16,109 5,102 5,93Z" fill="none" stroke="#3d2e0a" stroke-width="2.5"/>
+    <!-- Prominent hatband -->
+    <rect x="27" y="64" width="64" height="12" rx="2" fill="#c4a747" fill-opacity="0.25" stroke="#3d2e0a" stroke-width="1.2"/>
+    <!-- Band accent -->
+    <rect x="52" y="65.5" width="14" height="9" rx="2" fill="none" stroke="#3d2e0a" stroke-width="0.9"/>
+    <circle cx="59" cy="70" r="2.2" fill="#3d2e0a"/>
+    <!-- Subtle crown texture -->
+    <line x1="44" y1="14" x2="43" y2="64" stroke="#3d2e0a" stroke-width="0.3" stroke-opacity="0.2"/>
+    <line x1="59" y1="12" x2="59" y2="64" stroke="#3d2e0a" stroke-width="0.3" stroke-opacity="0.2"/>
+    <line x1="74" y1="14" x2="75" y2="64" stroke="#3d2e0a" stroke-width="0.3" stroke-opacity="0.2"/>
+  </g>
+  <!-- Thin vertical rule -->
+  <line x1="168" y1="16" x2="168" y2="144" stroke="#c4a747" stroke-width="0.4"/>
+  <!-- Bold wordmark — maximum readability -->
+  <text x="188" y="62" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="42" fill="#3d2e0a" letter-spacing="4">HATTEMANDEN</text>
+  <!-- .dk with fine rule -->
+  <text x="188" y="84" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="18" fill="#88754a">.dk</text>
+  <!-- Mid separator -->
+  <line x1="218" y1="76" x2="500" y2="76" stroke="#88754a" stroke-width="0.4"/>
+  <!-- Tagline -->
+  <text x="188" y="108" font-family="'Cormorant Garamond', serif" font-weight="300" font-size="13" fill="#5a4510" letter-spacing="3">DANSK HATTETRADITION</text>
+  <!-- Fine bottom rule with location -->
+  <line x1="188" y1="126" x2="240" y2="126" stroke="#c4a747" stroke-width="0.3"/>
+  <text x="248" y="130" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="10" fill="#88754a" letter-spacing="2">SØNDERGADE · KOLDING</text>
+  <line x1="420" y1="126" x2="500" y2="126" stroke="#c4a747" stroke-width="0.3"/>
+</svg>

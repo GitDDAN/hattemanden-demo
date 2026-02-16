@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Signature icon: seal with hat, clean text below -->
+  <g transform="translate(60, 48)">
+    <circle cx="0" cy="0" r="38" fill="none" stroke="#5a4510" stroke-width="2"/>
+    <circle cx="0" cy="0" r="34" fill="none" stroke="#c4a747" stroke-width="0.4"/>
+    <!-- Clean hat silhouette -->
+    <g transform="translate(-14, -16)">
+      <rect x="3" y="0" width="22" height="18" rx="1.2" fill="#5a4510"/>
+      <rect x="3" y="14" width="22" height="3" fill="#c4a747" fill-opacity="0.3"/>
+      <ellipse cx="14" cy="20" rx="14" ry="4.5" fill="#5a4510"/>
+    </g>
+  </g>
+  <text x="60" y="100" text-anchor="middle" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="9" fill="#3d2e0a" letter-spacing="1.5">HATTEMANDEN</text>
+  <line x1="18" y1="106" x2="102" y2="106" stroke="#88754a" stroke-width="0.4"/>
+  <text x="60" y="114" text-anchor="middle" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="7" fill="#88754a">.dk</text>
+</svg>

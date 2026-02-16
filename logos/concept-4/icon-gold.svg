@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <title>Hattemanden.dk Shield Icon</title>
+  <defs>
+    <linearGradient id="goldG4i" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c49b26;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b6914;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Shield -->
+  <path d="M50,4 L92,16 L92,56 Q92,88 50,98 Q8,88 8,56 L8,16 Z" fill="none" stroke="#8b6914" stroke-width="2.5" />
+  <path d="M50,10 L86,20 L86,54 Q86,82 50,92 Q14,82 14,54 L14,20 Z" fill="none" stroke="#c49b26" stroke-width="0.8" />
+  <!-- Top hat -->
+  <g transform="translate(22, 22)">
+    <ellipse cx="28" cy="50" rx="28" ry="7" fill="url(#goldG4i)" />
+    <rect x="10" y="10" width="36" height="40" rx="2" fill="url(#goldG4i)" />
+    <ellipse cx="28" cy="10" rx="18" ry="5" fill="#c49b26" />
+    <rect x="10" y="38" width="36" height="5" fill="#5a4510" />
+  </g>
+</svg>

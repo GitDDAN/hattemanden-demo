@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 100" width="520" height="100">
+  <title>Hattemanden.dk Logo - Classic Elegance Gold</title>
+  <desc>A refined top hat icon with Hattemanden.dk wordmark in warm gold tones</desc>
+  <defs>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#c49b26;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b6914;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Top Hat Icon - refined proportions -->
+  <g id="hat-icon" transform="translate(12, 6)">
+    <ellipse cx="38" cy="76" rx="37" ry="8" fill="url(#goldGrad)" />
+    <path d="M15,22 L13,76 L63,76 L61,22 Z" fill="url(#goldGrad)" />
+    <ellipse cx="38" cy="22" rx="23" ry="5.5" fill="#d4a82a" />
+    <rect x="14" y="59" width="48" height="6" fill="#5a4510" />
+    <rect x="32" y="57.5" width="12" height="10" rx="1.5" fill="none" stroke="#d4a82a" stroke-width="1.4" />
+  </g>
+  <!-- Wordmark - generous spacing -->
+  <text x="100" y="55" font-family="'Playfair Display', 'Georgia', serif" font-size="38" font-weight="700" fill="#3d2e0a" letter-spacing="0.5">Hattemanden</text>
+  <text x="390" y="55" font-family="'Inter', 'Helvetica Neue', sans-serif" font-size="38" font-weight="300" fill="#8b6914">.dk</text>
+  <line x1="100" y1="68" x2="175" y2="68" stroke="#c49b26" stroke-width="0.8" />
+</svg>

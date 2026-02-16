@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 180" width="520" height="180">
+  <defs>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&amp;family=Cormorant+Garamond:wght@300;400;500;600&amp;display=swap');</style>
+  </defs>
+  <!-- Refined circular seal — bolder, cleaner -->
+  <g transform="translate(90, 90)">
+    <circle cx="0" cy="0" r="75" fill="none" stroke="#5a4510" stroke-width="2.5"/>
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#c4a747" stroke-width="0.6"/>
+    <circle cx="0" cy="0" r="60" fill="none" stroke="#5a4510" stroke-width="1"/>
+    <!-- 8 accent dots (reduced from 12) -->
+    <g fill="#c4a747">
+      <circle cx="0" cy="-65" r="1.3"/>
+      <circle cx="46" cy="-46" r="1.3"/>
+      <circle cx="65" cy="0" r="1.3"/>
+      <circle cx="46" cy="46" r="1.3"/>
+      <circle cx="0" cy="65" r="1.3"/>
+      <circle cx="-46" cy="46" r="1.3"/>
+      <circle cx="-65" cy="0" r="1.3"/>
+      <circle cx="-46" cy="-46" r="1.3"/>
+    </g>
+    <!-- Curved text — larger, more readable -->
+    <path id="sealTopR3" d="M-52,-40 A65,65 0 0,1 52,-40" fill="none"/>
+    <text font-family="'Cormorant Garamond', serif" font-weight="600" font-size="11" fill="#5a4510" letter-spacing="4">
+      <textPath href="#sealTopR3" startOffset="50%" text-anchor="middle">HATTEMANDEN</textPath>
+    </text>
+    <path id="sealBotR3" d="M-50,44 A65,65 0 0,0 50,44" fill="none"/>
+    <text font-family="'Cormorant Garamond', serif" font-weight="400" font-size="9" fill="#5a4510" letter-spacing="2">
+      <textPath href="#sealBotR3" startOffset="50%" text-anchor="middle">KOLDING · SIDEN 2000</textPath>
+    </text>
+    <!-- Diamond separators -->
+    <g fill="#c4a747">
+      <polygon points="-58,-2 -56,0 -58,2 -60,0"/>
+      <polygon points="58,-2 60,0 58,2 56,0"/>
+    </g>
+    <!-- Larger, cleaner central hat -->
+    <g transform="translate(-30, -32)" fill="none" stroke="#5a4510">
+      <path d="M15,48 L17,14 C18,10 22,7 28,5 L34,5 C40,7 44,10 45,14 L47,48" stroke-width="2" stroke-linecap="round"/>
+      <path d="M4,50 C4,45 10,41 17,41 L45,41 C52,41 58,45 58,50 C58,55 52,59 45,59 L17,59 C10,59 4,55 4,50Z" stroke-width="2"/>
+      <rect x="17" y="33" width="28" height="8" rx="1.5" fill="#c4a747" fill-opacity="0.2" stroke-width="1"/>
+      <rect x="27" y="34.5" width="8" height="5" rx="1" stroke-width="0.7"/>
+      <circle cx="31" cy="37" r="1.2" fill="#5a4510"/>
+    </g>
+  </g>
+  <!-- Adjacent wordmark — bold and clean -->
+  <text x="190" y="68" font-family="'Playfair Display', Georgia, serif" font-weight="700" font-size="40" fill="#3d2e0a" letter-spacing="3">Hattemanden</text>
+  <text x="190" y="90" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="18" fill="#88754a">.dk</text>
+  <line x1="190" y1="100" x2="500" y2="100" stroke="#c4a747" stroke-width="0.5"/>
+  <text x="190" y="120" font-family="'Cormorant Garamond', serif" font-weight="300" font-size="13" fill="#5a4510" letter-spacing="2.5">Dansk Hattetradition</text>
+  <text x="190" y="140" font-family="'Cormorant Garamond', serif" font-weight="400" font-size="10" fill="#88754a" letter-spacing="1.5">Søndergade · Kolding</text>
+</svg>
