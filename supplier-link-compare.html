@@ -485,13 +485,11 @@
     </style>
 </head>
 <body>
+<script src="demo-nav.js"></script>
 
 <div class="header">
     <div class="header-inner">
         <h1>Leverandør-link Sammenligning</h1>
-        <nav class="header-nav">
-            <a href="hat-sales-overview.html">&larr; Salgsoversigt</a>
-        </nav>
         <div class="header-stats">
             <span>Produkter: <span class="count" id="stat-total">—</span></span>
             <span>Bekræftet: <span class="count" id="stat-ok" style="color:var(--green)">0</span></span>
@@ -926,25 +924,8 @@ function resetAll() {
     render();
 }
 
-/* ===== PASSWORD GATE ===== */
-function checkAuth() {
-    if (sessionStorage.getItem('hm-demo-auth') === 'ok') return true;
-    // Check if running locally (no auth needed)
-    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') return true;
-    // Redirect to index.html for password
-    const currentPage = location.pathname.split('/').pop();
-    if (currentPage !== 'index.html') {
-        sessionStorage.setItem('hm-redirect', currentPage);
-        location.href = 'index.html';
-        return false;
-    }
-    return false;
-}
-
-/* ===== INIT ===== */
-if (checkAuth()) {
-    loadData();
-}
+/* ===== INIT (auth handled by demo-nav.js) ===== */
+loadData();
 </script>
 </body>
 </html>

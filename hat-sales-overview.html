@@ -107,35 +107,7 @@
             color: var(--primary);
         }
 
-        /* ===== DEMO NAV ===== */
-        .demo-nav {
-            margin-left: auto;
-            display: flex;
-            gap: 0.5rem;
-        }
-        .demo-nav a {
-            font-size: 0.72rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.08em;
-            text-decoration: none;
-            color: var(--text-muted);
-            padding: 0.45rem 1rem;
-            border-radius: var(--radius-full);
-            border: 1px solid var(--border-default);
-            transition: all 180ms ease;
-            white-space: nowrap;
-        }
-        .demo-nav a:hover {
-            color: var(--primary);
-            border-color: var(--primary);
-            background: var(--primary-glow);
-        }
-        .demo-nav a.active {
-            color: #fff;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-color: var(--primary);
-        }
+        /* Nav handled by demo-nav.js */
 
         /* ===== HERO ===== */
         .hero {
@@ -755,13 +727,11 @@
             .hero-subtitle { font-size: 0.85rem; }
             .summary-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
             .summary-card .value { font-size: 1.4rem; }
-            .demo-nav { gap: 0.2rem; }
-            .demo-nav a { padding: 0.3rem 0.5rem; font-size: 0.55rem; }
         }
     </style>
 </head>
 <body>
-    <script>if(sessionStorage.getItem('hm-demo-auth')!=='ok')window.location.href='index.html';</script>
+    <script src="demo-nav.js"></script>
 
     <header class="site-header">
         <div class="header-inner">
@@ -770,15 +740,6 @@
                 <h1>hattemanden.dk</h1>
                 <span class="tagline">Dansk hattetradition</span>
             </div>
-            <nav class="demo-nav">
-                <a href="hat-carousel-demo.html">Farvekarrusel</a>
-                <a href="hat-rotation-demo.html">360&deg; Visning</a>
-                <a href="hat-images-demo.html">Billeder</a>
-                <a href="hat-sales-overview.html" class="active">Salgsoversigt</a>
-                <a href="supplier-link-compare.html">Link-verificering</a>
-                <a href="logo-design-journey.html">Logo Design</a>
-                <a href="https://hattemanden-dashboard.onrender.com" target="_blank">Dashboard &#8599;</a>
-            </nav>
         </div>
     </header>
 
