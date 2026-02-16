@@ -14,9 +14,9 @@
     { href: 'hat-carousel-demo.html',  label: 'Farvekarrusel' },
     { href: 'hat-rotation-demo.html',  label: '360\u00b0 Visning' },
     { href: 'hat-images-demo.html',    label: 'Billeder' },
+    { href: 'logo-design-journey.html', label: 'Logo Design' },
     { href: 'hat-sales-overview.html', label: 'Salgsoversigt' },
-    { href: 'supplier-link-compare.html', label: 'Link-verificering' },
-    { href: 'logo-design-journey.html', label: 'Logo Design' }
+    { href: 'supplier-link-compare.html', label: 'Link-verificering' }
   ];
 
   var current = location.pathname.split('/').pop();
