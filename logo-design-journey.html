@@ -1668,12 +1668,25 @@
 
   .mock-hat-label-wrap {
     background: linear-gradient(145deg, #2a1f0a, #1a1508);
-    padding: 3rem 2rem;
+    padding: 2.5rem 2rem 2rem;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    gap: 3rem;
+    gap: 2.5rem;
     flex-wrap: wrap;
+  }
+  .label-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .label-col-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.58rem;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(196,167,71,0.5);
   }
 
   .mock-hat-inner-label {
@@ -1687,19 +1700,6 @@
     gap: 0.6rem;
     padding: 0.8rem;
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-    position: relative;
-  }
-
-  .mock-hat-inner-label::before {
-    content: 'Inner Label';
-    position: absolute;
-    top: -20px;
-    left: 0;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.58rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(196,167,71,0.5);
   }
 
   .mock-hat-inner-label .label-seal {
@@ -1744,20 +1744,7 @@
     gap: 0.4rem;
     padding: 0.5rem;
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-    position: relative;
     border: 1px solid rgba(196,167,71,0.2);
-  }
-
-  .mock-hat-woven-tag::before {
-    content: 'Woven Tag';
-    position: absolute;
-    top: -20px;
-    left: 0;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.58rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(196,167,71,0.5);
   }
 
   .mock-hat-woven-tag .tag-seal {
@@ -1791,21 +1778,7 @@
     justify-content: center;
     gap: 0.2rem;
     box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-    position: relative;
     border: 2px solid var(--gold);
-  }
-
-  .mock-hat-sticker::before {
-    content: 'Brim Sticker';
-    position: absolute;
-    top: -20px;
-    left: -10px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 0.58rem;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(196,167,71,0.5);
-    white-space: nowrap;
   }
 
   .mock-hat-sticker .sticker-seal {
@@ -2064,6 +2037,73 @@
     .mock-hat-label-wrap { gap: 2rem; }
     .mock-invoice-header { flex-direction: column; gap: 0.5rem; text-align: center; }
     .mock-shop-building { width: 260px; }
+  }
+
+  /* ═══════════════════════════════════════════════════════ */
+  /* LIGHTBOX — Click to enlarge logo                       */
+  /* ═══════════════════════════════════════════════════════ */
+
+  .logo-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(26, 26, 26, 0.92);
+    backdrop-filter: blur(8px);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 300ms ease, visibility 300ms ease;
+    cursor: zoom-out;
+  }
+  .logo-lightbox.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .logo-lightbox img {
+    max-width: 85vw;
+    max-height: 85vh;
+    object-fit: contain;
+    transform: scale(0.9);
+    transition: transform 300ms ease;
+    filter: drop-shadow(0 8px 30px rgba(0,0,0,0.4));
+  }
+  .logo-lightbox.open img {
+    transform: scale(1);
+  }
+  .logo-lightbox .lb-close {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1.4rem;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 200ms ease;
+  }
+  .logo-lightbox .lb-close:hover {
+    background: rgba(255,255,255,0.2);
+  }
+  .logo-lightbox .lb-hint {
+    position: absolute;
+    bottom: 1.5rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.4);
+  }
+
+  [data-zoomable] {
+    cursor: zoom-in;
   }
 </style>
 </head>
@@ -2523,26 +2563,35 @@
       <div class="mockup-label">Hat Labels &amp; Tags (Physical Product)</div>
       <div class="mockup-content">
         <div class="mock-hat-label-wrap">
-          <div class="mock-hat-inner-label">
-            <div class="label-seal">
-              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
-            </div>
-            <div>
-              <div class="label-text">Hattemanden</div>
-              <div class="label-sub">Kolding &middot; Danmark</div>
+          <div class="label-col">
+            <span class="label-col-title">Inner Label</span>
+            <div class="mock-hat-inner-label">
+              <div class="label-seal">
+                <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+              </div>
+              <div>
+                <div class="label-text">Hattemanden</div>
+                <div class="label-sub">Kolding &middot; Danmark</div>
+              </div>
             </div>
           </div>
-          <div class="mock-hat-woven-tag">
-            <div class="tag-seal">
-              <img src="logos/final/seal-icon-dark.png" alt="" onerror="this.style.display='none';">
+          <div class="label-col">
+            <span class="label-col-title">Woven Tag</span>
+            <div class="mock-hat-woven-tag">
+              <div class="tag-seal">
+                <img src="logos/final/seal-icon-dark.png" alt="" onerror="this.style.display='none';">
+              </div>
+              <div class="tag-text">Hatte&shy;manden</div>
             </div>
-            <div class="tag-text">Hatte&shy;manden</div>
           </div>
-          <div class="mock-hat-sticker">
-            <div class="sticker-seal">
-              <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+          <div class="label-col">
+            <span class="label-col-title">Brim Sticker</span>
+            <div class="mock-hat-sticker">
+              <div class="sticker-seal">
+                <img src="logos/final/seal-icon.png" alt="" onerror="this.style.display='none';">
+              </div>
+              <div class="sticker-text">Hattemanden</div>
             </div>
-            <div class="sticker-text">Hattemanden</div>
           </div>
         </div>
       </div>
@@ -3030,5 +3079,41 @@
   Hattemanden.dk Logo Design Project &middot; February 2026
 </div>
 
+<!-- Lightbox overlay -->
+<div class="logo-lightbox" id="lightbox">
+  <button class="lb-close" aria-label="Close">&times;</button>
+  <img src="" alt="Logo preview">
+  <div class="lb-hint">Click anywhere to close</div>
+</div>
+
+<script>
+(function() {
+  var lb = document.getElementById('lightbox');
+  var lbImg = lb.querySelector('img');
+
+  // Make logo images zoomable
+  document.querySelectorAll('.seal-container img, .var-preview img, .logo-hero img').forEach(function(img) {
+    img.setAttribute('data-zoomable', '');
+    img.addEventListener('click', function(e) {
+      e.stopPropagation();
+      lbImg.src = this.src;
+      lbImg.alt = this.alt || 'Hattemanden Logo';
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  // Close lightbox
+  function closeLb() {
+    lb.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  lb.addEventListener('click', closeLb);
+  lb.querySelector('.lb-close').addEventListener('click', closeLb);
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLb();
+  });
+})();
+</script>
 </body>
 </html>
