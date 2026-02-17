@@ -107,7 +107,35 @@
             color: var(--primary);
         }
 
-        /* Nav handled by demo-nav.js */
+        /* ===== DEMO NAV ===== */
+        .demo-nav {
+            margin-left: auto;
+            display: flex;
+            gap: 0.5rem;
+        }
+        .demo-nav a {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-decoration: none;
+            color: var(--text-muted);
+            padding: 0.45rem 1rem;
+            border-radius: var(--radius-full);
+            border: 1px solid var(--border-default);
+            transition: all 180ms ease;
+            white-space: nowrap;
+        }
+        .demo-nav a:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: var(--primary-glow);
+        }
+        .demo-nav a.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-color: var(--primary);
+        }
 
         /* ===== HERO ===== */
         .hero {
@@ -570,6 +598,93 @@
         .zero-table .product-list { background: rgba(181, 52, 42, 0.02); }
         .zero-table .product-list tr:hover td { background: rgba(181, 52, 42, 0.03); }
 
+        /* ===== NA SECTION (Inactive Products) ===== */
+        .na-wrapper {
+            max-width: none;
+            margin: 3rem 2.5rem 0;
+        }
+        .na-wrapper-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem 1.25rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            user-select: none;
+            transition: background 150ms ease;
+            margin-bottom: 1.25rem;
+        }
+        .na-wrapper-header:hover {
+            background: var(--bg-elevated);
+        }
+        .na-wrapper-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: rgba(107, 92, 93, 0.08);
+            border: 1px solid rgba(107, 92, 93, 0.12);
+            color: var(--text-muted);
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .na-wrapper-title {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+        .na-wrapper-badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: rgba(107, 92, 93, 0.08);
+            padding: 0.15rem 0.6rem;
+            border-radius: var(--radius-full);
+            margin-left: auto;
+        }
+        .na-wrapper-chevron {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: transform 250ms ease;
+            margin-left: 0.5rem;
+        }
+        .na-section {
+            opacity: 0.7;
+        }
+        .na-section .category-icon {
+            background: rgba(107, 92, 93, 0.15);
+            color: var(--text-muted);
+        }
+        .na-section .category-title {
+            color: var(--text-muted);
+        }
+        .na-section .category-count {
+            color: var(--text-muted);
+            background: rgba(107, 92, 93, 0.08);
+        }
+        .na-section .sub-table {
+            border-color: rgba(107, 92, 93, 0.1);
+        }
+        .na-section .product-list .p-name {
+            color: var(--text-muted);
+        }
+        .na-section .link-cell a {
+            color: var(--text-muted);
+            border-color: var(--border-default);
+            background: transparent;
+        }
+        .na-section .link-cell a:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+            background: var(--primary-glow);
+        }
+
         /* ===== SELECTION SUMMARY PANEL ===== */
         .selection-panel {
             position: fixed;
@@ -727,11 +842,13 @@
             .hero-subtitle { font-size: 0.85rem; }
             .summary-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
             .summary-card .value { font-size: 1.4rem; }
+            .demo-nav { gap: 0.2rem; }
+            .demo-nav a { padding: 0.3rem 0.5rem; font-size: 0.55rem; }
         }
     </style>
 </head>
 <body>
-    <script src="demo-nav.js"></script>
+    <script>if(sessionStorage.getItem('hm-demo-auth')!=='ok')window.location.href='index.html';</script>
 
     <header class="site-header">
         <div class="header-inner">
@@ -740,6 +857,14 @@
                 <h1>hattemanden.dk</h1>
                 <span class="tagline">Dansk hattetradition</span>
             </div>
+            <nav class="demo-nav">
+                <a href="hat-carousel-demo.html">Farvekarrusel</a>
+                <a href="hat-rotation-demo.html">360&deg; Visning</a>
+                <a href="hat-images-demo.html">Billeder</a>
+                <a href="hat-sales-overview.html" class="active">Salgsoversigt</a>
+                <a href="supplier-link-compare.html">Link-verificering</a>
+                <a href="https://hattemanden-dashboard.onrender.com" target="_blank">Dashboard &#8599;</a>
+            </nav>
         </div>
     </header>
 
@@ -747,25 +872,25 @@
     <section class="hero">
         <span class="hero-badge">Produktanalyse</span>
         <h2 class="hero-title">Salgsoversigt</h2>
-        <p class="hero-subtitle">110 solgte produkter fordelt p&aring; kategorier og underkategorier</p>
+        <p class="hero-subtitle" id="hero-subtitle">110 solgte produkter fordelt p&aring; kategorier og underkategorier</p>
     </section>
 
     <!-- SUMMARY CARDS -->
     <div class="summary-grid">
         <div class="summary-card">
-            <div class="value">110</div>
+            <div class="value" id="summary-products">110</div>
             <div class="label">Solgte produkter</div>
         </div>
         <div class="summary-card">
-            <div class="value">46</div>
+            <div class="value" id="summary-zero">46</div>
             <div class="label">Nul salg</div>
         </div>
         <div class="summary-card">
-            <div class="value">811</div>
+            <div class="value" id="summary-units">811</div>
             <div class="label">Enheder solgt</div>
         </div>
         <div class="summary-card">
-            <div class="value">361K</div>
+            <div class="value" id="summary-revenue">361K</div>
             <div class="label">Oms&aelig;tning (DKK)</div>
         </div>
     </div>
@@ -972,6 +1097,57 @@ const DATA = {
     ]
   }
 };
+
+/* ===== NA PRODUCTS (client marked as "not available" in spreadsheet Notes column) ===== */
+const NA_PRODUCTS = new Set([
+  // Herrehatte > Kasketter & Chauffør
+  'Cap 780', 'Chauffør', 'PVC 1011',
+  // Herrehatte > Panama & Sommer
+  'Bouble med Liverpool', 'Cuba 2041', 'Cuba 1018', 'Napoli Panama kopi',
+  // Herrehatte > Jagthatte
+  'Jagthat 885', 'Jagthat 887', 'Jagthat 891', 'Jagthat 890',
+  'Jagthat 882', 'Jagthat 883', 'Jagthat 884',
+  // Herrehatte > Bowler & Formal
+  'Pork Pie',
+  // Herrehatte > Trilby & Fedora
+  'Pepino', 'Faust', 'Trilby 2040', '1112 Faust',
+  // Herrehatte > Western & Australske
+  'Aussie Western', 'USA', 'Western 2016', 'Australsk',
+  'Bill Western', 'John Western',
+  // Herrehatte > Sixpence (ALL)
+  'Gatwick', 'Sildeben 1012', 'Sixpence 2', '9908 Sixpence',
+  'Engelsk sixpence/flatcap', '6640 Sixpence', 'Sixpence',
+  // Herrehatte > City & Klassisk
+  'Harris Tweed 2011', '8801', 'City London', 'News',
+  'Dublin 7 | 1019', 'St. Petersborg 2015',
+  // Herrehatte > Newsboy & Peaky Blinders (ALL)
+  'Newsboy', 'Newsboy 1013', 'Patchwork 1015', 'Newsboy Cambridge',
+  'Picky Blinders Birmingham', 'Birmingham 561', 'Newsboy 557', 'Baker',
+  // Herrehatte > Øvrige
+  'Tyrolerhat 569', 'Oilskin', 'Bob Marley', 'Tyrolerhat 568',
+  'Oilskin (2)', 'Lotus 1014', 'Strikhue',
+  // Damehatte > Klassiske (ALL)
+  '1105', 'Royal', 'Quin', 'Napoli', 'Padova',
+  'Royal Derby', 'Maltesene', 'Garda',
+  // Damehatte > Sommerhatte
+  'Olivia', 'Derby 2045', 'Torino - Strå', 'Paris 2044', 'Torino',
+  // Damehatte > Kasketter (ALL)
+  'Damekasket', 'Damekasket m. sløjfe',
+  // Damehatte > Trilby & Fedora
+  'Fedora 2043',
+  // Damehatte > Vinterhatte (ALL)
+  'Strikhue Angorauld Mix', 'Strikhue m. ægte pels', 'Ørevarmerer',
+  // Festtøj > Tøj (ALL)
+  'Kjoleskjorte Boswell', 'Kjolevest Boswell',
+  // Festtøj > Tilbehør (ALL)
+  'Handsker', 'Butterfly',
+  // Diverse (ALL)
+  'Refleksbånd 780', 'Motorbriller',
+]);
+
+function parseRev(s) {
+  return parseInt(s.replace(/\./g, ''), 10) || 0;
+}
 
 const ZERO = [
   { cat: 'Herrehatte', count: 25, items: [
@@ -1521,33 +1697,60 @@ function dateClass(d) {
 }
 
 /* ===== RENDER SOLD CATEGORY ===== */
-function renderCategory(cat) {
+function renderCategory(cat, filterMode) {
+  filterMode = filterMode || 'active';
+  const isNA = filterMode === 'na';
   let id = 0;
   let rows = '';
+  let catProducts = 0, catUnits = 0, catRevenue = 0;
+
   for (const sub of cat.subs) {
-    const sid = cat.title.replace(/\s/g,'') + '_' + (id++);
+    const items = sub.items.filter(function(i) {
+      return isNA ? NA_PRODUCTS.has(i.n) : !NA_PRODUCTS.has(i.n);
+    });
+    if (items.length === 0) continue;
+
+    const subUnits = items.reduce(function(s, i) { return s + i.sold; }, 0);
+    const subRevenue = items.reduce(function(s, i) { return s + parseRev(i.rev); }, 0);
+    const subRevenueStr = subRevenue.toLocaleString('da-DK');
+    catProducts += items.length;
+    catUnits += subUnits;
+    catRevenue += subRevenue;
+
+    const sid = cat.title.replace(/\s/g,'') + '_' + filterMode + '_' + (id++);
     rows += `<tr class="sub-row" data-target="${sid}" onclick="toggleSub('${sid}', this)">
       <td><span class="chevron">\u25B6</span><span class="sub-name">${sub.name}</span></td>
-      <td class="r">${sub.products}</td>
-      <td class="r">${sub.units}</td>
-      <td class="r">${sub.revenue} kr</td>
+      <td class="r">${items.length}</td>
+      <td class="r">${subUnits}</td>
+      <td class="r">${subRevenueStr} kr</td>
     </tr>`;
-    rows += `<tr class="product-rows" id="${sid}"><td colspan="4" style="padding:0!important;border-bottom:1px solid var(--border-subtle)"><div class="product-inner"><div class="product-list"><table>
-      <thead><tr><th>Produkt</th><th class="r">Pris</th><th class="r">Solgt</th><th class="r">Oms\u00e6tning</th><th class="r">Sidst solgt</th><th>Shop</th><th>Kilde</th><th>Video</th><th>Lifestyle Foto</th></tr></thead>
-      <tbody>${sub.items.map(i => `<tr><td class="p-name">${i.n}</td><td class="r">${i.price.toLocaleString('da-DK')} kr</td><td class="r">${i.sold}</td><td class="r">${i.rev} kr</td><td class="r ${dateClass(i.date)}">${i.date}</td>${shopLink(i.n, i.url)}${srcLink(i.n, i.src)}${videoToggle(i.n)}${lifestyleToggle(i.n)}</tr>`).join('')}</tbody>
-    </table></div></div></td></tr>`;
+    if (isNA) {
+      rows += `<tr class="product-rows" id="${sid}"><td colspan="4" style="padding:0!important;border-bottom:1px solid var(--border-subtle)"><div class="product-inner"><div class="product-list"><table>
+        <thead><tr><th>Produkt</th><th class="r">Pris</th><th class="r">Solgt</th><th class="r">Oms\u00e6tning</th><th class="r">Sidst solgt</th><th>Shop</th><th>Kilde</th></tr></thead>
+        <tbody>${items.map(i => `<tr><td class="p-name">${i.n}</td><td class="r">${i.price.toLocaleString('da-DK')} kr</td><td class="r">${i.sold}</td><td class="r">${i.rev} kr</td><td class="r ${dateClass(i.date)}">${i.date}</td>${shopLink(i.n, i.url)}${srcLink(i.n, i.src)}</tr>`).join('')}</tbody>
+      </table></div></div></td></tr>`;
+    } else {
+      rows += `<tr class="product-rows" id="${sid}"><td colspan="4" style="padding:0!important;border-bottom:1px solid var(--border-subtle)"><div class="product-inner"><div class="product-list"><table>
+        <thead><tr><th>Produkt</th><th class="r">Pris</th><th class="r">Solgt</th><th class="r">Oms\u00e6tning</th><th class="r">Sidst solgt</th><th>Shop</th><th>Kilde</th><th>Video</th><th>Lifestyle Foto</th></tr></thead>
+        <tbody>${items.map(i => `<tr><td class="p-name">${i.n}</td><td class="r">${i.price.toLocaleString('da-DK')} kr</td><td class="r">${i.sold}</td><td class="r">${i.rev} kr</td><td class="r ${dateClass(i.date)}">${i.date}</td>${shopLink(i.n, i.url)}${srcLink(i.n, i.src)}${videoToggle(i.n)}${lifestyleToggle(i.n)}</tr>`).join('')}</tbody>
+      </table></div></div></td></tr>`;
+    }
   }
 
-  return `<section class="category-section">
+  if (rows === '') return '';
+
+  const catRevenueStr = catRevenue.toLocaleString('da-DK');
+  const sectionClass = isNA ? 'category-section na-section' : 'category-section';
+  return `<section class="${sectionClass}">
     <div class="category-header">
       <span class="category-icon">${cat.icon}</span>
       <h3 class="category-title">${cat.title}</h3>
-      <span class="category-count">${cat.totalProducts} produkter</span>
+      <span class="category-count">${catProducts} produkter</span>
     </div>
     <div class="sub-table"><table>
       <thead><tr><th>Underkategori</th><th class="r">Produkter</th><th class="r">Solgt</th><th class="r">Oms\u00e6tning</th></tr></thead>
       <tbody>${rows}</tbody>
-      <tfoot><tr><td>Total ${cat.title}</td><td class="r">${cat.totalProducts}</td><td class="r">${cat.totalUnits}</td><td class="r">${cat.totalRevenue} kr</td></tr></tfoot>
+      <tfoot><tr><td>Total ${cat.title}</td><td class="r">${catProducts}</td><td class="r">${catUnits}</td><td class="r">${catRevenueStr} kr</td></tr></tfoot>
     </table></div>
   </section>`;
 }
@@ -1579,6 +1782,73 @@ function renderZero() {
       <tbody>${rows}</tbody>
     </table></div>
   </section>`;
+}
+
+/* ===== RENDER NA SECTION ===== */
+function renderNASection() {
+  let content = '';
+  var catKeys = ['herrehatte', 'damehatte', 'festtoej', 'diverse'];
+  for (var k = 0; k < catKeys.length; k++) {
+    content += renderCategory(DATA[catKeys[k]], 'na');
+  }
+  if (!content) return '';
+
+  var naCount = 0;
+  for (var catKey in DATA) {
+    for (var s = 0; s < DATA[catKey].subs.length; s++) {
+      var items = DATA[catKey].subs[s].items;
+      for (var j = 0; j < items.length; j++) {
+        if (NA_PRODUCTS.has(items[j].n)) naCount++;
+      }
+    }
+  }
+
+  return `<section class="na-wrapper">
+    <div class="na-wrapper-header" onclick="toggleNASection()">
+      <span class="na-wrapper-icon">\u2298</span>
+      <h3 class="na-wrapper-title">Udg\u00e5et / Ikke aktive (NA)</h3>
+      <span class="na-wrapper-badge">${naCount} produkter</span>
+      <span class="na-wrapper-chevron" id="na-chevron">\u25B6</span>
+    </div>
+    <div class="na-wrapper-body" id="na-body" style="display: none;">
+      ${content}
+    </div>
+  </section>`;
+}
+
+function toggleNASection() {
+  var body = document.getElementById('na-body');
+  var chevron = document.getElementById('na-chevron');
+  var isVisible = body.style.display !== 'none';
+  body.style.display = isVisible ? 'none' : 'block';
+  chevron.textContent = isVisible ? '\u25BC' : '\u25B6';
+}
+
+/* ===== UPDATE SUMMARY CARDS ===== */
+function updateSummaryCards() {
+  var activeProducts = 0, activeUnits = 0, activeRevenue = 0;
+  for (var catKey in DATA) {
+    for (var s = 0; s < DATA[catKey].subs.length; s++) {
+      var items = DATA[catKey].subs[s].items;
+      for (var j = 0; j < items.length; j++) {
+        if (!NA_PRODUCTS.has(items[j].n)) {
+          activeProducts++;
+          activeUnits += items[j].sold;
+          activeRevenue += parseRev(items[j].rev);
+        }
+      }
+    }
+  }
+  var el;
+  el = document.getElementById('summary-products');
+  if (el) el.textContent = activeProducts;
+  el = document.getElementById('summary-units');
+  if (el) el.textContent = activeUnits.toLocaleString('da-DK');
+  var revK = Math.round(activeRevenue / 1000);
+  el = document.getElementById('summary-revenue');
+  if (el) el.textContent = revK + 'K';
+  el = document.getElementById('hero-subtitle');
+  if (el) el.textContent = activeProducts + ' aktive produkter fordelt p\u00e5 kategorier og underkategorier';
 }
 
 /* ===== TOGGLE ===== */
@@ -1622,7 +1892,9 @@ function exportSelections() {
   const allProducts = [];
   for (const catKey in DATA) {
     for (const sub of DATA[catKey].subs) {
-      for (const item of sub.items) allProducts.push(item.n);
+      for (const item of sub.items) {
+        if (!NA_PRODUCTS.has(item.n)) allProducts.push(item.n);
+      }
     }
   }
   for (const z of ZERO) {
@@ -1658,12 +1930,14 @@ const app = document.getElementById('app');
 
 function renderAll() {
   app.innerHTML =
-    renderCategory(DATA.herrehatte) +
-    renderCategory(DATA.damehatte) +
-    renderCategory(DATA.festtoej) +
-    renderCategory(DATA.diverse) +
+    renderCategory(DATA.herrehatte, 'active') +
+    renderCategory(DATA.damehatte, 'active') +
+    renderCategory(DATA.festtoej, 'active') +
+    renderCategory(DATA.diverse, 'active') +
+    renderNASection() +
     renderZero();
   updateSelectionSummary();
+  updateSummaryCards();
 }
 
 // Render immediately from localStorage (instant, no waiting)
