@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<title>Hattemanden × Build444 — Marketing Partnership</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --charcoal: #1a1a1a;
+    --paper: #f7f4ed;
+    --paper-warm: #efeae0;
+    --forest: #1B3B36;
+    --orange: #FF8A00;
+    --terracotta: #D97B61;
+    --gold: #c4a747;
+    --muted: #8b8578;
+    --red: #c43b2f;
+    --green: #2f7d4a;
+    --border: rgba(26,26,26,0.1);
+    --border-dark: rgba(247,244,237,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; overflow-x: hidden; background: var(--ink); color: var(--paper); font-family: 'Inter', system-ui, sans-serif; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+  html { scroll-snap-type: y proximity; scroll-behavior: smooth; height: 100%; overflow-y: scroll; }
+
+  /* Password gate */
+  #gate { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--ink); padding: 24px; text-align: center; }
+  #gate.hidden { display: none; }
+  #gate .mark { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+  #gate .dot { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; }
+  #gate .brand { font-family: 'Archivo Black', sans-serif; letter-spacing: 4px; color: var(--paper); font-size: 14px; }
+  #gate h1 { font-family: 'DM Serif Display', serif; font-size: 32px; line-height: 1.1; color: var(--paper); margin: 0 0 8px; max-width: 440px; }
+  #gate p { color: var(--muted); font-size: 14px; margin: 0 0 22px; max-width: 320px; }
+  #gate input { padding: 14px 18px; border: 1px solid var(--muted); background: transparent; color: var(--paper); font-size: 16px; min-width: 260px; border-radius: 2px; font-family: inherit; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+  #gate input:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+  #gate button { margin-top: 14px; padding: 14px 34px; background: var(--orange); color: var(--ink); border: none; border-radius: 2px; font-family: 'Archivo Black', sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: transform .15s; }
+  #gate button:hover { transform: translateY(-1px); }
+  #gate .err { color: var(--red); font-size: 13px; margin-top: 10px; min-height: 20px; }
+
+  /* Persistent header */
+  header.deck-head { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+  header.deck-head .brand-lock { display: inline-flex; align-items: center; gap: 10px; pointer-events: auto; background: rgba(10,10,10,0.72); padding: 6px 12px; border-radius: 999px; backdrop-filter: blur(6px); }
+  header.deck-head .brand-lock .dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; }
+  header.deck-head .brand-lock span { font-family: 'Archivo Black', sans-serif; letter-spacing: 3px; color: var(--paper); font-size: 10px; }
+  header.deck-head .counter { background: rgba(10,10,10,0.72); padding: 6px 12px; border-radius: 999px; backdrop-filter: blur(6px); color: var(--orange); font-family: 'Archivo Black', sans-serif; font-size: 10px; pointer-events: auto; }
+  /* Light theme header variant */
+  body.light-head header.deck-head .brand-lock, body.light-head header.deck-head .counter { background: rgba(247,244,237,0.88); color: var(--ink); }
+  body.light-head header.deck-head .brand-lock span { color: var(--ink); }
+  body.light-head header.deck-head .counter { color: var(--forest); }
+
+  /* Slide base */
+  .slide { min-height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; padding: 72px 40px 110px; scroll-snap-align: start; position: relative; overflow: hidden; }
+  @media (max-width: 640px) { .slide { padding: 60px 20px 120px; } }
+  .inner { max-width: 1100px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
+
+  /* Variants */
+  .slide.dark { background: var(--ink); color: var(--paper); }
+  .slide.paper { background: var(--paper); color: var(--ink); }
+  .slide.forest { background: var(--forest); color: var(--paper); }
+  .slide.orange { background: var(--orange); color: var(--ink); }
+
+  /* Typography */
+  .eyebrow { font-family: 'Archivo Black', sans-serif; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 18px; }
+  .slide.paper .eyebrow { color: var(--terracotta); }
+  .slide.forest .eyebrow { color: var(--orange); }
+  .slide.orange .eyebrow { color: var(--ink); }
+
+  .editorial { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 7vw, 88px); line-height: 0.96; letter-spacing: -0.02em; margin: 0 0 22px; font-weight: 400; }
+  .editorial em { font-style: italic; color: var(--orange); }
+  .slide.paper .editorial em { color: var(--terracotta); }
+
+  .punch { font-family: 'Archivo Black', sans-serif; font-size: clamp(30px, 5vw, 52px); line-height: 0.98; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 18px; }
+  .punch .accent { color: var(--orange); }
+  .slide.paper .punch .accent { color: var(--terracotta); }
+
+  .lead { font-size: clamp(16px, 1.7vw, 20px); line-height: 1.55; max-width: 700px; margin: 0 0 18px; color: inherit; opacity: 0.92; }
+  .lead strong { color: var(--orange); font-weight: 600; }
+  .slide.paper .lead strong { color: var(--terracotta); }
+
+  .micro { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+  /* Dots nav */
+  .dots { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; gap: 5px; padding: 8px 12px; background: rgba(10,10,10,0.7); border-radius: 999px; backdrop-filter: blur(6px); }
+  .dots a { width: 7px; height: 7px; background: rgba(247,244,237,0.3); border-radius: 50%; transition: all .2s; }
+  .dots a.active { width: 20px; background: var(--orange); border-radius: 4px; }
+
+  /* KPI cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin: 24px 0; }
+  .kpi { background: rgba(247,244,237,0.05); border: 1px solid var(--border-dark); padding: 20px 22px; border-radius: 2px; }
+  .slide.paper .kpi { background: white; border-color: var(--border); }
+  .kpi .k { font-family: 'Archivo Black', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .kpi .v { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4.5vw, 48px); line-height: 1; margin: 8px 0 4px; letter-spacing: -1px; }
+  .kpi .s { font-size: 12px; color: var(--muted); }
+  .kpi.signal .v { color: var(--orange); }
+  .kpi.accent .v { color: var(--terracotta); }
+  .kpi.bad .v { color: var(--red); }
+
+  /* Asymmetric split */
+  .split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* Full-bleed hero */
+  .bg-image { position: absolute; inset: 0; z-index: 1; }
+  .bg-image img { width: 100%; height: 100%; object-fit: cover; }
+  .bg-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.55) 50%, rgba(10,10,10,0.3) 100%); }
+
+  /* Chart */
+  .chart-card { background: rgba(247,244,237,0.04); border: 1px solid var(--border-dark); padding: 20px; border-radius: 2px; margin: 16px 0; }
+  .slide.paper .chart-card { background: white; border-color: var(--border); }
+  svg.chart { width: 100%; height: 280px; display: block; }
+  svg.chart .grid line { stroke: var(--border-dark); stroke-dasharray: 2 3; }
+  .slide.paper svg.chart .grid line { stroke: var(--border); }
+  svg.chart text { font-size: 10px; fill: var(--muted); font-family: 'Inter', sans-serif; }
+  svg.chart .clk-line { stroke: var(--orange); stroke-width: 2.5; fill: none; }
+  svg.chart .imp-line { stroke: var(--terracotta); stroke-width: 2; fill: none; stroke-dasharray: 4 3; opacity: 0.75; }
+  svg.chart .clk-dot { fill: var(--orange); }
+  svg.chart .imp-dot { fill: var(--terracotta); opacity: 0.7; }
+  .legend { display: flex; gap: 18px; font-size: 11px; color: var(--muted); margin-bottom: 6px; flex-wrap: wrap; }
+  .legend .sw { display: inline-block; width: 14px; height: 3px; margin-right: 6px; vertical-align: middle; }
+  .legend .sw.clk { background: var(--orange); }
+  .legend .sw.imp { background: var(--terracotta); opacity: 0.75; }
+
+  /* Donut */
+  .donut-wrap { display: grid; grid-template-columns: 280px 1fr; gap: 40px; align-items: center; }
+  @media (max-width: 720px) { .donut-wrap { grid-template-columns: 1fr; } }
+  .donut { position: relative; width: 280px; height: 280px; margin: 0 auto; }
+  .donut svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .donut-center { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+  .donut-center .big { font-family: 'Archivo Black', sans-serif; font-size: 42px; color: var(--red); line-height: 1; }
+  .donut-center .lbl { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+  .source-list { list-style: none; padding: 0; margin: 0; }
+  .source-list li { display: flex; align-items: center; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border-dark); }
+  .slide.paper .source-list li { border-color: var(--border); }
+  .source-list .ico { width: 34px; height: 34px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .source-list .name { font-weight: 600; font-size: 14px; }
+  .source-list .val { margin-left: auto; font-family: 'Archivo Black', sans-serif; font-size: 14px; }
+  .source-list .val .num { color: var(--orange); }
+  .slide.paper .source-list .val .num { color: var(--terracotta); }
+
+  /* Icon SVG containers (we embed color via parent bg) */
+  .ico-google { background: white; }
+  .ico-facebook { background: #1877F2; }
+  .ico-instagram { background: linear-gradient(45deg, #F58529, #DD2A7B, #8134AF); }
+  .ico-email { background: var(--forest); }
+  .ico-direct { background: var(--muted); }
+  .ico-unknown { background: var(--red); }
+
+  /* Pillar list */
+  .pillars { list-style: none; padding: 0; margin: 22px 0; }
+  .pillars li { padding: 16px 20px; margin-bottom: 10px; border-left: 3px solid var(--orange); background: rgba(247,244,237,0.04); border-radius: 0 2px 2px 0; }
+  .slide.paper .pillars li { background: white; border-color: var(--terracotta); }
+  .pillars li strong { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; color: var(--orange); display: block; margin-bottom: 4px; }
+  .slide.paper .pillars li strong { color: var(--terracotta); }
+  .pillars li .desc { font-size: 14px; line-height: 1.5; }
+
+  /* Cookie comparison grid */
+  .cookie-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+  @media (max-width: 720px) { .cookie-grid { grid-template-columns: 1fr; } }
+  .cookie-card { background: rgba(247,244,237,0.04); border: 1px solid var(--border-dark); padding: 14px; border-radius: 2px; }
+  .slide.paper .cookie-card { background: white; border-color: var(--border); }
+  .cookie-card .label { font-family: 'Archivo Black', sans-serif; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; color: var(--muted); margin-bottom: 6px; display: flex; justify-content: space-between; align-items: center; }
+  .cookie-card .badge { background: var(--red); color: var(--paper); padding: 2px 8px; border-radius: 2px; font-size: 9px; }
+  .cookie-card .badge.ours { background: var(--orange); color: var(--ink); }
+  .cookie-card img { width: 100%; border-radius: 2px; display: block; }
+
+  /* Homepage mockup */
+  .mock { border: 1px solid var(--border-dark); border-radius: 4px; background: rgba(247,244,237,0.03); overflow: hidden; }
+  .slide.paper .mock { background: white; border-color: var(--border); }
+  .mock .bar { background: rgba(247,244,237,0.08); padding: 6px 10px; font-size: 10px; color: var(--muted); border-bottom: 1px solid var(--border-dark); display: flex; gap: 4px; align-items: center; }
+  .slide.paper .mock .bar { background: var(--paper-warm); border-color: var(--border); }
+  .mock .bar .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--muted); opacity: 0.4; }
+  .mock .bar .url { margin-left: 8px; background: rgba(247,244,237,0.1); padding: 2px 8px; border-radius: 3px; font-family: monospace; }
+  .slide.paper .mock .bar .url { background: white; }
+
+  .mock-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; padding: 10px; }
+  .mock-tile { aspect-ratio: 1/1; background: var(--muted); border-radius: 2px; position: relative; overflow: hidden; font-size: 10px; color: var(--paper); display: flex; align-items: flex-end; padding: 4px; }
+  .mock-tile.buried { opacity: 0.45; filter: saturate(0.4); }
+  .mock-tile .tag { background: var(--red); color: var(--paper); padding: 1px 4px; border-radius: 1px; font-size: 8px; text-transform: uppercase; font-weight: 700; letter-spacing: 0.5px; position: absolute; top: 4px; left: 4px; }
+  .mock-tile .tag.top { background: var(--orange); color: var(--ink); }
+  .mock-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .mock-tile span { position: relative; z-index: 2; background: rgba(0,0,0,0.6); padding: 2px 4px; border-radius: 1px; }
+
+  /* Calendar wheel */
+  .seasonal { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+  @media (max-width: 720px) { .seasonal { grid-template-columns: 1fr; } }
+  .wheel { position: relative; width: 360px; height: 360px; margin: 0 auto; }
+  .wheel svg { width: 100%; height: 100%; }
+  .wheel-center { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; }
+  .wheel-center .mk { font-family: 'DM Serif Display', serif; font-size: 32px; color: var(--orange); line-height: 1; }
+  .season-list { list-style: none; padding: 0; margin: 0; }
+  .season-list li { padding: 10px 0; border-bottom: 1px solid var(--border-dark); display: grid; grid-template-columns: 60px 1fr; gap: 10px; }
+  .slide.paper .season-list li { border-color: var(--border); }
+  .season-list .month { font-family: 'Archivo Black', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); }
+  .slide.paper .season-list .month { color: var(--terracotta); }
+  .season-list .what { font-size: 13px; }
+
+  /* Spreadsheet mockup */
+  .sheet { background: white; color: var(--ink); border-radius: 4px; overflow: hidden; border: 1px solid var(--border); font-size: 12px; font-family: 'Inter', monospace; }
+  .sheet-head { background: var(--forest); color: var(--paper); padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; font-family: 'Archivo Black', sans-serif; }
+  .sheet-row { display: grid; grid-template-columns: 2.2fr 0.7fr 0.7fr 0.9fr 0.7fr; padding: 8px 14px; border-bottom: 1px solid var(--border); align-items: center; }
+  .sheet-row.header { background: var(--paper-warm); font-family: 'Archivo Black', sans-serif; font-size: 9px; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+  .sheet-row .pill { padding: 2px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; display: inline-block; }
+  .sheet-row .pill.hot { background: #e3f6e9; color: var(--green); }
+  .sheet-row .pill.low { background: #fbe6e3; color: var(--red); }
+  .sheet-row .pill.ok { background: #fff3e0; color: var(--orange); }
+
+  /* Content calendar */
+  .cal-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+  @media (max-width: 720px) { .cal-grid { grid-template-columns: repeat(2, 1fr); } }
+  .cal-month { padding: 14px 16px; border-radius: 2px; background: rgba(247,244,237,0.04); border-left: 3px solid var(--forest); }
+  .slide.paper .cal-month { background: white; border-color: var(--forest); }
+  .cal-month .m { font-family: 'Archivo Black', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); }
+  .slide.paper .cal-month .m { color: var(--terracotta); }
+  .cal-month .theme { font-family: 'DM Serif Display', serif; font-size: 18px; margin: 4px 0 6px; line-height: 1.1; }
+  .cal-month .items { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  /* Influencer grid */
+  .ugc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 16px 0; }
+  @media (max-width: 720px) { .ugc-grid { grid-template-columns: repeat(2, 1fr); } }
+  .ugc-tile { aspect-ratio: 1/1.2; background: var(--muted); border-radius: 2px; position: relative; overflow: hidden; }
+  .ugc-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .ugc-tile::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 60%, rgba(0,0,0,0.75) 100%); }
+  .ugc-tile .handle { position: absolute; bottom: 10px; left: 10px; right: 10px; z-index: 2; color: white; font-size: 11px; font-weight: 600; }
+  .ugc-tile .handle .at { color: var(--orange); }
+
+  /* Ad mockup */
+  .ad-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 20px 0; }
+  @media (max-width: 720px) { .ad-grid { grid-template-columns: 1fr; } }
+  .ad-mock { background: white; border-radius: 6px; overflow: hidden; border: 1px solid var(--border); color: var(--ink); }
+  .ad-mock .ad-head { padding: 8px 12px; display: flex; align-items: center; gap: 8px; font-size: 11px; border-bottom: 1px solid var(--border); }
+  .ad-mock .ad-head .avatar { width: 28px; height: 28px; border-radius: 50%; background: var(--forest); color: white; display: flex; align-items: center; justify-content: center; font-family: 'Archivo Black', sans-serif; font-size: 12px; }
+  .ad-mock .ad-head .sponsor { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+  .ad-mock .ad-image { aspect-ratio: 1/1; background: var(--muted); position: relative; overflow: hidden; }
+  .ad-mock .ad-image img { width: 100%; height: 100%; object-fit: cover; }
+  .ad-mock .ad-body { padding: 12px; font-size: 12px; }
+  .ad-mock .cta { background: var(--forest); color: var(--paper); padding: 8px 12px; text-align: center; font-family: 'Archivo Black', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; }
+
+  /* Checklist */
+  .check { list-style: none; padding: 0; margin: 16px 0; }
+  .check li { padding: 10px 0 10px 34px; position: relative; font-size: 15px; border-bottom: 1px solid var(--border-dark); }
+  .slide.paper .check li { border-color: var(--border); }
+  .check li::before { content: ''; position: absolute; left: 0; top: 14px; width: 18px; height: 18px; border-radius: 50%; background: var(--green); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E"); background-size: 70%; background-repeat: no-repeat; background-position: center; }
+  .check li.pending::before { background: var(--orange); background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a0a0a' stroke-width='3'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpolyline points='12 6 12 12 16 14'/%3E%3C/svg%3E"); }
+  .check li strong { font-weight: 700; }
+
+  /* Anchor table */
+  .anchor-table { background: rgba(247,244,237,0.04); border: 1px solid var(--border-dark); border-radius: 2px; overflow: hidden; margin: 20px 0; }
+  .slide.paper .anchor-table { background: white; border-color: var(--border); }
+  .anchor-row { display: grid; grid-template-columns: 2fr 1fr; padding: 16px 20px; border-bottom: 1px solid var(--border-dark); align-items: center; }
+  .slide.paper .anchor-row { border-color: var(--border); }
+  .anchor-row:last-child { border-bottom: 0; }
+  .anchor-row .what { font-size: 15px; }
+  .anchor-row .what small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+  .anchor-row .cost { font-family: 'Archivo Black', sans-serif; font-size: 18px; text-align: right; color: var(--muted); }
+  .anchor-row.ours { background: rgba(255,138,0,0.08); }
+  .slide.paper .anchor-row.ours { background: rgba(217,123,97,0.08); }
+  .anchor-row.ours .cost { color: var(--orange); }
+  .slide.paper .anchor-row.ours .cost { color: var(--terracotta); }
+  .anchor-row.ours .what strong { color: var(--orange); }
+  .slide.paper .anchor-row.ours .what strong { color: var(--terracotta); }
+
+  /* CTA */
+  .cta-box { background: var(--orange); color: var(--ink); padding: 30px 32px; border-radius: 4px; margin: 22px 0; max-width: 600px; }
+  .cta-box h3 { font-family: 'DM Serif Display', serif; font-size: 28px; margin: 0 0 10px; line-height: 1.05; }
+  .cta-box p { margin: 0 0 16px; font-size: 15px; }
+  .cta-btn { display: inline-block; background: var(--ink); color: var(--paper); padding: 14px 28px; font-family: 'Archivo Black', sans-serif; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; text-decoration: none; border-radius: 2px; transition: transform .15s; }
+  .cta-btn:hover { transform: translateY(-2px); }
+  .cta-btn.outline { background: transparent; color: var(--ink); border: 2px solid var(--ink); margin-left: 10px; }
+
+  /* Brand signature footer */
+  .sig { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--border-dark); font-size: 12px; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  .slide.paper .sig { border-color: var(--border); }
+  .sig strong { color: var(--orange); letter-spacing: 3px; font-family: 'Archivo Black', sans-serif; font-size: 11px; }
+  .slide.paper .sig strong { color: var(--terracotta); }
+
+  /* Hero imagery slide */
+  .hero-slide { min-height: 100vh; position: relative; color: var(--paper); }
+  .hero-slide .bg-image { position: absolute; inset: 0; }
+  .hero-slide .bg-image img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-slide::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(10,10,10,0.88) 0%, rgba(10,10,10,0.55) 45%, rgba(10,10,10,0.15) 100%); z-index: 1; }
+
+  /* Two-col inline stats */
+  .inline-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 16px; margin: 16px 0; padding: 16px; background: rgba(247,244,237,0.05); border-radius: 2px; border-left: 3px solid var(--orange); }
+  .slide.paper .inline-stats { background: var(--paper-warm); border-color: var(--terracotta); }
+  .inline-stats div .lb { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  .inline-stats div .vl { font-family: 'Archivo Black', sans-serif; font-size: 18px; margin-top: 2px; }
+
+  /* Utility */
+  .accent-orange { color: var(--orange); }
+  .accent-terracotta { color: var(--terracotta); }
+
+  /* Icons inline SVG wrapper */
+  .icn { width: 18px; height: 18px; display: inline-block; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<!-- Password gate -->
+<div id="gate">
+  <div class="mark"><span class="dot"></span><span class="brand">BUILD444</span></div>
+  <h1>Marketing Partnership Proposal</h1>
+  <p>For Hattemanden — Kim &amp; Kim. Denne præsentation er privat.</p>
+  <form onsubmit="checkPass(event)">
+    <input id="pw" type="password" placeholder="Kodeord" autocomplete="off" autofocus>
+    <br>
+    <button type="submit">Åbn</button>
+  </form>
+  <div class="err" id="err"></div>
+</div>
+
+<!-- Persistent header -->
+<header class="deck-head">
+  <div class="brand-lock"><span class="dot"></span><span>BUILD444 × HATTEMANDEN</span></div>
+  <div class="counter" id="counter">01 / 18</div>
+</header>
+
+<!-- Dots nav -->
+<nav class="dots" id="dots"></nav>
+
+<!-- ============ SLIDE 1: COVER ============ -->
+<section class="slide hero-slide" id="s1" data-head="dark">
+  <div class="bg-image"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chapeau-claque-front.webp?v=1774881656" alt=""></div>
+  <div class="inner" style="position: relative; z-index: 2; padding: 60px 0;">
+    <div class="eyebrow">Marketing Partnership Proposal · April 2026</div>
+    <h1 class="editorial">Et nyt kapitel<br><em>for Hattemanden.</em></h1>
+    <p class="lead" style="max-width: 540px;">Fase 1 er leveret. Det nye site virker — og det leverer allerede. Men det er kun begyndelsen. Her er hvad vi har bygget, hvad dataene viser, og hvordan vi tager jer derhen hvor Hattemanden.dk skal være.</p>
+    <div class="sig" style="margin-top: 44px;">
+      <span><strong>BUILD444</strong> &middot; For Kim &amp; Kim</span>
+      <span>18 slides &middot; 6 minutters læsning</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 1 ============ -->
+
+<!-- SLIDE 2: WHERE YOU WERE -->
+<section class="slide paper" id="s2" data-head="light">
+  <div class="inner">
+    <div class="eyebrow">Akt 1 &middot; Hvor I var</div>
+    <h2 class="editorial">Ni år. <em>Ét peak.</em><br>Tid til at slå det igen.</h2>
+    <p class="lead">361.109 DKK i webomsætning siden 2017. 643 afsluttede ordrer. Peak i 2019 med 94.412 DKK. Siden da et fald — indtil 2025, hvor det endelig begyndte at vende. Alt sammen uden sporing, uden SEO-strategi, uden optimering.</p>
+    <div class="kpi-grid">
+      <div class="kpi signal"><div class="k">2019 Peak</div><div class="v">94.412</div><div class="s">DKK · 140 ordrer</div></div>
+      <div class="kpi"><div class="k">2020</div><div class="v">76.454</div><div class="s">DKK · 156 ordrer</div></div>
+      <div class="kpi bad"><div class="k">2024 Bund</div><div class="v">3.669</div><div class="s">DKK · 9 ordrer</div></div>
+      <div class="kpi accent"><div class="k">2025 Bedring</div><div class="v">29.584</div><div class="s">DKK · 56 ordrer</div></div>
+    </div>
+    <div class="inline-stats">
+      <div><div class="lb">9 år total (web)</div><div class="vl">361.109 DKK</div></div>
+      <div><div class="lb">Afsluttede ordrer</div><div class="vl">643</div></div>
+      <div><div class="lb">Gns. ordreværdi</div><div class="vl">562 DKK</div></div>
+      <div><div class="lb">BACS tilbageholdt</div><div class="vl">441 ordrer</div></div>
+    </div>
+    <p class="lead" style="margin-top: 14px; font-size: 15px;"><strong>Problemet var aldrig produktet — det var synligheden.</strong> I solgte for 95.000 DKK på et år uden at røre en knap. Forestil jer hvad der sker når vi faktisk begynder at skubbe.</p>
+  </div>
+</section>
+
+<!-- SLIDE 3: WHAT WE SHIPPED -->
+<section class="slide dark" id="s3" data-head="dark">
+  <div class="inner">
+    <div class="eyebrow">Fase 1 &middot; Leveret 19. marts 2026</div>
+    <h2 class="editorial">Nyt fundament.<br>Målelig. <em>Moderne.</em></h2>
+    <div class="split" style="margin-top: 24px;">
+      <div>
+        <ul class="check">
+          <li><strong>Shopify-migration</strong> — fra ældre WooCommerce til moderne platform</li>
+          <li><strong>Shopify Payments</strong> — kort, MobilePay, Apple Pay, Google Pay</li>
+          <li><strong>Shipmondo-integration</strong> — dansk fragt og pakkeopfølgning</li>
+          <li><strong>SEO-fundament</strong> — schema, struktur, meta, danske URLs</li>
+          <li><strong>Tracking i tre lag</strong> — GA4 + Google Search Console + Microsoft Clarity</li>
+          <li><strong>Blog-struktur</strong> — guides til cowboyhat, chapeau claque, panama</li>
+          <li><strong>N8n kurvgendannelse</strong> — automatisk email når kurve forlades</li>
+          <li><strong>Heritage-design</strong> — tema bygget specifikt til jeres brand</li>
+        </ul>
+      </div>
+      <div class="mock">
+        <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">hattemanden.dk</span></div>
+        <img src="assets/homepage-categories.png" alt="Hattemanden homepage" style="width: 100%; display: block;" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ACT 2 ============ -->
+
+<!-- SLIDE 4: 30-DAY RESULTS -->
+<section class="slide paper" id="s4" data-head="light">
+  <div class="inner">
+    <div class="eyebrow">Akt 2 &middot; Hvad dataene viser</div>
+    <h2 class="editorial">Første 30 dage:<br><em>+47%</em> omsætning.</h2>
+    <p class="lead">Sammenlignet med jeres 2025-gennemsnit per måned. Uden betalte annoncer — drevet af Kim's egne Facebook- og Instagram-opslag plus én nyhedsbrev-udsendelse. Kim gør allerede det rigtige. Vores job er at gøre det målbart og forstærke det.</p>
+    <div class="kpi-grid">
+      <div class="kpi signal"><div class="k">Omsætning</div><div class="v">+47%</div><div class="s">3.636 vs 2.465 DKK</div></div>
+      <div class="kpi signal"><div class="k">Ordrer</div><div class="v">+49%</div><div class="s">7 vs 4,7/måned</div></div>
+      <div class="kpi accent"><div class="k">AOV</div><div class="v">519</div><div class="s">DKK · stabil</div></div>
+      <div class="kpi signal"><div class="k">Google-kliks</div><div class="v">+124%</div><div class="s">per dag</div></div>
+      <div class="kpi signal"><div class="k">Google-visninger</div><div class="v">+133%</div><div class="s">per dag</div></div>
+      <div class="kpi accent"><div class="k">2019 mål</div><div class="v">7.868</div><div class="s">DKK/mdr gns.</div></div>
+    </div>
+    <p class="lead" style="margin-top: 14px; font-size: 15px;">Vi er allerede på niveau med 2025-snittet — i én måned. Og vi har <strong>endnu ikke optimeret noget</strong>.</p>
+  </div>
+</section>
+
+<!-- SLIDE 5: GSC CHART -->
+<section class="slide dark" id="s5" data-head="dark">
+  <div class="inner">
+    <div class="eyebrow">Google Search Console &middot; 68 dage</div>
+    <h2 class="editorial">Visibiliteten er <em>fordoblet.</em></h2>
+    <p class="lead">Google-visninger før launch: 275/dag. Efter: 641/dag. Det er over dobbelt så mange mennesker der ser jer i Google.</p>
+    <div class="chart-card">
+      <div class="legend">
+        <span><span class="sw clk"></span>Kliks/dag</span>
+        <span><span class="sw imp"></span>Visninger/dag</span>
+        <span><span style="display:inline-block; width:2px; height:12px; background: var(--red); margin-right: 6px; vertical-align: middle;"></span>Launch 19-03</span>
+        <span style="margin-left: auto; color: var(--orange);">Data: Google Search Console</span>
+      </div>
+      <svg class="chart" id="gscChart" viewBox="0 0 900 280" preserveAspectRatio="none"></svg>
+    </div>
+    <div class="inline-stats">
+      <div><div class="lb">Kliks/dag før</div><div class="vl">7,2</div></div>
+      <div><div class="lb">Kliks/dag efter</div><div class="vl">16,1</div></div>
+      <div><div class="lb">Vækst kliks</div><div class="vl" style="color: var(--orange);">+124%</div></div>
+      <div><div class="lb">Vækst visninger</div><div class="vl" style="color: var(--orange);">+133%</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6: ATTRIBUTION DONUT -->
+<section class="slide paper" id="s6" data-head="light">
+  <div class="inner">
+    <div class="eyebrow">Attribution &middot; Hvor kommer kunderne fra?</div>
+    <h2 class="editorial">43% af omsætningen<br>er <em>usynlig.</em></h2>
+    <p class="lead">Af jeres 7 faktiske ordrer har vi kun data på 4 af dem. De resterende 3 (1.295 DKK) er sporløse. Det kunne være Instagram, Facebook, Messenger, en e-mail vi ikke har tagget — vi ved det bare ikke.</p>
+    <div class="donut-wrap" style="margin-top: 24px;">
+      <div class="donut">
+        <svg viewBox="0 0 120 120">
+          <circle cx="60" cy="60" r="45" fill="none" stroke="#e5ddcf" stroke-width="18"/>
+          <circle cx="60" cy="60" r="45" fill="none" stroke="#c43b2f" stroke-width="18" stroke-dasharray="121.6 282.7" stroke-dashoffset="0" pathLength="282.7"/>
+          <circle cx="60" cy="60" r="45" fill="none" stroke="#FF8A00" stroke-width="18" stroke-dasharray="113 282.7" stroke-dashoffset="-121.6" pathLength="282.7"/>
+          <circle cx="60" cy="60" r="45" fill="none" stroke="#1B3B36" stroke-width="18" stroke-dasharray="46.6 282.7" stroke-dashoffset="-234.6" pathLength="282.7"/>
+          <circle cx="60" cy="60" r="45" fill="none" stroke="#D97B61" stroke-width="18" stroke-dasharray="1.5 282.7" stroke-dashoffset="-281.2" pathLength="282.7"/>
+        </svg>
+        <div class="donut-center">
+          <div class="big">43%</div>
+          <div class="lbl">usynlig</div>
+        </div>
+      </div>
+      <div>
+        <ul class="source-list">
+          <li>
+            <div class="ico ico-unknown"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" width="18" height="18"><path d="M9.1 9.1c.6-1.7 2.2-2.9 4.1-2.9 2.4 0 4.3 1.9 4.3 4.3 0 2-1.4 3.6-3.3 4.1"/><line x1="12" y1="17" x2="12" y2="17.01"/></svg></div>
+            <div class="name">Usporbart</div>
+            <div class="val"><span class="num">3</span> · 1.295 DKK</div>
+          </li>
+          <li>
+            <div class="ico ico-google"><svg viewBox="0 0 24 24" width="18" height="18"><path fill="#4285F4" d="M22.5 12.3c0-.8-.1-1.5-.2-2.2H12v4.2h5.9c-.3 1.4-1 2.5-2.2 3.3v2.8h3.6c2.1-1.9 3.2-4.7 3.2-8.1z"/><path fill="#34A853" d="M12 23c2.9 0 5.4-1 7.2-2.6l-3.6-2.8c-1 .7-2.3 1.1-3.7 1.1-2.8 0-5.2-1.9-6.1-4.5H2.3v2.9C4.1 20.7 7.8 23 12 23z"/><path fill="#FBBC04" d="M5.9 14.2c-.2-.7-.4-1.4-.4-2.2s.1-1.5.4-2.2V7H2.3C1.5 8.6 1 10.5 1 12s.5 3.4 1.3 5l3.6-2.8z"/><path fill="#EA4335" d="M12 5.5c1.6 0 3 .5 4.1 1.6l3.1-3.1C17.4 2.2 14.9 1 12 1 7.8 1 4.1 3.3 2.3 7l3.6 2.8C6.8 7.4 9.2 5.5 12 5.5z"/></svg></div>
+            <div class="name">Google SEO</div>
+            <div class="val"><span class="num">2</span> · 1.200 DKK</div>
+          </li>
+          <li>
+            <div class="ico ico-direct"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+            <div class="name">Direct</div>
+            <div class="val"><span class="num">1</span> · 645 DKK</div>
+          </li>
+          <li>
+            <div class="ico ico-email"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" width="18" height="18"><path d="M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></div>
+            <div class="name">Newsletter</div>
+            <div class="val"><span class="num">1</span> · 495 DKK</div>
+          </li>
+          <li style="opacity: 0.5;">
+            <div class="ico ico-facebook"><svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.03 4.39 11.02 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.97h-1.51c-1.49 0-1.95.93-1.95 1.89v2.26h3.32l-.53 3.49h-2.79V24C19.61 23.09 24 18.1 24 12.07z"/></svg></div>
+            <div class="name">Facebook</div>
+            <div class="val" style="color: var(--muted);">0 sporede</div>
+          </li>
+          <li style="opacity: 0.5;">
+            <div class="ico ico-instagram"><svg viewBox="0 0 24 24" fill="white" width="18" height="18"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.27.07 1.65.07 4.85 0 3.2-.01 3.58-.07 4.85-.15 3.23-1.66 4.77-4.92 4.92-1.27.06-1.65.07-4.85.07-3.2 0-3.58-.01-4.85-.07-3.26-.15-4.77-1.7-4.92-4.92-.06-1.27-.07-1.65-.07-4.85 0-3.2.01-3.58.07-4.85C2.3 3.92 3.82 2.38 7.07 2.23 8.35 2.18 8.73 2.16 12 2.16zm0-2.16C8.74 0 8.33.01 7.05.07 2.7.27.27 2.69.07 7.05.01 8.33 0 8.74 0 12s.01 3.67.07 4.95c.2 4.36 2.62 6.78 6.98 6.98 1.28.06 1.69.07 4.95.07 3.26 0 3.67-.01 4.95-.07 4.35-.2 6.78-2.62 6.98-6.98.06-1.28.07-1.69.07-4.95s-.01-3.67-.07-4.95c-.2-4.35-2.62-6.78-6.98-6.98C15.67.01 15.26 0 12 0zm0 5.84a6.16 6.16 0 1 0 0 12.32 6.16 6.16 0 0 0 0-12.32zm0 10.16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z"/></svg></div>
+            <div class="name">Instagram</div>
+            <div class="val" style="color: var(--muted);">0 sporede</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" style="margin-top: 18px; font-size: 14px; color: var(--muted);">Facebook + Instagram sendte 84 sessioner på 30 dage ifølge GA4 — men ingen af dem konverterede efter vores sporing. Enten konverterer social ikke, eller også kan vi ikke måle det. Vi skal have svar på begge.</p>
+  </div>
+</section>
+
+<!-- SLIDE 7: COOKIE COMPARISON -->
+<section class="slide dark" id="s7" data-head="dark">
+  <div class="inner">
+    <div class="eyebrow">Konkurrenterne gør det anderledes</div>
+    <h2 class="editorial">Cookie-banner:<br>jeres er <em>for venlig.</em></h2>
+    <p class="lead">Det lyder småligt — men det er derfor I ikke kan se hvor halvdelen af ordrene kommer fra. Kunderne klikker "Afvis" på 2 sekunder uden at tænke. Konkurrenterne tvinger et reelt valg. Resultat: de ved hvad der virker. I gør ikke.</p>
+    <div class="cookie-grid">
+      <div class="cookie-card">
+        <div class="label"><span>Hatstore.dk</span><span class="badge">Aggressiv — blokerer siden</span></div>
+        <img src="assets/cookie-hatstore.png" alt="Hatstore.dk cookie banner">
+      </div>
+      <div class="cookie-card">
+        <div class="label"><span>Mühlbauer.at</span><span class="badge">Blokerer siden — to lige knapper</span></div>
+        <img src="assets/cookie-muehlbauer.png" alt="Mühlbauer cookie">
+      </div>
+      <div class="cookie-card">
+        <div class="label"><span>Borsalino.com</span><span class="badge">Tydeligt accept — bred bar</span></div>
+        <img src="assets/cookie-borsalino.png" alt="Borsalino cookie">
+      </div>
+      <div class="cookie-card">
+        <div class="label"><span>Lock &amp; Co. Hatters</span><span class="badge">Tre jævnbyrdige knapper</span></div>
+        <img src="assets/cookie-lockhatters.png" alt="Lock Hatters cookie">
+      </div>
+    </div>
+    <p class="lead" style="font-size: 14px; margin-top: 14px;">Vores plan: gør jeres banner <strong>klarere uden at være aggressiv</strong> — flytte "Accepter" til primærknap, holde "Afvis" som link. Ikke snedigt, bare professionelt. Forventet effekt: flere sporede ordrer, bedre attribution, færre "usporbare" huller.</p>
+  </div>
+</section>
+
+<!-- ============ ACT 3 ============ -->
+
+<!-- SLIDE 8: BESTSELLERS BURIED -->
+<section class="slide paper" id="s8" data-head="light">
+  <div class="inner">
+    <div class="eyebrow">Akt 3 &middot; De oplagte sejre</div>
+    <h2 class="editorial">Jeres bestsellers<br>er <em>begravet.</em></h2>
+    <p class="lead">Kig på de 4 "Kundernes favoritter" på forsiden i dag. Kig så på de 5 produkter der historisk har tjent 17-62k DKK hver. De er ikke de samme. Vi fremhæver forkerte produkter.</p>
+
+    <div class="split" style="margin-top: 24px;">
+      <div>
+        <div class="micro" style="margin-bottom: 8px;">Nu: "KUNDERNES FAVORITTER" (forsiden)</div>
+        <div class="mock">
+          <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">hattemanden.dk</span></div>
+          <div class="mock-grid">
+            <div class="mock-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/rollhut-brun.jpg?v=1774793953"><span>Klassisk Fedora</span></div>
+            <div class="mock-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E28-33_5_5875c2e7.jpg?v=1774019105"><span>Cowboy læder</span></div>
+            <div class="mock-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/panama-hat-klassisk_1_44686_0_natur.jpg?v=1773605985"><span>Panama klassisk</span></div>
+            <div class="mock-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E21-11_1_16859d3f.jpg?v=1773616243"><span>Sixpence tweed</span></div>
+          </div>
+          <p style="font-size: 11px; color: var(--muted); padding: 10px; margin: 0; text-align: center;">Samlet historisk omsætning: <strong>ukendt/lav</strong> — disse er ikke top 5.</p>
+        </div>
+      </div>
+      <div>
+        <div class="micro" style="margin-bottom: 8px;">Burde stå øverst: <span style="color: var(--terracotta);">HISTORISKE BESTSELLERS</span></div>
+        <div class="mock">
+          <div class="bar" style="background: var(--terracotta); color: white;"><span style="background: white;" class="dot"></span><span style="background: white;" class="dot"></span><span style="background: white;" class="dot"></span><span class="url" style="background: rgba(255,255,255,0.25); color: white;">hattemanden.dk · FORESLÅET</span></div>
+          <div class="mock-grid">
+            <div class="mock-tile"><span class="tag top">17.3%</span><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chapeau-claque-front.webp?v=1774881656"><span>Chapeau Claque · 62k</span></div>
+            <div class="mock-tile"><span class="tag top">9.2%</span><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chauffeur-kasket-sort.webp?v=1775733979"><span>Chauffør kasket · 33k</span></div>
+            <div class="mock-tile"><span class="tag top">7.9%</span><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E15-04_1_6630cf.jpg?v=1773949373"><span>Bowler · 28k</span></div>
+            <div class="mock-tile"><span class="tag top">5.9%</span><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E39-222_1_130238d90.jpg?v=1773949355"><span>Alpehue · 21k</span></div>
+          </div>
+          <p style="font-size: 11px; color: var(--muted); padding: 10px; margin: 0; text-align: center;">Top 4 = <strong>40,3% af 9 års omsætning</strong>.</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="lead" style="margin-top: 20px; font-size: 15px;"><strong>Et konkret eksempel:</strong> Chapeau Claque alene har tjent <strong>62.440 DKK</strong> historisk — 17,3% af jeres totale webomsætning. På det nye site fik den <strong>57 visninger sidste måned og solgte 0 gange</strong>. Fordi den er begravet i en kategori-kakel. Flyt den op på forsiden som hero-produkt. Det koster nul at ændre.</p>
+  </div>
+</section>
+
+<!-- SLIDE 9: SEASONAL MERCHANDISING -->
+<section class="slide dark" id="s9" data-head="dark">
+  <div class="inner">
+    <div class="eyebrow">Sæson &middot; Hvad skal stå øverst hvornår?</div>
+    <h2 class="editorial">Hatte har <em>sæsoner.</em><br>Forsiden har ikke.</h2>
+    <p class="lead">Hvert kvartal har sin egen type hat. Men forsiden er statisk — samme kollektioner året rundt. Hvis vi roterer hero + featured i takt med sæsonen, møder vi kunden lige når hun søger.</p>
+    <div class="seasonal" style="margin-top: 24px;">
+      <div class="wheel">
+        <svg viewBox="0 0 120 120">
+          <defs>
+            <path id="arc-q1" d="M 60 60 L 102 60 A 42 42 0 0 1 60 102 Z"/>
+            <path id="arc-q2" d="M 60 60 L 60 102 A 42 42 0 0 1 18 60 Z"/>
+            <path id="arc-q3" d="M 60 60 L 18 60 A 42 42 0 0 1 60 18 Z"/>
+            <path id="arc-q4" d="M 60 60 L 60 18 A 42 42 0 0 1 102 60 Z"/>
+          </defs>
+          <use href="#arc-q1" fill="#D97B61" opacity="0.85"/>
+          <use href="#arc-q2" fill="#FF8A00" opacity="0.85"/>
+          <use href="#arc-q3" fill="#1B3B36" opacity="0.95"/>
+          <use href="#arc-q4" fill="#c4a747" opacity="0.85"/>
+          <circle cx="60" cy="60" r="22" fill="#0a0a0a"/>
+          <text x="81" y="83" fill="white" font-family="Archivo Black" font-size="6" text-anchor="middle">Q1 VINTER</text>
+          <text x="39" y="83" fill="white" font-family="Archivo Black" font-size="6" text-anchor="middle">Q2 FORÅR</text>
+          <text x="39" y="42" fill="white" font-family="Archivo Black" font-size="6" text-anchor="middle">Q3 SOMMER</text>
+          <text x="81" y="42" fill="#0a0a0a" font-family="Archivo Black" font-size="6" text-anchor="middle">Q4 JUL</text>
+        </svg>
+        <div class="wheel-center"><div class="mk">12mdr</div></div>
+      </div>
+      <div>
+        <ul class="season-list">
+          <li><span class="month">Jan–Mar</span><span class="what"><strong>Vinter + Peaky Blinders:</strong> Newsboy, sixpence i uld, høj hat til gallaer</span></li>
+          <li><span class="month">Apr–Jun</span><span class="what"><strong>Forår + festival:</strong> Panama, straw hats, trilby — Tønder build-up</span></li>
+          <li><span class="month">Jul–Sep</span><span class="what"><strong>Sommer + turisme:</strong> Panama Lux, søgræshatte, bredskyggede</span></li>
+          <li><span class="month">Okt–Dec</span><span class="what"><strong>Efterår + gaver:</strong> Fedora, læder, Chapeau Claque (gave-hero)</span></li>
+        </ul>
+        <p class="micro" style="margin-top: 16px;">Hver måned skiftes hero, featured og kollektions-rækkefølge. Google ser nyhed. Kunder ser relevans.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10: LIVE PRODUCT SPREADSHEET -->
+<section class="slide paper" id="s10" data-head="light">
+  <div class="inner">
+    <div class="eyebrow">Product ops &middot; Én kilde, to-vejs sync</div>
+    <h2 class="editorial">Rediger regnearket.<br><em>Shoppen opdateres.</em></h2>
+    <p class="lead">Slut med email-frem-og-tilbage med regneark. Kim redigerer produktnavn, salgspris, lager, leverandørlink og landingspris direkte i et Google Sheet — Shopify opdateres automatisk. Ét sted at styre hele butikken. Tilføj nye produkter, juster priser, hold styr på margin og leverandører, alt sammen fra samme ark.</p>
+    <div class="sheet" style="margin-top: 20px;">
+      <div class="sheet-head"><span>HATTEMANDEN · PRODUKT-STAMDATA</span><span style="font-size: 10px; opacity: 0.7;">To-vejs sync &middot; Shopify &harr; Sheet</span></div>
+      <div class="sheet-row header" style="grid-template-columns: 1.7fr 1fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr;">
+        <div>Produkt</div><div>Leverandør</div><div>Landing</div><div>Salgspris</div><div>Margin</div><div>Lager</div><div>Sync</div>
+      </div>
+      <div class="sheet-row" style="grid-template-columns: 1.7fr 1fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr;">
+        <div>Chapeau Claque</div><div>Mayser DE &#128279;</div><div>1.850</div><div>4.650</div><div>60%</div><div>4</div><div><span class="pill hot">Synced</span></div>
+      </div>
+      <div class="sheet-row" style="grid-template-columns: 1.7fr 1fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr;">
+        <div>Chauffør kasket sort</div><div>Göttmann &#128279;</div><div>180</div><div>450</div><div>60%</div><div>12</div><div><span class="pill hot">Synced</span></div>
+      </div>
+      <div class="sheet-row" style="grid-template-columns: 1.7fr 1fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr;">
+        <div>Bowler</div><div>Christys' UK &#128279;</div><div>220</div><div>550</div><div>60%</div><div>8</div><div><span class="pill hot">Synced</span></div>
+      </div>
+      <div class="sheet-row" style="grid-template-columns: 1.7fr 1fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr;">
+        <div>Alpehue (Baret)</div><div>Göttmann &#128279;</div><div>140</div><div>350</div><div>60%</div><div>18</div><div><span class="pill hot">Synced</span></div>
+      </div>
+      <div class="sheet-row" style="grid-template-columns: 1.7fr 1fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr;">
+        <div>Høj Hat</div><div>Mayser DE &#128279;</div><div>360</div><div>895</div><div>60%</div><div>2</div><div><span class="pill low">Lav lager</span></div>
+      </div>
+      <div class="sheet-row" style="grid-template-columns: 1.7fr 1fr 0.7fr 0.7fr 0.6fr 0.6fr 0.6fr; background: #fff8e1;">
+        <div><em>Ny tweed newsboy</em></div><div>Hills England &#128279;</div><div>185</div><div>495</div><div>63%</div><div>0</div><div><span class="pill ok">Draft &rarr; sync</span></div>
+      </div>
+    </div>
+    <p class="lead" style="font-size: 14px; margin-top: 14px;"><strong>Hvad det betyder i praksis:</strong> Kim finder nye hatte hos leverandøren, skriver dem direkte i Sheet (produktnavn, landingspris, salgspris, billede-link). Syncen pusher dem til Shopify. Justere priser? Ret cellen, tryk enter. Skifte leverandør? Opdater linket. Alt i én fil.</p>
+    <p class="micro" style="margin-top: 10px;">Ingen apps at købe. Ingen licens. Bare et Google Sheet Kim kan åbne fra telefonen.</p>
+  </div>
+</section>
+
+<!-- SLIDE 11: KIM'S SOCIALS + CONTENT -->
+<section class="slide dark" id="s11" data-head="dark">
+  <div class="inner">
+    <div class="eyebrow">Social &middot; Vi bygger videre på det du allerede gør</div>
+    <h2 class="editorial">Kim poster allerede.<br><em>Lad os forstærke det.</em></h2>
+    <p class="lead">Hattemanden har Facebook. Kim lægger ting op. Det respekterer vi — I kender kunderne bedre end nogen marketingperson. Vores job er ikke at overtage. Det er at give det struktur, rækkevidde og målbarhed.</p>
+    <div class="split" style="margin-top: 24px;">
+      <div>
+        <div class="micro" style="margin-bottom: 10px;">Det Kim allerede gør <span style="color: var(--green);">✓</span></div>
+        <ul class="check">
+          <li>Facebook-side med lokal målgruppe</li>
+          <li>Personlig ton — folk kender jer</li>
+          <li>Billeder fra butikken og Tønder</li>
+          <li>Direkte kontakt med kunder</li>
+        </ul>
+      </div>
+      <div>
+        <div class="micro" style="margin-bottom: 10px;">Vi lægger oven på <span style="color: var(--orange);">+</span></div>
+        <ul class="check">
+          <li class="pending"><strong>Indholdskalender</strong> — så I ved hvad der poster hvornår</li>
+          <li class="pending"><strong>Brand kit</strong> — skabeloner, farver, skrifter til konsekvens</li>
+          <li class="pending"><strong>Paid boost</strong> — 200-500 DKK per top-post, 3-5x rækkevidde</li>
+          <li class="pending"><strong>Instagram rebuild</strong> — I er ikke der endnu, konkurrenterne er</li>
+          <li class="pending"><strong>Facebook Pixel</strong> — så vi endelig kan måle om det konverterer</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead" style="margin-top: 20px; font-size: 14px; color: var(--muted);">Når du får dit FB / IG-handle til os, indsætter vi rigtige eksempler på dine opslag lige her i præsentationen. Det bliver et "vi bygger oven på X" i stedet for tom snak.</p>
+  </div>
+</section>
+
+<!-- ============ ACT 4 ============ -->
+
+<!-- SLIDE 12: CONTENT CALENDAR -->
+<section class="slide paper" id="s12" data-head="light">
+  <div class="inner">
+    <div class="eyebrow">Akt 4 &middot; Planen for de næste 12 måneder</div>
+    <h2 class="editorial">Indhold, ikke tilfælde.</h2>
+    <p class="lead">Hver måned: 2 blog-posts, 1 nyhedsbrev, 8-12 social-posts, 1 kampagne-tema. Alt planlagt efter sæson + bestsellers + Danish events.</p>
+    <div class="cal-grid">
+      <div class="cal-month"><div class="m">Jan</div><div class="theme">Nytår + Peaky Blinders</div><div class="items">Blog: "Hattemand-guide til Peaky Blinders" &middot; Newsletter: efterår-udsalg &middot; Social: styled looks</div></div>
+      <div class="cal-month"><div class="m">Feb</div><div class="theme">Valentines + gavekort</div><div class="items">Blog: "Gave til ham/hende" &middot; Newsletter: gavekort &middot; Social: par-fotos</div></div>
+      <div class="cal-month"><div class="m">Mar</div><div class="theme">Forår + Tønder build-up</div><div class="items">Blog: "Festival-hat guide" &middot; Newsletter: forårslook &middot; Social: Tønder teaser</div></div>
+      <div class="cal-month"><div class="m">Apr</div><div class="theme">Konfirmation + fester</div><div class="items">Blog: "Konfirmation — perfekt hat" &middot; Newsletter: Chapeau Claque &middot; Social: fest-ready</div></div>
+      <div class="cal-month"><div class="m">Maj</div><div class="theme">Bryllup + galla</div><div class="items">Blog: "Høj hat vs Fedora" &middot; Newsletter: bryllupshatte &middot; Social: gæsteportraits</div></div>
+      <div class="cal-month"><div class="m">Jun</div><div class="theme">Sommer + Panama</div><div class="items">Blog: "Panama-guide" &middot; Newsletter: sommer-lookbook &middot; Social: sommerlook</div></div>
+      <div class="cal-month"><div class="m">Jul</div><div class="theme">Ferie + turisme</div><div class="items">Blog: "Bedste hat til ferien" &middot; Newsletter: rejsehatte &middot; Social: location fotos</div></div>
+      <div class="cal-month"><div class="m">Aug</div><div class="theme">Tønder Festival LIVE</div><div class="items">Blog: "Tønder-hattens historie" &middot; Newsletter: festival-rabat &middot; Social: live fra Tønder</div></div>
+      <div class="cal-month"><div class="m">Sep</div><div class="theme">Efterår + newsboy</div><div class="items">Blog: "Newsboy guide" &middot; Newsletter: efterårskollektion &middot; Social: tweed styling</div></div>
+      <div class="cal-month"><div class="m">Okt</div><div class="theme">Halloween + steampunk</div><div class="items">Blog: "Steampunk høj hat" &middot; Newsletter: karneval &middot; Social: kostume-tip</div></div>
+      <div class="cal-month"><div class="m">Nov</div><div class="theme">Black Friday + Jul</div><div class="items">Blog: "Gave-guide" &middot; Newsletter: BF-rabat &middot; Social: julefavoritter</div></div>
+      <div class="cal-month"><div class="m">Dec</div><div class="theme">Jul + nytårsgalla</div><div class="items">Blog: "Nytårsgallaen" &middot; Newsletter: sidste chance &middot; Social: holiday look</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13: MICRO-INFLUENCER -->
+<section class="slide dark" id="s13" data-head="dark">
+  <div class="inner">
+    <div class="eyebrow">UGC &middot; Ægte mennesker med ægte hatte</div>
+    <h2 class="editorial">10 hatte.<br>100+ <em>organiske posts.</em></h2>
+    <p class="lead">Vi vælger 10 danske micro-influencere (200-5.000 følgere i vintage/menswear/fashion-nichen). De får en hat gratis. I bytte: post med hattten, tag @hattemanden, naturligt billedsprog. I året bliver det 100+ posts i deres feeds — som alle ser ud som anbefalinger, fordi de er det.</p>
+    <div class="ugc-grid" style="margin-top: 20px;">
+      <div class="ugc-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chapeau-claque-front.webp?v=1774881656"><div class="handle"><span class="at">@</span>daniellenørregade</div></div>
+      <div class="ugc-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chauffeur-kasket-sort.webp?v=1775733979"><div class="handle"><span class="at">@</span>mortenvintagemen</div></div>
+      <div class="ugc-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E15-04_1_6630cf.jpg?v=1773949373"><div class="handle"><span class="at">@</span>kbhdandy</div></div>
+      <div class="ugc-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/fedora-italia-jagtgroen.webp?v=1774638864"><div class="handle"><span class="at">@</span>tweedandtea</div></div>
+      <div class="ugc-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E39-222_1_130238d90.jpg?v=1773949355"><div class="handle"><span class="at">@</span>ninabaret</div></div>
+      <div class="ugc-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/panama-hat-klassisk_1_44686_0_natur.jpg?v=1773605985"><div class="handle"><span class="at">@</span>summerstyles.dk</div></div>
+      <div class="ugc-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E15-01_1_777cc.jpg?v=1773949407"><div class="handle"><span class="at">@</span>galladrengene</div></div>
+      <div class="ugc-tile"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E28-33_5_5875c2e7.jpg?v=1774019105"><div class="handle"><span class="at">@</span>dkwesternclub</div></div>
+    </div>
+    <p class="lead" style="margin-top: 20px; font-size: 14px;">Kostpris for en runde: <strong>ca. 10 hatte</strong>. Udbytte: organisk content vi kan genbruge i ads, på hjemmesiden, og i newsletters — plus direkte salg fra influencers's følgere.</p>
+  </div>
+</section>
+
+<!-- SLIDE 14: PAID SOCIAL + RETARGETING -->
+<section class="slide paper" id="s14" data-head="light">
+  <div class="inner">
+    <div class="eyebrow">Paid social &middot; Målrettet og målbart</div>
+    <h2 class="editorial">Stop med at <em>håbe.</em><br>Start med at måle.</h2>
+    <p class="lead">Når FB Pixel er installeret og UGC er klar: små retargeting-kampagner. Ingen store budget. Bare "har set en produktside men ikke købt" → annoncer samme produkt over for dem i 30 dage.</p>
+    <div class="ad-grid">
+      <div class="ad-mock">
+        <div class="ad-head"><div class="avatar">H</div><div><div style="font-weight: 700;">Hattemanden</div><div class="sponsor">Sponsoreret</div></div></div>
+        <div class="ad-image"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chapeau-claque-front.webp?v=1774881656"></div>
+        <div class="ad-body">Du kiggede på Chapeau Claque i går. Den er stadig på lager — kun 4 tilbage.</div>
+        <div class="cta">KØB NU →</div>
+      </div>
+      <div class="ad-mock">
+        <div class="ad-head"><div class="avatar">H</div><div><div style="font-weight: 700;">Hattemanden</div><div class="sponsor">Sponsoreret · Lookalike DK</div></div></div>
+        <div class="ad-image"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chauffeur-kasket-sort.webp?v=1775733979"></div>
+        <div class="ad-body">Klassisk chauffør-kasket. Håndlavet, dansk butik, gratis fragt.</div>
+        <div class="cta">SE MERE →</div>
+      </div>
+      <div class="ad-mock">
+        <div class="ad-head"><div class="avatar">H</div><div><div style="font-weight: 700;">Hattemanden</div><div class="sponsor">Sponsoreret · Kurv-gendannelse</div></div></div>
+        <div class="ad-image"><img src="https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E15-01_1_777cc.jpg?v=1773949407"></div>
+        <div class="ad-body">Din kurv venter stadig. 10% rabat i 24 timer — kode: KOMTILBAGE</div>
+        <div class="cta">AFSLUT KØB →</div>
+      </div>
+    </div>
+    <p class="lead" style="margin-top: 18px; font-size: 14px;"><strong>Budgetforslag:</strong> 1.500-2.500 DKK/mdr i paid social. Forventet ROAS (return on ad spend) for retargeting på en niche-shop: <strong>3-5x</strong>. Kold trafik: 1,5-2,5x. Vi følger tallene, skruer op på det der virker, ned på resten.</p>
+  </div>
+</section>
+
+<!-- SLIDE 15: TRACKING INFRASTRUCTURE -->
+<section class="slide forest" id="s15" data-head="dark">
+  <div class="inner">
+    <div class="eyebrow">Teknik &middot; Fundamentet under alt det andet</div>
+    <h2 class="editorial">Hver krone.<br><em>Sporet.</em></h2>
+    <p class="lead">Ingen marketing betaler sig uden sporing. Uden tracking vi ved ikke hvad der virker, og uden det er vi bare tilbage til håb. Dette er infrastruktur-arbejdet.</p>
+    <ul class="check">
+      <li class="pending"><strong>Cookie-banner justering</strong> — klarere accept, reduceret "dark pattern"-risiko, højere consent-rate</li>
+      <li class="pending"><strong>GA4 purchase events verificeret</strong> — lukker 75%-hullet, I ser alle køb</li>
+      <li class="pending"><strong>Facebook Pixel + Conversions API</strong> — server-side, virker selv når iOS blokerer</li>
+      <li class="pending"><strong>UTM-disciplin</strong> — alle links fra newsletter, social, ads, QR tagget korrekt</li>
+      <li class="pending"><strong>N8n recovery-konverteringer målt</strong> — ved endelig om gendannelsesmail virker</li>
+      <li class="pending"><strong>Månedlig rapport</strong> — PDF + dashboard-link, I ser alt samlet</li>
+    </ul>
+    <p class="lead" style="margin-top: 16px; font-size: 15px;">Det er hverken glamourøst eller spændende — men det er det der gør resten målbart. Og uden det ved vi aldrig om næste kampagne var god eller skidt.</p>
+  </div>
+</section>
+
+<!-- ============ ACT 5 ============ -->
+
+<!-- SLIDE 16: VALUE ANCHOR -->
+<section class="slide paper" id="s16" data-head="light">
+  <div class="inner">
+    <div class="eyebrow">Akt 5 &middot; Hvad koster det normalt?</div>
+    <h2 class="editorial">Lad os tale om <em>værdi.</em><br>Ikke om pris.</h2>
+    <p class="lead">Dette er hvad I ville betale, hvis I hyrede en enkelt løsning ind for at få samme dækning. Vi siger ikke hvad Build444 koster her — det snakker vi om. Men sammenlign selv.</p>
+    <div class="anchor-table">
+      <div class="anchor-row">
+        <div class="what">Fuldtids marketing-medarbejder<small>Med erfaring, løn + feriepenge + forsikring</small></div>
+        <div class="cost">35-45.000 DKK/mdr</div>
+      </div>
+      <div class="anchor-row">
+        <div class="what">Marketing-bureau retainer<small>Mindre dansk bureau, 15-20 timer/mdr</small></div>
+        <div class="cost">20-35.000 DKK/mdr</div>
+      </div>
+      <div class="anchor-row">
+        <div class="what">Freelance marketing-konsulent<small>5-10 timer/mdr · 1.500-2.500 DKK/time</small></div>
+        <div class="cost">15-25.000 DKK/mdr</div>
+      </div>
+      <div class="anchor-row">
+        <div class="what">Build444 SEO-dashboard alene<small>Normalt betalt separat · 9 moduler × 249 DKK</small></div>
+        <div class="cost">2.241 DKK/mdr</div>
+      </div>
+      <div class="anchor-row ours">
+        <div class="what"><strong>Build444 Marketing Partnership</strong><small>Alt det ovenfor + dashboard GRATIS</small></div>
+        <div class="cost">Drøftes</div>
+      </div>
+    </div>
+    <p class="lead" style="font-size: 14px; margin-top: 16px;">Vi ligger under alle disse alternativer. Hvorfor? Fordi jeg vil have Hattemanden til at lykkes. Og fordi jeg tror på at vise før jeg sælger.</p>
+  </div>
+</section>
+
+<!-- SLIDE 17: THE ASK -->
+<section class="slide orange" id="s17" data-head="light">
+  <div class="inner" style="text-align: center;">
+    <div class="eyebrow">Valget er jeres</div>
+    <h2 class="editorial" style="margin: 0 auto 16px; max-width: 800px;">Skal vi<br>gøre det?</h2>
+    <p class="lead" style="margin: 0 auto 20px;">Launch var fase 1. Fase 2 er det rigtige arbejde — det der tager en shop fra 29.000 om året til 100.000+.</p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; max-width: 860px; margin: 0 auto 28px; text-align: left;">
+      <div style="padding: 16px; background: rgba(10,10,10,0.1); border-radius: 2px;"><div class="micro" style="color: var(--ink); opacity: 0.7;">✓ Månedligt arbejde</div><div style="font-family: 'Archivo Black', sans-serif; font-size: 13px; margin-top: 4px;">Tracking · SEO · Mobile · Content</div></div>
+      <div style="padding: 16px; background: rgba(10,10,10,0.1); border-radius: 2px;"><div class="micro" style="color: var(--ink); opacity: 0.7;">✓ Social &amp; paid ads</div><div style="font-family: 'Archivo Black', sans-serif; font-size: 13px; margin-top: 4px;">Kalender · UGC · Retargeting</div></div>
+      <div style="padding: 16px; background: rgba(10,10,10,0.1); border-radius: 2px;"><div class="micro" style="color: var(--ink); opacity: 0.7;">✓ Build444 Dashboard</div><div style="font-family: 'Archivo Black', sans-serif; font-size: 13px; margin-top: 4px;">Alle 9 moduler · GRATIS</div></div>
+      <div style="padding: 16px; background: rgba(10,10,10,0.1); border-radius: 2px;"><div class="micro" style="color: var(--ink); opacity: 0.7;">✓ Månedlig rapport</div><div style="font-family: 'Archivo Black', sans-serif; font-size: 13px; margin-top: 4px;">I ser alt · opsigelse mdr for mdr</div></div>
+    </div>
+
+    <div class="cta-box" style="max-width: 520px; margin: 0 auto;">
+      <h3>Lad os tage en kort snak.</h3>
+      <p>Jeg lægger tallene, tilbuddet og timingen frem. I beslutter.</p>
+      <a href="mailto:daniel@build444.com?subject=Hattemanden%20%C2%B7%20Marketing%20Partnership" class="cta-btn">JA, LAD OS SNAKKE</a>
+    </div>
+    <p class="micro" style="margin-top: 26px; color: var(--ink); opacity: 0.7;">Ingen binding. Opsigelse fra måned til måned. Transparent rapportering.</p>
+  </div>
+</section>
+
+<!-- SLIDE 18: THANK YOU -->
+<section class="slide dark" id="s18" data-head="dark">
+  <div class="inner" style="text-align: center;">
+    <div class="eyebrow">Tak for jeres tid</div>
+    <h2 class="editorial">Vi byggede et fundament.<br><em>Lad os bygge videre.</em></h2>
+    <p class="lead" style="margin: 0 auto 28px;">Alle tal i denne præsentation er baseret på rigtige data fra Shopify Admin, Google Search Console, Google Analytics 4 og Microsoft Clarity. Ingen gætværk, ingen marketingfjums.</p>
+
+    <div style="display: inline-block; padding: 24px 32px; background: rgba(247,244,237,0.04); border: 1px solid var(--border-dark); border-radius: 4px; margin-top: 20px;">
+      <div style="font-family: 'Archivo Black', sans-serif; letter-spacing: 4px; color: var(--orange); font-size: 16px;">BUILD444</div>
+      <div style="margin-top: 10px; font-size: 14px;">Daniel Dulwich · <a href="mailto:daniel@build444.com" style="color: var(--paper);">daniel@build444.com</a></div>
+      <div style="margin-top: 6px; font-size: 12px; color: var(--muted);">build444.com</div>
+    </div>
+    <div style="margin-top: 24px; font-size: 13px; color: var(--muted);">Kigger frem til at høre fra jer, Kim &amp; Kim.</div>
+    <div style="margin-top: 40px;">
+      <a href="#s1" class="cta-btn" style="background: var(--orange); color: var(--ink);">Til start ↑</a>
+      <a href="mailto:daniel@build444.com" class="cta-btn outline" style="border-color: var(--orange); color: var(--orange);">Send mail</a>
+    </div>
+  </div>
+</section>
+
+<script>
+// Password gate
+const GATE_KEY = 'hattemanden-presentation-unlocked';
+const PASSWORD = 'hattemanden2026';
+if (localStorage.getItem(GATE_KEY) === 'yes') document.getElementById('gate').classList.add('hidden');
+function checkPass(e) {
+  e.preventDefault();
+  const pw = document.getElementById('pw').value.trim().toLowerCase();
+  if (pw === PASSWORD) { localStorage.setItem(GATE_KEY, 'yes'); document.getElementById('gate').classList.add('hidden'); }
+  else { document.getElementById('err').textContent = 'Forkert kodeord. Prøv igen.'; document.getElementById('pw').select(); }
+}
+
+// Build dots
+const slides = document.querySelectorAll('.slide');
+const dotsNav = document.getElementById('dots');
+slides.forEach((s, i) => {
+  const a = document.createElement('a');
+  a.href = '#' + s.id;
+  a.setAttribute('aria-label', 'Slide ' + (i+1));
+  if (i === 0) a.classList.add('active');
+  dotsNav.appendChild(a);
+});
+const dots = document.querySelectorAll('.dots a');
+const counter = document.getElementById('counter');
+const total = slides.length;
+
+// IntersectionObserver — track active slide and switch header theme
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+      const idx = Array.from(slides).indexOf(entry.target);
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      counter.textContent = String(idx + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+      const head = entry.target.getAttribute('data-head');
+      document.body.classList.toggle('light-head', head === 'light');
+    }
+  });
+}, { threshold: [0.5] });
+slides.forEach(s => io.observe(s));
+
+// Arrow key navigation
+document.addEventListener('keydown', (e) => {
+  if (!document.getElementById('gate').classList.contains('hidden')) return;
+  const current = Array.from(slides).findIndex(s => { const r = s.getBoundingClientRect(); return r.top >= -50 && r.top <= 100; });
+  if (e.key === 'ArrowDown' || e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+    e.preventDefault();
+    if (current < slides.length - 1) slides[current + 1].scrollIntoView({ behavior: 'smooth' });
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    e.preventDefault();
+    if (current > 0) slides[current - 1].scrollIntoView({ behavior: 'smooth' });
+  } else if (e.key === 'Home') { e.preventDefault(); slides[0].scrollIntoView({ behavior: 'smooth' }); }
+  else if (e.key === 'End') { e.preventDefault(); slides[slides.length - 1].scrollIntoView({ behavior: 'smooth' }); }
+});
+
+// GSC chart
+(function() {
+  const data = [
+    {d:'10-02', c:11, i:334},{d:'11-02', c:6, i:324},{d:'12-02', c:2, i:447},{d:'13-02', c:8, i:285},{d:'14-02', c:13, i:306},{d:'15-02', c:4, i:244},{d:'16-02', c:6, i:300},{d:'17-02', c:5, i:331},{d:'18-02', c:11, i:321},{d:'19-02', c:10, i:341},{d:'20-02', c:11, i:390},{d:'21-02', c:5, i:340},{d:'22-02', c:7, i:252},{d:'23-02', c:11, i:161},{d:'24-02', c:4, i:128},{d:'25-02', c:2, i:94},{d:'26-02', c:7, i:98},{d:'27-02', c:5, i:95},{d:'28-02', c:1, i:171},{d:'01-03', c:4, i:164},{d:'02-03', c:8, i:211},{d:'03-03', c:3, i:236},{d:'04-03', c:8, i:304},{d:'05-03', c:3, i:241},{d:'06-03', c:10, i:311},{d:'07-03', c:10, i:317},{d:'08-03', c:6, i:238},{d:'09-03', c:6, i:376},{d:'10-03', c:4, i:289},{d:'11-03', c:2, i:287},{d:'12-03', c:11, i:296},{d:'13-03', c:5, i:307},{d:'14-03', c:18, i:331},{d:'15-03', c:9, i:272},{d:'16-03', c:13, i:335},{d:'17-03', c:7, i:266},{d:'18-03', c:18, i:312},
+    {d:'19-03', c:10, i:305, launch:true},
+    {d:'20-03', c:23, i:758},{d:'21-03', c:26, i:758},{d:'22-03', c:14, i:730},{d:'23-03', c:24, i:735},{d:'24-03', c:25, i:795},{d:'25-03', c:18, i:722},{d:'26-03', c:16, i:718},{d:'27-03', c:19, i:628},{d:'28-03', c:14, i:685},{d:'29-03', c:10, i:582},{d:'30-03', c:23, i:575},{d:'31-03', c:22, i:581},{d:'01-04', c:9, i:488},{d:'02-04', c:9, i:493},{d:'03-04', c:8, i:538},{d:'04-04', c:12, i:689},{d:'05-04', c:20, i:665},{d:'06-04', c:17, i:605},{d:'07-04', c:25, i:572},{d:'08-04', c:5, i:534},{d:'09-04', c:10, i:490},{d:'10-04', c:14, i:1020},{d:'11-04', c:22, i:607},{d:'12-04', c:17, i:601},{d:'13-04', c:17, i:543},{d:'14-04', c:6, i:614},{d:'15-04', c:21, i:597},{d:'16-04', c:8, i:585},{d:'17-04', c:12, i:676}
+  ];
+  const W = 900, H = 280, P = { t: 20, r: 50, b: 38, l: 40 };
+  const cw = W - P.l - P.r, ch = H - P.t - P.b;
+  const maxC = 30, maxI = 1100, n = data.length, step = cw / (n - 1);
+  const x = i => P.l + i * step, yC = v => P.t + ch - (v/maxC)*ch, yI = v => P.t + ch - (v/maxI)*ch;
+  let svg = '<g class="grid">';
+  for (let i=0; i<=5; i++) { const gy = P.t + (ch/5)*i; svg += `<line x1="${P.l}" x2="${P.l+cw}" y1="${gy}" y2="${gy}"/>`; }
+  svg += '</g>';
+  for (let i=0; i<=5; i++) { const cv = Math.round(maxC - (maxC/5)*i), iv = Math.round(maxI - (maxI/5)*i), gy = P.t + (ch/5)*i; svg += `<text x="${P.l-6}" y="${gy+3}" text-anchor="end" fill="#FF8A00" font-weight="700">${cv}</text><text x="${P.l+cw+6}" y="${gy+3}" text-anchor="start" fill="#D97B61">${iv}</text>`; }
+  data.forEach((d, i) => { if (i % 10 === 0 || i === n-1) svg += `<text x="${x(i)}" y="${H - P.b + 14}" text-anchor="middle">${d.d}</text>`; });
+  const launchIdx = data.findIndex(d => d.launch);
+  if (launchIdx >= 0) { const lx = x(launchIdx); svg += `<line x1="${lx}" x2="${lx}" y1="${P.t}" y2="${P.t+ch}" stroke="#c43b2f" stroke-width="2" stroke-dasharray="5 4"/><rect x="${lx-32}" y="${P.t-4}" width="64" height="16" fill="#c43b2f" rx="2"/><text x="${lx}" y="${P.t+7}" text-anchor="middle" fill="white" font-weight="900" font-size="9" font-family="Archivo Black">LAUNCH</text>`; }
+  let iPath = ''; data.forEach((d, idx) => { iPath += `${idx===0?'M':'L'} ${x(idx)} ${yI(d.i)} `; });
+  svg += `<path d="${iPath}" class="imp-line"/>`;
+  let cPath = ''; data.forEach((d, idx) => { cPath += `${idx===0?'M':'L'} ${x(idx)} ${yC(d.c)} `; });
+  svg += `<path d="${cPath}" class="clk-line"/>`;
+  data.forEach((d, idx) => { svg += `<circle cx="${x(idx)}" cy="${yC(d.c)}" r="3" class="clk-dot"/>`; });
+  document.getElementById('gscChart').innerHTML = svg;
+})();
+</script>
+
+</body>
+</html>
