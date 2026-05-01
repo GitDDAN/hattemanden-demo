@@ -815,13 +815,22 @@ function buildCard(q) {
 
 function saveAnswer(q, answer, card) {
   const status = card.querySelector('[data-status]');
+  const isEmpty = !answer || !answer.trim();
   status.textContent = '⏳ Gemmer…';
   status.className = 'save-status saving';
 
-  ANSWERS[q.id] = answer;
-  card.classList.add('answered');
-  card.querySelector('.qcard-id').textContent = q.id + ' ✓';
-  card.querySelector('.qcard-id').classList.add('answered');
+  const idEl = card.querySelector('.qcard-id');
+  if (isEmpty) {
+    delete ANSWERS[q.id];
+    card.classList.remove('answered');
+    idEl.textContent = q.cat === 'B' ? q.id : q.id;
+    idEl.classList.remove('answered');
+  } else {
+    ANSWERS[q.id] = answer;
+    card.classList.add('answered');
+    idEl.textContent = q.id + ' ✓';
+    idEl.classList.add('answered');
+  }
 
   const payload = {
     action: 'audit-answer',
@@ -843,9 +852,9 @@ function saveAnswer(q, answer, card) {
     .then(r => r.json())
     .then(j => {
       if (j.status === 'ok') {
-        status.textContent = '✓ Gemt';
-        status.className = 'save-status saved';
-        showToast('Svar gemt');
+        status.textContent = isEmpty ? 'Ikke besvaret' : '✓ Gemt';
+        status.className = isEmpty ? 'save-status' : 'save-status saved';
+        if (!isEmpty) showToast('Svar gemt');
         updateProgress();
       } else {
         throw new Error(j.message || 'Ukendt fejl');
@@ -868,7 +877,7 @@ function showToast(msg) {
 
 function updateProgress() {
   const total = QUESTIONS.length;
-  const done = Object.keys(ANSWERS).length;
+  const done = Object.values(ANSWERS).filter(v => v && String(v).trim()).length;
   const pct = total ? Math.round(done / total * 100) : 0;
   document.getElementById('progressBar').style.width = pct + '%';
   document.getElementById('progressText').textContent = done + ' af ' + total + ' besvaret (' + pct + '%)';
