@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Hat-tjek for Kim — Hattemanden audit</title>
+<style>
+  :root {
+    --gold: #c4a747;
+    --dark-gold: #8b6914;
+    --readable-gold: #997a1d;
+    --cognac: #8b4513;
+    --taupe: #88754a;
+    --charcoal: #1a1a1a;
+    --cream: #f5f0e8;
+    --paper: #fffcf6;
+    --green: #059669;
+    --amber: #d97706;
+    --shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  .hidden { display: none !important; }
+
+  /* Password gate */
+  #gate {
+    position: fixed; inset: 0; background: var(--charcoal); color: var(--cream);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 24px; z-index: 1000;
+  }
+  #gate h1 { font-family: "Playfair Display", Georgia, serif; color: var(--gold); margin: 0 0 8px; font-size: 28px; }
+  #gate p { color: #ccc; margin: 0 0 24px; text-align: center; max-width: 320px; }
+  #gate input { padding: 14px 16px; font-size: 17px; border: none; border-radius: 8px; width: 240px; max-width: 80vw; }
+  #gate button { padding: 14px 24px; font-size: 17px; background: var(--gold); color: var(--charcoal); border: none; border-radius: 8px; font-weight: 700; margin-top: 12px; cursor: pointer; }
+  #gate .err { color: #ff6b6b; margin-top: 12px; font-size: 14px; }
+
+  /* Header */
+  header.app-head {
+    background: var(--charcoal); color: var(--cream);
+    padding: 16px 20px; position: sticky; top: 0; z-index: 50;
+    box-shadow: var(--shadow);
+  }
+  .head-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .head-title { font-family: "Playfair Display", Georgia, serif; font-size: 20px; color: var(--gold); margin: 0; }
+  .head-sub { color: #aaa; font-size: 13px; margin: 2px 0 0; }
+  .progress-wrap { background: rgba(255,255,255,0.1); height: 6px; border-radius: 3px; margin-top: 12px; overflow: hidden; }
+  .progress-bar { background: var(--gold); height: 100%; width: 0%; transition: width 0.3s ease; }
+  .progress-text { font-size: 13px; color: #ccc; margin-top: 6px; }
+
+  /* Content */
+  main { max-width: 720px; margin: 0 auto; padding: 16px; padding-bottom: 80px; }
+  .intro { background: var(--paper); border-radius: 12px; padding: 18px 20px; margin-bottom: 20px; box-shadow: var(--shadow); border-left: 4px solid var(--gold); }
+  .intro h2 { margin: 0 0 8px; font-family: "Playfair Display", Georgia, serif; color: var(--dark-gold); font-size: 20px; }
+  .intro p { margin: 6px 0; color: #555; font-size: 15px; }
+  .intro b { color: var(--charcoal); }
+
+  .section-head {
+    margin: 32px 0 12px; padding: 12px 16px; border-radius: 10px;
+    background: var(--charcoal); color: var(--cream);
+  }
+  .section-head h2 { margin: 0; font-family: "Playfair Display", Georgia, serif; color: var(--gold); font-size: 18px; }
+  .section-head p { margin: 4px 0 0; color: #aaa; font-size: 13px; }
+  .section-head.B { background: var(--cognac); }
+  .section-head.B h2 { color: #fff5e6; }
+
+  /* Question card */
+  .qcard {
+    background: var(--paper);
+    border-radius: 14px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    transition: opacity 0.2s, border-color 0.2s;
+    border-left: 4px solid transparent;
+  }
+  .qcard.answered { border-left-color: var(--green); }
+  .qcard.skipped { border-left-color: var(--taupe); opacity: 0.7; }
+
+  .qcard-top { display: flex; gap: 14px; padding: 14px 16px 4px; align-items: flex-start; }
+  .qcard-img {
+    width: 84px; height: 84px; border-radius: 10px; object-fit: cover;
+    background: var(--cream); flex-shrink: 0; border: 1px solid #eee;
+  }
+  .qcard-meta { flex: 1; min-width: 0; }
+  .qcard-id { display: inline-block; background: var(--gold); color: var(--charcoal); font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 10px; letter-spacing: 0.5px; }
+  .qcard-id.B { background: var(--cognac); color: #fff5e6; }
+  .qcard-id.answered { background: var(--green); color: #fff; }
+  .qcard-title { font-weight: 600; color: var(--charcoal); font-size: 15px; margin-top: 4px; word-break: break-word; }
+  .qcard-link { font-size: 13px; color: var(--readable-gold); text-decoration: none; display: inline-block; margin-top: 4px; }
+  .qcard-link:hover { text-decoration: underline; }
+
+  .qcard-q {
+    padding: 8px 16px 12px;
+    color: var(--charcoal);
+    font-size: 16px;
+    line-height: 1.45;
+  }
+
+  .qcard-input { padding: 0 16px 14px; }
+  .qcard-input input[type="text"], .qcard-input textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 2px solid #e5dfd0;
+    border-radius: 10px;
+    font-size: 16px;
+    font-family: inherit;
+    background: white;
+    transition: border-color 0.15s;
+  }
+  .qcard-input input[type="text"]:focus, .qcard-input textarea:focus {
+    outline: none; border-color: var(--gold);
+  }
+  .qcard-input textarea { min-height: 60px; resize: vertical; }
+  .qcard-input .cm-wrap { position: relative; max-width: 200px; }
+  .qcard-input .cm-wrap input { padding-right: 40px; }
+  .qcard-input .cm-wrap::after { content: 'cm'; position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #aaa; font-weight: 600; pointer-events: none; }
+
+  .choices { display: flex; flex-wrap: wrap; gap: 8px; }
+  .choice-btn {
+    padding: 10px 16px;
+    border: 2px solid #e5dfd0;
+    background: white;
+    border-radius: 24px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--charcoal);
+    font-family: inherit;
+  }
+  .choice-btn:hover { border-color: var(--gold); }
+  .choice-btn.selected { background: var(--gold); border-color: var(--gold); color: var(--charcoal); font-weight: 600; }
+
+  .qcard-actions {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 16px 14px; border-top: 1px solid #f0e9d8; padding-top: 12px;
+  }
+  .save-status { font-size: 13px; color: #888; transition: color 0.2s; }
+  .save-status.saving { color: var(--amber); }
+  .save-status.saved { color: var(--green); font-weight: 600; }
+  .save-status.error { color: #c44; font-weight: 600; }
+  .skip-btn {
+    background: transparent; border: none; color: var(--taupe); font-size: 13px;
+    cursor: pointer; padding: 4px 8px; text-decoration: underline; font-family: inherit;
+  }
+  .skip-btn:hover { color: var(--cognac); }
+
+  /* Filter bar */
+  .filter-bar {
+    background: var(--paper); border-radius: 10px; padding: 8px;
+    margin-bottom: 16px; display: flex; gap: 6px; box-shadow: var(--shadow);
+    overflow-x: auto;
+  }
+  .filter-btn {
+    padding: 8px 14px; border: 1px solid #e5dfd0; background: white;
+    border-radius: 20px; font-size: 14px; cursor: pointer; white-space: nowrap;
+    color: var(--charcoal); font-family: inherit;
+  }
+  .filter-btn.active { background: var(--charcoal); color: var(--gold); border-color: var(--charcoal); font-weight: 600; }
+
+  /* Toast */
+  #toast {
+    position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%) translateY(100px);
+    background: var(--charcoal); color: var(--cream);
+    padding: 10px 20px; border-radius: 22px; font-size: 14px;
+    transition: transform 0.3s ease; z-index: 100;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Done state */
+  .all-done {
+    background: linear-gradient(135deg, var(--gold), var(--dark-gold));
+    color: white; padding: 30px 24px; border-radius: 14px;
+    text-align: center; margin-top: 30px; box-shadow: var(--shadow);
+  }
+  .all-done h2 { font-family: "Playfair Display", Georgia, serif; margin: 0 0 8px; }
+</style>
+</head>
+<body>
+
+<!-- Password gate -->
+<div id="gate">
+  <h1>Hat-tjek for Kim</h1>
+  <p>Privat side til Hattemanden produkt-audit. Indtast kodeord for at fortsætte.</p>
+  <form onsubmit="checkPass(event)">
+    <input id="pw" type="password" placeholder="Kodeord" autocomplete="off" autofocus>
+    <br>
+    <button type="submit">Åbn</button>
+  </form>
+  <div class="err" id="err"></div>
+</div>
+
+<!-- Main app -->
+<header class="app-head">
+  <div class="head-row">
+    <div>
+      <h1 class="head-title">Hat-tjek for Kim</h1>
+      <p class="head-sub">Daniel — Hattemanden audit</p>
+    </div>
+  </div>
+  <div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+  <div class="progress-text" id="progressText">0 af 0 besvaret</div>
+</header>
+
+<main>
+  <div class="intro">
+    <h2>Kære Kim</h2>
+    <p>Jeg har samlet alle de spørgsmål jeg ikke kunne finde svar på via Faustmann. Du behøver <b>ikke</b> svare på alt på én gang — dine svar gemmes <b>automatisk</b> efterhånden som du skriver dem.</p>
+    <p><b>Sektion B (4 spørgsmål)</b> kan du svare på herfra computeren.<br>
+    <b>Sektion A (resten)</b> kræver at du har hatten i hånden eller måler skygge med en lineal.</p>
+    <p style="margin-top:14px;">Du kan altid trykke "Spring over" hvis du ikke kan finde hatten. Jeg ser dine svar i realtid.</p>
+  </div>
+
+  <div class="filter-bar">
+    <button class="filter-btn active" data-filter="all">Alle</button>
+    <button class="filter-btn" data-filter="B">Sektion B (computer)</button>
+    <button class="filter-btn" data-filter="A">Sektion A (fysisk)</button>
+    <button class="filter-btn" data-filter="open">Kun ubesvarede</button>
+  </div>
+
+  <div id="qList"></div>
+</main>
+
+<div id="toast"></div>
+
+<script id="audit-data" type="application/json">[
+  {
+    "id": "Q12",
+    "cat": "B",
+    "handle": "laederkasket",
+    "q": "Hvilken brun-tone er den vi sælger som standard? (Brown-Dark eller Brown-Light)",
+    "type": "choice",
+    "options": [
+      "Brown-Dark",
+      "Brown-Light"
+    ],
+    "productTitle": "Flatcap - læder",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E15-195_1_714c460.jpg?v=1773949441",
+    "productUrl": "https://hattemanden.dk/products/laederkasket"
+  },
+  {
+    "id": "Q14",
+    "cat": "B",
+    "handle": "chauffeur-kasket-sort",
+    "q": "Skal vi tilføje XL, eller beholde S/M/L?",
+    "type": "choice",
+    "options": [
+      "Behold S/M/L",
+      "Tilføj XL"
+    ],
+    "productTitle": "Chauffør kasket i sort",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chauffeur-kasket-sort.webp?v=1775733979",
+    "productUrl": "https://hattemanden.dk/products/chauffeur-kasket-sort"
+  },
+  {
+    "id": "Q15",
+    "cat": "B",
+    "handle": "hoej-hat",
+    "q": "Får alle farver det fulde størrelsesudvalg, eller kun sort?",
+    "type": "choice",
+    "options": [
+      "Alle farver fuld range",
+      "Kun sort har fuld range",
+      "Andet (skriv)"
+    ],
+    "productTitle": "Høj Hat",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E15-01_1_777cc.jpg?v=1773949407",
+    "productUrl": "https://hattemanden.dk/products/hoej-hat"
+  },
+  {
+    "id": "Q20",
+    "cat": "B",
+    "handle": "bredskygget-solhat-til-kvinder",
+    "q": "Hvilket materiale er den i? (papirstrå, ægte strå, syntetisk?)",
+    "type": "text",
+    "productTitle": "Bredskygget solhat til kvinder",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E38-65_2_103786af.jpg?v=1773949386",
+    "productUrl": "https://hattemanden.dk/products/bredskygget-solhat-til-kvinder"
+  },
+  {
+    "id": "Q10",
+    "cat": "A",
+    "handle": "kasket-i-aegte-laeder",
+    "q": "Hvilke farver fører vi pt? (Black, Brown-Dark, Brown-Light, Burgundy)",
+    "type": "multi",
+    "options": [
+      "Black",
+      "Brown-Dark",
+      "Brown-Light",
+      "Burgundy"
+    ],
+    "productTitle": "Kasket i ægte læder",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/laederkasket-sort.webp?v=1774629058",
+    "productUrl": "https://hattemanden.dk/products/kasket-i-aegte-laeder"
+  },
+  {
+    "id": "Q11",
+    "cat": "A",
+    "handle": "cowboyhat-i-stiv-uldfilt-med-spaende",
+    "q": "Leverandøren har 5 farver — hvilken 5. har de udover sort/brun/creme/beige?",
+    "type": "text",
+    "productTitle": "Cowboyhat i stiv uldfilt med spænde",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/cowboyhat-stiv-filt-brun.webp?v=1774631476",
+    "productUrl": "https://hattemanden.dk/products/cowboyhat-i-stiv-uldfilt-med-spaende"
+  },
+  {
+    "id": "Q16",
+    "cat": "A",
+    "handle": "newsboy-kasket-i-uld",
+    "q": "Hvilke størrelser har vi pt på lager? (range f.eks. 55-60)",
+    "type": "text",
+    "productTitle": "Newsboy kasket i uldblanding",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/newsboy-kasket-i-uld_1_58020_0_oliv.jpg?v=1773616058",
+    "productUrl": "https://hattemanden.dk/products/newsboy-kasket-i-uld"
+  },
+  {
+    "id": "Q21",
+    "cat": "A",
+    "handle": "moenstret-sixpence-uldblanding",
+    "q": "Har den faktisk et tydeligt mønster, eller er den meleret/tweedy?",
+    "type": "choice",
+    "options": [
+      "Tydeligt mønster",
+      "Meleret/tweedy",
+      "Helt glat"
+    ],
+    "productTitle": "Mønstret sixpence i uldblanding",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chauffoer-kasket_1_53200_0_braun.jpg?v=1773615343",
+    "productUrl": "https://hattemanden.dk/products/moenstret-sixpence-uldblanding"
+  },
+  {
+    "id": "Q22a",
+    "cat": "A",
+    "handle": "steampunk-hoj-hat-med-goggles",
+    "q": "Er gogglerne aftagelige eller fastsyet?",
+    "type": "choice",
+    "options": [
+      "Aftagelige",
+      "Fastsyet",
+      "Klem-fast (kan tages af)"
+    ],
+    "productTitle": "Steampunk høj hat med goggles",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E19-03_1_5092be4.jpg?v=1773606349",
+    "productUrl": "https://hattemanden.dk/products/steampunk-hoj-hat-med-goggles"
+  },
+  {
+    "id": "Q23",
+    "cat": "A",
+    "handle": "sixpence-i-laeder",
+    "q": "Er læderet blødt eller stift?",
+    "type": "choice",
+    "options": [
+      "Blødt",
+      "Mellem",
+      "Stift"
+    ],
+    "productTitle": "Sixpence i læder",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/sixpence-i-laeder_1_51233_0_braun.jpg?v=1773606135",
+    "productUrl": "https://hattemanden.dk/products/sixpence-i-laeder"
+  },
+  {
+    "id": "Q24",
+    "cat": "A",
+    "handle": "crushable-cowboyhat-i-laeder",
+    "q": "Er læderet blødt/tyndt eller tykt/stift?",
+    "type": "choice",
+    "options": [
+      "Blødt og tyndt",
+      "Mellem",
+      "Tykt og stift"
+    ],
+    "productTitle": "Crushable cowboyhat i læder",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E27-07_6_6188b5df.jpg?v=1773949401",
+    "productUrl": "https://hattemanden.dk/products/crushable-cowboyhat-i-laeder"
+  },
+  {
+    "id": "Q25",
+    "cat": "A",
+    "handle": "sixpence-i-uld",
+    "q": "Glat overflade eller tweedy? Er skyggen fast eller blød?",
+    "type": "text",
+    "productTitle": "Sixpence i uldblanding",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/sixpence-i-uld_1_58007_0_grau.jpg?v=1773616248",
+    "productUrl": "https://hattemanden.dk/products/sixpence-i-uld"
+  },
+  {
+    "id": "Q26",
+    "cat": "A",
+    "handle": "sixpence-i-vokset-bomuld",
+    "q": "Er overfladen blank/glansende? Er grebet fast?",
+    "type": "text",
+    "productTitle": "Sixpence i vokset bomuld",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/sixpence-i-vokset-bomuld_1_52265_0_braun.jpg?v=1773606242",
+    "productUrl": "https://hattemanden.dk/products/sixpence-i-vokset-bomuld"
+  },
+  {
+    "id": "Q27",
+    "cat": "A",
+    "handle": "bredskygget-solhat-til-kvinder",
+    "q": "Kan den nemt pakkes ned i kuffert/taske?",
+    "type": "choice",
+    "options": [
+      "Ja, fuldt pakbar",
+      "Delvist (kan rulles)",
+      "Nej, holder formen"
+    ],
+    "productTitle": "Bredskygget solhat til kvinder",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E38-65_2_103786af.jpg?v=1773949386",
+    "productUrl": "https://hattemanden.dk/products/bredskygget-solhat-til-kvinder"
+  },
+  {
+    "id": "Q31",
+    "cat": "A",
+    "handle": "cowboyhat-i-aegte-laeder",
+    "q": "Hvilken lædertype? (kvægskind, oksehud, semsket?)",
+    "type": "text",
+    "productTitle": "Cowboyhat i ægte læder",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E28-33_5_5875c2e7.jpg?v=1774019105",
+    "productUrl": "https://hattemanden.dk/products/cowboyhat-i-aegte-laeder"
+  },
+  {
+    "id": "Q32",
+    "cat": "A",
+    "handle": "cowboyhat-i-stiv-uldfilt-med-spaende",
+    "q": "Vandafvisende? Har den satin-for indeni?",
+    "type": "text",
+    "productTitle": "Cowboyhat i stiv uldfilt med spænde",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/cowboyhat-stiv-filt-brun.webp?v=1774631476",
+    "productUrl": "https://hattemanden.dk/products/cowboyhat-i-stiv-uldfilt-med-spaende"
+  },
+  {
+    "id": "Q34b",
+    "cat": "A",
+    "handle": "newsboy-kasket-i-brun-uld",
+    "q": "Er der en knap på toppen?",
+    "type": "choice",
+    "options": [
+      "Ja, knap",
+      "Nej, glat top"
+    ],
+    "productTitle": "Newsboy kasket i brun uldblanding",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/newsboy-kasket-i-brun-uld_1_56035_0_braun.jpg?v=1773605805",
+    "productUrl": "https://hattemanden.dk/products/newsboy-kasket-i-brun-uld"
+  },
+  {
+    "id": "Q35b",
+    "cat": "A",
+    "handle": "panama-hat-klassisk",
+    "q": "Pulden-form: indbulet (pinched crown) eller rund/glat?",
+    "type": "choice",
+    "options": [
+      "Pinched (indbulet)",
+      "Rund/glat",
+      "Anden"
+    ],
+    "productTitle": "Panama hat klassisk",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/panama-hat-klassisk_1_44686_0_natur.jpg?v=1773605985",
+    "productUrl": "https://hattemanden.dk/products/panama-hat-klassisk"
+  },
+  {
+    "id": "Q36b",
+    "cat": "A",
+    "handle": "panama-hat-med-sort-band",
+    "q": "Er det sorte bånd bredt eller smalt? (ca cm hvis muligt)",
+    "type": "text",
+    "productTitle": "Panama hat med sort bånd",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/panama-hat-natur.webp?v=1774629881",
+    "productUrl": "https://hattemanden.dk/products/panama-hat-med-sort-band"
+  },
+  {
+    "id": "Q37b",
+    "cat": "A",
+    "handle": "raffiahat-med-baelterem",
+    "q": "Spændets farve/look: messing/guld eller sølv?",
+    "type": "choice",
+    "options": [
+      "Messing/guld",
+      "Sølv",
+      "Sort/mørk",
+      "Andet"
+    ],
+    "productTitle": "Raffiahat med bælterem",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/4732-1.jpg?v=1774120453",
+    "productUrl": "https://hattemanden.dk/products/raffiahat-med-baelterem"
+  },
+  {
+    "id": "Q38b",
+    "cat": "A",
+    "handle": "raffiahat-med-laederspaende",
+    "q": "Hvilken farve har læderbåndet? Hvilket spænde?",
+    "type": "text",
+    "productTitle": "Raffiahat med læderspænde",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/4102-1.jpg?v=1774120449",
+    "productUrl": "https://hattemanden.dk/products/raffiahat-med-laederspaende"
+  },
+  {
+    "id": "Q39b",
+    "cat": "A",
+    "handle": "soegraes-traveller",
+    "q": "Er den krølbar/foldbar (kan rejses sammen)?",
+    "type": "choice",
+    "options": [
+      "Ja, krølbar",
+      "Nej, holder formen"
+    ],
+    "productTitle": "Søgræs Traveller",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/soegraes-traveller.jpg?v=1774371985",
+    "productUrl": "https://hattemanden.dk/products/soegraes-traveller"
+  },
+  {
+    "id": "Q40",
+    "cat": "A",
+    "handle": "alpin-uldhat",
+    "q": "Skygge-bredde i cm (mål med lineal)",
+    "type": "cm",
+    "productTitle": "Alpin uldhat",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/alpin-uldhat_1_243B_orig__schwarz.jpg?v=1773949359",
+    "productUrl": "https://hattemanden.dk/products/alpin-uldhat"
+  },
+  {
+    "id": "Q43",
+    "cat": "A",
+    "handle": "klassisk-fedora",
+    "q": "Skygge-bredde i cm",
+    "type": "cm",
+    "productTitle": "Fedora Classica - med læderbånd",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/rollhut-brun.jpg?v=1774793953",
+    "productUrl": "https://hattemanden.dk/products/klassisk-fedora"
+  },
+  {
+    "id": "Q44",
+    "cat": "A",
+    "handle": "laederhat-western-stil",
+    "q": "Skygge-bredde i cm",
+    "type": "cm",
+    "productTitle": "Cowboyhat \"western style\"",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/laederhat-western-stil_1_5826_0_braun.jpg?v=1773949440",
+    "productUrl": "https://hattemanden.dk/products/laederhat-western-stil"
+  },
+  {
+    "id": "Q45",
+    "cat": "A",
+    "handle": "moenstret-sixpence-uldblanding",
+    "q": "Skygge-længde i cm",
+    "type": "cm",
+    "productTitle": "Mønstret sixpence i uldblanding",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/chauffoer-kasket_1_53200_0_braun.jpg?v=1773615343",
+    "productUrl": "https://hattemanden.dk/products/moenstret-sixpence-uldblanding"
+  },
+  {
+    "id": "Q46",
+    "cat": "A",
+    "handle": "panama-crochet-hat",
+    "q": "Skygge-bredde i cm",
+    "type": "cm",
+    "productTitle": "Panama crochet hat",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/panama-crochet-hat_1_42571_0_natur.jpg?v=1773605976",
+    "productUrl": "https://hattemanden.dk/products/panama-crochet-hat"
+  },
+  {
+    "id": "Q47",
+    "cat": "A",
+    "handle": "panama-hat-klassisk",
+    "q": "Skygge-bredde i cm",
+    "type": "cm",
+    "productTitle": "Panama hat klassisk",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/panama-hat-klassisk_1_44686_0_natur.jpg?v=1773605985",
+    "productUrl": "https://hattemanden.dk/products/panama-hat-klassisk"
+  },
+  {
+    "id": "Q50",
+    "cat": "A",
+    "handle": "prinz-heinrich-kasket-i-uld",
+    "q": "Skygge-længde i cm",
+    "type": "cm",
+    "productTitle": "Prinz Heinrich kasket i uld og kashmir",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/prinz-heinrich-kasket-i-uld_1_7011_0_marine.jpg?v=1773606074",
+    "productUrl": "https://hattemanden.dk/products/prinz-heinrich-kasket-i-uld"
+  },
+  {
+    "id": "Q51",
+    "cat": "A",
+    "handle": "sixpence-i-laeder",
+    "q": "Skygge-længde i cm",
+    "type": "cm",
+    "productTitle": "Sixpence i læder",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/sixpence-i-laeder_1_51233_0_braun.jpg?v=1773606135",
+    "productUrl": "https://hattemanden.dk/products/sixpence-i-laeder"
+  },
+  {
+    "id": "Q52",
+    "cat": "A",
+    "handle": "sixpence-i-uld",
+    "q": "Skygge-længde i cm",
+    "type": "cm",
+    "productTitle": "Sixpence i uldblanding",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/sixpence-i-uld_1_58007_0_grau.jpg?v=1773616248",
+    "productUrl": "https://hattemanden.dk/products/sixpence-i-uld"
+  },
+  {
+    "id": "Q53",
+    "cat": "A",
+    "handle": "sixpence-i-vokset-bomuld",
+    "q": "Skygge-længde i cm",
+    "type": "cm",
+    "productTitle": "Sixpence i vokset bomuld",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/sixpence-i-vokset-bomuld_1_52265_0_braun.jpg?v=1773606242",
+    "productUrl": "https://hattemanden.dk/products/sixpence-i-vokset-bomuld"
+  },
+  {
+    "id": "Q59",
+    "cat": "A",
+    "handle": "fedora-argentina-med-laederband-copy",
+    "q": "Bekræft: Materiale = uldfilt, læderbånd, satin-for?",
+    "type": "choice",
+    "options": [
+      "Bekræftet",
+      "Anderledes (skriv)"
+    ],
+    "productTitle": "Fedora Argentina - med læderbånd",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/rejsefedora-marineblaa.webp?v=1774793952",
+    "productUrl": "https://hattemanden.dk/products/fedora-argentina-med-laederband-copy"
+  },
+  {
+    "id": "Q60",
+    "cat": "A",
+    "handle": "klassisk-uldtrilby-med-fjer",
+    "q": "Bekræft: Uldfilt + ægte fjer + grosgrain-bånd?",
+    "type": "choice",
+    "options": [
+      "Bekræftet",
+      "Anderledes (skriv)"
+    ],
+    "productTitle": "Klassisk uldtrilby med fjer",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/klassisk-uldtrilby-sort.webp?v=1774627637",
+    "productUrl": "https://hattemanden.dk/products/klassisk-uldtrilby-med-fjer"
+  },
+  {
+    "id": "Q61",
+    "cat": "A",
+    "handle": "panama-trilby",
+    "q": "Bekræft: 100% Panama-strå, smal skygge, sort bånd?",
+    "type": "choice",
+    "options": [
+      "Bekræftet",
+      "Anderledes (skriv)"
+    ],
+    "productTitle": "Panama trilby",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/panama-trilby_1_40230_0_natur.jpg?v=1773616157",
+    "productUrl": "https://hattemanden.dk/products/panama-trilby"
+  },
+  {
+    "id": "Q62",
+    "cat": "A",
+    "handle": "sixpence-i-sildebensmonster",
+    "q": "Bekræft: Uld med sildebensmønster, fast skygge?",
+    "type": "choice",
+    "options": [
+      "Bekræftet",
+      "Anderledes (skriv)"
+    ],
+    "productTitle": "Sixpence i sildebensmønster",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/E38-307_1_11250688.jpg?v=1773616234",
+    "productUrl": "https://hattemanden.dk/products/sixpence-i-sildebensmonster"
+  },
+  {
+    "id": "Q63",
+    "cat": "A",
+    "handle": "trilby-i-papirstraa",
+    "q": "Bekræft: Materialet er PAPIRSTRÅ (ikke ægte strå)?",
+    "type": "choice",
+    "options": [
+      "Bekræftet papirstrå",
+      "Andet materiale (skriv)"
+    ],
+    "productTitle": "Trilby i papirstrå",
+    "productImage": "https://cdn.shopify.com/s/files/1/1053/8562/3901/files/4786-1.jpg?v=1774120467",
+    "productUrl": "https://hattemanden.dk/products/trilby-i-papirstraa"
+  }
+]</script>
+
+<script>
+const SHEET_API_URL = 'https://script.google.com/macros/s/AKfycbwvwajvewy3XFl2kL4OxPi3grMba0a1cxsdYU1G56PXhuGKQuUyYfDM8D0Y3CSqruRWmA/exec';
+const PASSWORD = 'hattemanden2026';
+const GATE_KEY = 'hm_audit_gate';
+
+// Password gate
+if (localStorage.getItem(GATE_KEY) === 'yes') document.getElementById('gate').classList.add('hidden');
+function checkPass(e) {
+  e.preventDefault();
+  const pw = document.getElementById('pw').value.trim();
+  if (pw === PASSWORD) { localStorage.setItem(GATE_KEY, 'yes'); document.getElementById('gate').classList.add('hidden'); }
+  else document.getElementById('err').textContent = 'Forkert kodeord';
+}
+
+// Data
+const QUESTIONS = JSON.parse(document.getElementById('audit-data').textContent);
+const ANSWERS = {}; // questionId → answer
+
+// Render
+function render() {
+  const list = document.getElementById('qList');
+  const filter = document.querySelector('.filter-btn.active').dataset.filter;
+  list.innerHTML = '';
+
+  // Group by category
+  const sections = [
+    { cat: 'B', label: 'Sektion B — kan besvares ved computeren', sub: '4 spørgsmål om sortiment og lager-beslutninger' },
+    { cat: 'A', label: 'Sektion A — kræver hatten i hånden', sub: 'Cirka 30 spørgsmål — tag hattene frem og en lineal' }
+  ];
+
+  for (const s of sections) {
+    if (filter !== 'all' && filter !== s.cat && filter !== 'open') continue;
+    const qs = QUESTIONS.filter(q => q.cat === s.cat && (filter !== 'open' || !ANSWERS[q.id]));
+    if (qs.length === 0) continue;
+    const head = document.createElement('div');
+    head.className = 'section-head ' + s.cat;
+    head.innerHTML = '<h2>' + escapeHtml(s.label) + '</h2><p>' + escapeHtml(s.sub) + '</p>';
+    list.appendChild(head);
+
+    for (const q of qs) {
+      list.appendChild(buildCard(q));
+    }
+  }
+
+  updateProgress();
+}
+
+function buildCard(q) {
+  const card = document.createElement('div');
+  card.className = 'qcard';
+  card.dataset.qid = q.id;
+  if (ANSWERS[q.id]) card.classList.add('answered');
+
+  const idClass = ANSWERS[q.id] ? 'answered' : (q.cat === 'B' ? 'B' : '');
+  const imgHtml = q.productImage
+    ? '<img class="qcard-img" src="' + escapeAttr(q.productImage) + '" loading="lazy" alt="">'
+    : '<div class="qcard-img"></div>';
+
+  let inputHtml = '';
+  const currentAnswer = ANSWERS[q.id] || '';
+
+  if (q.type === 'choice') {
+    inputHtml = '<div class="choices">' + q.options.map(o =>
+      '<button type="button" class="choice-btn' + (currentAnswer === o ? ' selected' : '') + '" data-choice="' + escapeAttr(o) + '">' + escapeHtml(o) + '</button>'
+    ).join('') + '</div>';
+  } else if (q.type === 'multi') {
+    const chosen = currentAnswer ? currentAnswer.split('|') : [];
+    inputHtml = '<div class="choices">' + q.options.map(o =>
+      '<button type="button" class="choice-btn' + (chosen.includes(o) ? ' selected' : '') + '" data-multi="' + escapeAttr(o) + '">' + escapeHtml(o) + '</button>'
+    ).join('') + '</div>';
+  } else if (q.type === 'cm') {
+    inputHtml = '<div class="cm-wrap"><input type="text" inputmode="decimal" placeholder="f.eks. 5.5" value="' + escapeAttr(currentAnswer) + '" data-input="cm"></div>';
+  } else {
+    inputHtml = '<textarea data-input="text" placeholder="Skriv svar...">' + escapeHtml(currentAnswer) + '</textarea>';
+  }
+
+  card.innerHTML =
+    '<div class="qcard-top">' +
+      imgHtml +
+      '<div class="qcard-meta">' +
+        '<span class="qcard-id ' + idClass + '">' + escapeHtml(q.id) + (ANSWERS[q.id] ? ' ✓' : '') + '</span>' +
+        '<div class="qcard-title">' + escapeHtml(q.productTitle) + '</div>' +
+        (q.productUrl ? '<a class="qcard-link" href="' + escapeAttr(q.productUrl) + '" target="_blank" rel="noopener">→ Se produktside</a>' : '') +
+      '</div>' +
+    '</div>' +
+    '<div class="qcard-q">' + escapeHtml(q.q) + '</div>' +
+    '<div class="qcard-input">' + inputHtml + '</div>' +
+    '<div class="qcard-actions">' +
+      '<span class="save-status" data-status>' + (ANSWERS[q.id] ? '✓ Gemt' : 'Ikke besvaret') + '</span>' +
+      '<button class="skip-btn" data-skip>Spring over</button>' +
+    '</div>';
+
+  // Attach handlers
+  card.querySelectorAll('[data-choice]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      card.querySelectorAll('[data-choice]').forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      saveAnswer(q, btn.dataset.choice, card);
+    });
+  });
+  card.querySelectorAll('[data-multi]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      btn.classList.toggle('selected');
+      const sel = [...card.querySelectorAll('[data-multi].selected')].map(b => b.dataset.multi);
+      saveAnswer(q, sel.join('|'), card);
+    });
+  });
+  const inp = card.querySelector('[data-input]');
+  if (inp) {
+    let timer;
+    inp.addEventListener('input', () => {
+      clearTimeout(timer);
+      const status = card.querySelector('[data-status]');
+      status.textContent = '⏳ Skriver…';
+      status.className = 'save-status saving';
+      timer = setTimeout(() => saveAnswer(q, inp.value.trim(), card), 700);
+    });
+  }
+  card.querySelector('[data-skip]').addEventListener('click', () => {
+    saveAnswer(q, '[SPRUNGET OVER]', card);
+  });
+
+  return card;
+}
+
+function saveAnswer(q, answer, card) {
+  const status = card.querySelector('[data-status]');
+  status.textContent = '⏳ Gemmer…';
+  status.className = 'save-status saving';
+
+  ANSWERS[q.id] = answer;
+  card.classList.add('answered');
+  card.querySelector('.qcard-id').textContent = q.id + ' ✓';
+  card.querySelector('.qcard-id').classList.add('answered');
+
+  const payload = {
+    action: 'audit-answer',
+    question_id: q.id,
+    product_handle: q.handle,
+    product_title: q.productTitle,
+    category: q.cat,
+    question: q.q,
+    answer: answer
+  };
+
+  // Apps Script doesn't accept JSON content-type from browser without preflight pain.
+  // Use text/plain — Apps Script reads e.postData.contents as raw string and our doPost JSON.parses it.
+  fetch(SHEET_API_URL, {
+    method: 'POST',
+    body: JSON.stringify(payload),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' }
+  })
+    .then(r => r.json())
+    .then(j => {
+      if (j.status === 'ok') {
+        status.textContent = '✓ Gemt';
+        status.className = 'save-status saved';
+        showToast('Svar gemt');
+        updateProgress();
+      } else {
+        throw new Error(j.message || 'Ukendt fejl');
+      }
+    })
+    .catch(err => {
+      status.textContent = '⚠ Ikke gemt — prøv igen';
+      status.className = 'save-status error';
+      console.error(err);
+    });
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 1500);
+}
+
+function updateProgress() {
+  const total = QUESTIONS.length;
+  const done = Object.keys(ANSWERS).length;
+  const pct = total ? Math.round(done / total * 100) : 0;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = done + ' af ' + total + ' besvaret (' + pct + '%)';
+}
+
+// Filter bar
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  });
+});
+
+// Helpers
+function escapeHtml(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function escapeAttr(s) { return escapeHtml(s); }
+
+// Load existing answers from sheet
+async function loadAnswers() {
+  try {
+    const r = await fetch(SHEET_API_URL + '?action=audit-get');
+    const j = await r.json();
+    if (j.status === 'ok' && j.data) {
+      for (const id in j.data) ANSWERS[id] = j.data[id].answer;
+    }
+  } catch (e) { console.warn('Kunne ikke hente eksisterende svar', e); }
+  render();
+}
+
+loadAnswers();
+</script>
+</body>
+</html>
