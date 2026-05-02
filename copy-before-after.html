@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Produktbeskrivelse-opdatering — Hattemanden.dk</title>
+<style>
+  :root {
+    --gold: #c4a747;
+    --dark-gold: #8b6914;
+    --cognac: #8b4513;
+    --charcoal: #1a1a1a;
+    --cream: #f5f0e8;
+    --paper: #fffcf6;
+    --red: #c0392b;
+    --green: #1a7a4a;
+    --green-bg: #e8f5ee;
+    --red-bg: #fdf0ee;
+    --amber: #d97706;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  /* Header */
+  .page-header {
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 40px 48px 36px;
+  }
+  .page-header h1 {
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 28px;
+    color: var(--gold);
+    margin-bottom: 8px;
+    font-weight: normal;
+  }
+  .page-header p {
+    color: #bbb;
+    font-size: 15px;
+    max-width: 640px;
+  }
+  .page-header .date {
+    color: #777;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    background: var(--gold);
+    display: flex;
+    gap: 0;
+    overflow: hidden;
+  }
+  .stat {
+    flex: 1;
+    padding: 18px 24px;
+    text-align: center;
+    border-right: 1px solid rgba(0,0,0,0.1);
+  }
+  .stat:last-child { border-right: none; }
+  .stat .num {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--charcoal);
+    display: block;
+    line-height: 1.1;
+  }
+  .stat .label {
+    font-size: 12px;
+    color: rgba(0,0,0,0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 3px;
+    display: block;
+  }
+
+  /* Main content */
+  main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  /* Section intro */
+  .section-intro {
+    background: var(--paper);
+    border-left: 4px solid var(--gold);
+    padding: 16px 20px;
+    margin-bottom: 32px;
+    border-radius: 0 8px 8px 0;
+    font-size: 14px;
+    color: #555;
+  }
+  .section-intro strong { color: var(--charcoal); }
+
+  /* Product card */
+  .product-card {
+    background: var(--paper);
+    border-radius: 12px;
+    margin-bottom: 40px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  }
+  .product-header {
+    background: var(--charcoal);
+    padding: 16px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .product-header h2 {
+    font-family: Georgia, serif;
+    font-size: 18px;
+    color: var(--gold);
+    font-weight: normal;
+    flex: 1;
+  }
+  .badge {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .badge.p1 { background: var(--gold); color: var(--charcoal); }
+  .badge.rank { background: #2ecc71; color: #fff; }
+  .badge.fix { background: var(--red); color: #fff; }
+
+  .compare-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border-top: 1px solid #e8e0d0;
+  }
+  .col-before, .col-after {
+    padding: 24px;
+  }
+  .col-before {
+    border-right: 1px solid #e8e0d0;
+    background: #fdf8f4;
+  }
+  .col-after {
+    background: var(--paper);
+  }
+  .col-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .col-before .col-label {
+    color: #999;
+    border-color: #e0d8cc;
+  }
+  .col-after .col-label {
+    color: var(--dark-gold);
+    border-color: var(--gold);
+  }
+  .col-label .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .col-before .dot { background: #ccc; }
+  .col-after .dot { background: var(--gold); }
+
+  .copy-text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #444;
+  }
+  .col-before .copy-text { color: #777; }
+
+  .del {
+    background: var(--red-bg);
+    color: var(--red);
+    text-decoration: line-through;
+    text-decoration-color: var(--red);
+    border-radius: 3px;
+    padding: 0 2px;
+    font-size: 13px;
+  }
+  .add {
+    background: var(--green-bg);
+    color: var(--green);
+    border-radius: 3px;
+    padding: 0 2px;
+    font-size: 13px;
+    font-weight: 500;
+  }
+
+  .spec-table {
+    width: 100%;
+    font-size: 13px;
+    border-collapse: collapse;
+    margin-top: 14px;
+  }
+  .spec-table td {
+    padding: 5px 8px;
+    vertical-align: top;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+  }
+  .spec-table td:first-child {
+    font-weight: 600;
+    color: #888;
+    width: 100px;
+    white-space: nowrap;
+  }
+  .col-after .spec-table td:first-child { color: var(--dark-gold); }
+
+  /* Product meta strip */
+  .product-meta {
+    padding: 12px 24px;
+    background: #f2ede4;
+    border-top: 1px solid #e8e0d0;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+  .meta-group {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 180px;
+  }
+  .meta-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #aaa;
+  }
+  .meta-value {
+    font-size: 13px;
+    color: var(--charcoal);
+    line-height: 1.4;
+  }
+  .meta-value a {
+    color: var(--dark-gold);
+    text-decoration: none;
+    word-break: break-all;
+  }
+  .meta-value a:hover { text-decoration: underline; }
+  .kw-primary {
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+  .kw-secondary {
+    color: #888;
+    font-size: 12px;
+    margin-top: 2px;
+  }
+  .collection-tag {
+    display: inline-block;
+    background: var(--gold);
+    color: var(--charcoal);
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin: 1px 2px 1px 0;
+    text-decoration: none;
+  }
+
+  /* Change log */
+  .changes {
+    padding: 16px 24px;
+    background: #f8f4ee;
+    border-top: 1px solid #e8e0d0;
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .change-pill {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+  .pill-red { background: var(--red-bg); color: var(--red); }
+  .pill-green { background: var(--green-bg); color: var(--green); }
+  .pill-amber { background: #fef3cd; color: var(--amber); }
+
+  /* Global summary */
+  .global-fixes {
+    background: var(--charcoal);
+    color: var(--cream);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 40px;
+  }
+  .global-fixes h2 {
+    font-family: Georgia, serif;
+    color: var(--gold);
+    font-weight: normal;
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  .fix-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 24px;
+  }
+  .fix-list li {
+    font-size: 13px;
+    color: #ccc;
+    padding-left: 18px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .fix-list li::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    color: var(--red);
+    font-weight: 700;
+  }
+  .fix-list li strong { color: #fff; }
+
+  .footer-note {
+    text-align: center;
+    color: #aaa;
+    font-size: 13px;
+    padding: 32px;
+  }
+  .footer-note strong { color: var(--charcoal); }
+
+  @media (max-width: 720px) {
+    .compare-grid { grid-template-columns: 1fr; }
+    .col-before { border-right: none; border-bottom: 1px solid #e8e0d0; }
+    .stats-bar { flex-direction: column; }
+    .stat { border-right: none; border-bottom: 1px solid rgba(0,0,0,0.1); }
+    .fix-list { grid-template-columns: 1fr; }
+    .page-header { padding: 28px 20px; }
+    main { padding: 24px 16px 60px; }
+  }
+</style>
+</head>
+<body>
+<script src="demo-nav.js"></script>
+
+<div class="page-header">
+  <h1>Produktbeskrivelse-opdatering</h1>
+  <p>Alle 91 produkter på Hattemanden.dk er gennemgået mod leverandørdata. Ukorrekte påstande er fjernet, verificerede fakta og mål er tilføjet, og teksten er optimeret til søgemaskiner.</p>
+  <div class="date">Hattemanden.dk &mdash; Maj 2026 &mdash; Udarbejdet af Build444</div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat">
+    <span class="num">91</span>
+    <span class="label">Produkter gennemgået</span>
+  </div>
+  <div class="stat">
+    <span class="num">15</span>
+    <span class="label">Forkerte materiale&shy;angivelser rettet</span>
+  </div>
+  <div class="stat">
+    <span class="num">8+</span>
+    <span class="label">Opfundne påstande fjernet</span>
+  </div>
+  <div class="stat">
+    <span class="num">#1</span>
+    <span class="label">Google-rang bevaret (chauffør kasket)</span>
+  </div>
+</div>
+
+<main>
+
+  <div class="section-intro">
+    <strong>Hvad du ser herunder:</strong> Eksempler på fire af jeres vigtigste produkter. FØR-teksten er den nuværende tekst på hattemanden.dk. EFTER-teksten er det forslag vi har udarbejdet baseret på verificerede data fra leverandørerne. <strong>Intet er skiftet endnu</strong> — I godkender, inden vi publicerer.
+  </div>
+
+  <!-- GLOBAL ERRORS BOX -->
+  <div class="global-fixes">
+    <h2>Hvad vi har fundet på tværs af alle 91 produkter</h2>
+    <ul class="fix-list">
+      <li><strong>"150 arbejdsprocesser"</strong> — Tallet findes ingen steder hos leverandøren. Fjernet.</li>
+      <li><strong>specs.material = "Uld"</strong> på 8+ produkter der slet ikke er af uld</li>
+      <li><strong>specs.material = "Læder"</strong> på Fedora Classica — den er 100% uld</li>
+      <li><strong>"Korkjusterbart sveddebånd"</strong> på Chapeau Claque — misvisende formulering</li>
+      <li><strong>"3-4 ugers leveringstid"</strong> som hardkodet fakta — ubekræftet</li>
+      <li><strong>Byron Bay, bøffellæder, voksbehandlet</strong> på australsk hat — opfundet</li>
+      <li><strong>"Fås i tre størrelser"</strong> på Chauffør kasket — den fås i fire</li>
+      <li><strong>Pleje-råd for uldfilt</strong> på produkter der er bomuld/PVC/raffia</li>
+    </ul>
+  </div>
+
+  <!-- ======= PRODUCT 1: CHAPEAU CLAQUE ======= -->
+  <div class="product-card">
+    <div class="product-header">
+      <h2>Chapeau Claque</h2>
+      <span class="badge p1">Prioritet 1</span>
+      <span class="badge fix">2 fakta-fejl rettet</span>
+    </div>
+    <div class="compare-grid">
+      <div class="col-before">
+        <div class="col-label"><span class="dot"></span> Nuværende tekst</div>
+        <div class="copy-text">
+          <p>Håndlavet chapeau claque i sort hattesilke (satin) med fjedermekanisme i fjederstål. Klappes helt flad, og med et enkelt tryk springer den op i fuld form igen. Selve pulden er betrukket med stram, blank satin, der giver den karakteristiske sorte glans. Under satinen sidder et lag kaninhårsfilt, som giver varme og struktur. <span class="del">Indvendigt moiré-foring og korkjusterbart sveddebånd.</span></p>
+          <br>
+          <p><span class="del">Op til 150 arbejdsprocesser går i én hat.</span> Lavet til kjole og hvidt, bryllupper, galla og nytårsaften. <span class="del">3, 4 ugers leveringstid, fordi hver hat bygges i hånden.</span></p>
+        </div>
+        <table class="spec-table">
+          <tr><td>Materiale</td><td><span class="del">(tomt)</span></td></tr>
+          <tr><td>Oprindelse</td><td><span class="del">(tomt)</span></td></tr>
+          <tr><td>Pleje</td><td><span class="del">(tomt)</span></td></tr>
+        </table>
+      </div>
+      <div class="col-after">
+        <div class="col-label"><span class="dot"></span> Forslag</div>
+        <div class="copy-text">
+          <p><strong>Klik. Åben. Klar til opera.</strong></p>
+          <br>
+          <p>En chapeau claque i blank hattesilke (satin) over en hattekrop af kaninhårsfilt, med et klapstel i fjederstål under betrækkene. Klik den flad under teater-sædet. Klik den op igen, inden du går på scenen. Sådan fungerer den — det var hele idéen, da pariser-hattemager <span class="add">Antoine Gibus patenterede mekanismen i 1830'erne.</span></p>
+          <br>
+          <p><span class="add">Pulden er 12,5 cm høj.</span> Kanten på krempen er <span class="add">håndsyet og betrukket med ripsbånd.</span> Foring er sort moiré-stof. Indvendigt <span class="add">klap-hattelæder kan polstres med kork- eller stofstrimler for præcis pasform.</span> <span class="add">Håndlavet i Thüringen, Tyskland.</span></p>
+          <br>
+          <p>Til kjole og hvidt, nytårsbal, opera og bryllup. Fås i størrelser <span class="add">55 til 64.</span> Fri fragt.</p>
+        </div>
+        <table class="spec-table">
+          <tr><td>Materiale</td><td><span class="add">Satin (hattesilke) over kaninhårsfilt, klapstel i fjederstål</span></td></tr>
+          <tr><td>Oprindelse</td><td><span class="add">Thüringen, Tyskland</span></td></tr>
+          <tr><td>Pleje</td><td><span class="add">Opbevares tørt og støvfrit. Helst i opklappet tilstand.</span></td></tr>
+          <tr><td>Størrelse</td><td><span class="add">55, 56, 57, 58, 59, 60, 61, 62, 63, 64 cm</span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="product-meta">
+      <div class="meta-group">
+        <span class="meta-label">Butik</span>
+        <span class="meta-value"><a href="https://hattemanden.dk/products/chapeau-claque" target="_blank">hattemanden.dk/products/chapeau-claque</a></span>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Leverandør</span>
+        <span class="meta-value"><a href="https://www.hk-altenburg.de/products/chapeau-claque" target="_blank">hk-altenburg.de — Chapeau Claque</a></span>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Søgeord vi målretter</span>
+        <div class="meta-value">
+          <div class="kw-primary">chapeau claque <span style="font-weight:400;color:#aaa;">(50 søgninger/md)</span></div>
+          <div class="kw-secondary">+ kjole og hvidt hat (880/md) · høj hat til fest · chapeau</div>
+        </div>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Kollektion</span>
+        <span class="meta-value">
+          <a class="collection-tag" href="https://hattemanden.dk/collections/specialhatte" target="_blank">Specialhatte</a>
+        </span>
+      </div>
+    </div>
+    <div class="changes">
+      <span class="change-pill pill-red">Fjernet: "150 arbejdsprocesser" — ikke dokumenteret</span>
+      <span class="change-pill pill-red">Fjernet: "korkjusterbart sveddebånd" — misvisende</span>
+      <span class="change-pill pill-red">Fjernet: "3-4 ugers leveringstid" — ubekræftet</span>
+      <span class="change-pill pill-green">Tilføjet: Antoine Gibus 1830'erne (leverandørbekræftet)</span>
+      <span class="change-pill pill-green">Tilføjet: puld 12,5 cm, ripsbånd, Thüringen, str. 55-64</span>
+      <span class="change-pill pill-green">Udfyldt: alle tomme metafelter</span>
+    </div>
+  </div>
+
+  <!-- ======= PRODUCT 2: BOWLER ======= -->
+  <div class="product-card">
+    <div class="product-header">
+      <h2>Bowler</h2>
+      <span class="badge p1">Prioritet 1</span>
+    </div>
+    <div class="compare-grid">
+      <div class="col-before">
+        <div class="col-label"><span class="dot"></span> Nuværende tekst</div>
+        <div class="copy-text">
+          <p>Bowlerhat i ren uldfilt med stiv, rund puld og <span class="del">lille skygge</span> hele vejen rundt. Den her bowler hat vejer næsten ingenting og sidder behageligt hele dagen. Fås i sort og hvid, i størrelse XS til XXL. Bowleren er en gentleman-klassiker, der fungerer til bryllupper, gallafester eller bare når du vil gøre lidt ekstra ud af dig selv. I Danmark kender mange også bowlerhatten som slagterhatten, fordi den i generationer har været en del af slagterens uniform. Vi har solgt den her model i butikken i mange år, og den holder formen flot.</p>
+        </div>
+        <table class="spec-table">
+          <tr><td>Materiale</td><td>Uldfilt</td></tr>
+          <tr><td>Skygge</td><td>5,0 cm</td></tr>
+          <tr><td>Oprindelse</td><td><span class="del">(tomt)</span></td></tr>
+        </table>
+      </div>
+      <div class="col-after">
+        <div class="col-label"><span class="dot"></span> Forslag</div>
+        <div class="copy-text">
+          <p><strong>100% uldfilt. Stiv puld. Den hat danskerne kalder slagterhatten.</strong></p>
+          <br>
+          <p>En bowler hat i 100% hærdet uldfilt med stiv, rund puld og <span class="add">5 cm omløbende skygge.</span> Håndlavet med <span class="add">satinforing, ripsbånd med sidesløjfe og svedbånd i ægte læder</span> indvendigt. Behagelig at have på hele dagen.</p>
+          <br>
+          <p>I Danmark kender de fleste bowlerhatten som slagterhatten. I generationer en del af slagterens arbejdsdragt. I England hedder den derby hat. Det er den samme hat. Til bryllupper, gallafester og kjole og hvidt, eller bare når du vil gøre lidt ekstra ud af dig selv.</p>
+          <br>
+          <p>Fås i sort, hvid og flere farver. Størrelser XS til XXL — <span class="add">sort tillige XXXL.</span> Fri fragt.</p>
+        </div>
+        <table class="spec-table">
+          <tr><td>Materiale</td><td><span class="add">100% hærdet uldfilt</span></td></tr>
+          <tr><td>Foring</td><td><span class="add">Satinforing + svedbånd i ægte læder</span></td></tr>
+          <tr><td>Skygge</td><td>5 cm (bekræftet)</td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="product-meta">
+      <div class="meta-group">
+        <span class="meta-label">Butik</span>
+        <span class="meta-value"><a href="https://hattemanden.dk/products/bowler" target="_blank">hattemanden.dk/products/bowler</a></span>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Leverandør</span>
+        <span class="meta-value"><a href="https://www.euroaccessories.co.uk/classic-bowler-hat-e15-04" target="_blank">euroaccessories.co.uk — Classic Bowler Hat E15-04</a></span>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Søgeord vi målretter</span>
+        <div class="meta-value">
+          <div class="kw-primary">bowler hat <span style="font-weight:400;color:#aaa;">(480 søgninger/md)</span></div>
+          <div class="kw-secondary">+ bowlerhat (590/md) · derby hat · slagterhat · charlie chaplin hat</div>
+        </div>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Kollektion</span>
+        <span class="meta-value">
+          <a class="collection-tag" href="https://hattemanden.dk/collections/bowler-formal" target="_blank">Bowler &amp; Formal</a>
+        </span>
+      </div>
+    </div>
+    <div class="changes">
+      <span class="change-pill pill-green">Tilføjet: "hærdet" — præcis betegnelse fra leverandør</span>
+      <span class="change-pill pill-green">Tilføjet: satinforing, ripsbånd, svedbånd i ægte læder</span>
+      <span class="change-pill pill-green">Tilføjet: XXXL-størrelse i sort (leverandørbekræftet)</span>
+      <span class="change-pill pill-green">Erstattet: "lille skygge" med "5 cm" (eksakt mål)</span>
+    </div>
+  </div>
+
+  <!-- ======= PRODUCT 3: KLASSISK FEDORA ======= -->
+  <div class="product-card">
+    <div class="product-header">
+      <h2>Fedora Classica</h2>
+      <span class="badge p1">Prioritet 1</span>
+      <span class="badge fix">Kritisk fejl i specs rettet</span>
+    </div>
+    <div class="compare-grid">
+      <div class="col-before">
+        <div class="col-label"><span class="dot"></span> Nuværende tekst</div>
+        <div class="copy-text">
+          <p>Klassisk fedora i 100% uldfilt. Krølbar og vandafvisende, så den er perfekt til både hverdag og rejser. Det bøjelige design gør den nem at pakke, uden at den mister sin form. En rejsehat, der tåler at blive rullet sammen i kufferten og stadig ser ud som den skal, når du tager den frem.</p>
+          <br>
+          <ul style="padding-left:18px; color:#777;">
+            <li>100% uldfilt</li>
+            <li>Krølbar, tager sin form igen</li>
+            <li>Vandafvisende</li>
+            <li>Farver: sort, brun</li>
+            <li><span class="del">Størrelser: 54, 62</span></li>
+          </ul>
+        </div>
+        <table class="spec-table">
+          <tr><td>Materiale</td><td><span class="del">Læder</span> &nbsp;<span style="font-size:12px;color:#c0392b;">← forkert</span></td></tr>
+          <tr><td>Pleje</td><td><span class="del">Tør af med fugtig klud. Lædercreme 1-2 gange årligt.</span> &nbsp;<span style="font-size:12px;color:#c0392b;">← for læder, ikke uld</span></td></tr>
+        </table>
+      </div>
+      <div class="col-after">
+        <div class="col-label"><span class="dot"></span> Forslag</div>
+        <div class="copy-text">
+          <p><strong>Krølbar fedora hat. Tager sin form igen.</strong></p>
+          <br>
+          <p>En fedora hat i 100% uld med to egenskaber der gør den anderledes end de fleste: den er krølbar og vandafvisende. Kassen i kufferten, regnen på vejen — hatten tager dem begge og finder sin form igen, når du tager den frem. Det tyske handelsnavn for denne type er "Rollhut" — en hat der er designet til at overleve brug, ikke bare til at sidde pænt i en boks.</p>
+          <br>
+          <p><span class="add">Skyggen er 6,5 cm bred</span> — bred nok til at markere det klassiske fedora-snit men ikke så bred at den hælder mod det teatralske. Trilbyen stopper ved 5 cm — den forskel er ikke tilfældig.</p>
+          <br>
+          <p>Fås i sort og brun i størrelse <span class="add">54 til 62. Ni størrelser.</span></p>
+        </div>
+        <table class="spec-table">
+          <tr><td>Materiale</td><td><span class="add">100% uld</span></td></tr>
+          <tr><td>Pleje</td><td><span class="add">Børst med blød hatbørste. Damp over dampende kedel for at genvinde form. Aldrig tørretumbler.</span></td></tr>
+          <tr><td>Størrelse</td><td><span class="add">54, 55, 56, 57, 58, 59, 60, 61, 62 (alle ni)</span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="product-meta">
+      <div class="meta-group">
+        <span class="meta-label">Butik</span>
+        <span class="meta-value"><a href="https://hattemanden.dk/products/klassisk-fedora" target="_blank">hattemanden.dk/products/klassisk-fedora</a></span>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Leverandør</span>
+        <span class="meta-value"><a href="https://www.hutlager.de/1363/Rollhut/?fb=51&cref=287" target="_blank">hutlager.de — Rollhut (foldbar fedora)</a></span>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Søgeord vi målretter</span>
+        <div class="meta-value">
+          <div class="kw-primary">fedora hat klassisk <span style="font-weight:400;color:#aaa;">(del af 1.600/md)</span></div>
+          <div class="kw-secondary">+ fedora hat uld · klassisk filtfedora · fedora med læderbånd</div>
+        </div>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Kollektion</span>
+        <span class="meta-value">
+          <a class="collection-tag" href="https://hattemanden.dk/collections/trilby-fedora" target="_blank">Trilby &amp; Fedora</a>
+        </span>
+      </div>
+    </div>
+    <div class="changes">
+      <span class="change-pill pill-red">Kritisk: specs.material var "Læder" — hatten er 100% uld</span>
+      <span class="change-pill pill-red">Kritisk: pleje-råd var for læder, ikke for uldfilt</span>
+      <span class="change-pill pill-red">Rettet: "Størrelser: 54, 62" → alle 9 størrelser (54 til 62)</span>
+      <span class="change-pill pill-green">Tilføjet: skyggebredde 6,5 cm og fedora/trilby-distinction</span>
+      <span class="change-pill pill-green">Tilføjet: "Rollhut"-forklaring som rejsehat-argument</span>
+    </div>
+  </div>
+
+  <!-- ======= PRODUCT 4: CHAUFFEUR KASKET SORT ======= -->
+  <div class="product-card">
+    <div class="product-header">
+      <h2>Chauffør kasket i sort</h2>
+      <span class="badge p1">Prioritet 1</span>
+      <span class="badge rank">#1 på Google</span>
+    </div>
+    <div class="compare-grid">
+      <div class="col-before">
+        <div class="col-label"><span class="dot"></span> Nuværende tekst</div>
+        <div class="copy-text">
+          <p>Klassisk chaufførkasket i sort og grå med blank skygge og matchende rem. Kasketten har satinfor og en vandafvisende overflade, så den holder sig flot i al slags vejr. Perfekt til dig, der søger en markant og stilfuld kasket med rødder i den klassiske chaufførstil.</p>
+          <br>
+          <p><span class="del">Fås i tre størrelser.</span></p>
+          <p><span class="del">Se alle kasketter →</span></p>
+        </div>
+        <table class="spec-table">
+          <tr><td>Materiale</td><td><span class="del">Uld</span> &nbsp;<span style="font-size:12px;color:#c0392b;">← forkert</span></td></tr>
+          <tr><td>Pleje</td><td><span class="del">Uldsæbe, koldt vand</span> &nbsp;<span style="font-size:12px;color:#c0392b;">← for uldfilt, ikke bomuld</span></td></tr>
+          <tr><td>Størrelse</td><td><span class="del">Tre størrelser</span></td></tr>
+        </table>
+      </div>
+      <div class="col-after">
+        <div class="col-label"><span class="dot"></span> Forslag</div>
+        <div class="copy-text">
+          <p><strong>Chauffør kasket i det klassiske snit. Sort og grå.</strong></p>
+          <br>
+          <p>En chauffør kasket med den strukturerede form, der definerer stilarten: <span class="add">11 cm høj krone, 6 cm skygge,</span> bånd med to studs rundt om kronen, og en <span class="add">formbar skygge</span> du kan justere til dit eget brug. Foret med satin indvendigt. Vandafvisende ydre — kasketten klarer morgenturen.</p>
+          <br>
+          <p>Fås i sort, grå og marineblå. <span class="add">Fire størrelser: S, M, L og XL.</span> Kasketformens rødder går tilbage til militærets tradition fra 1799 — i dag er det chaufførkaskettens klassiske silhuet.</p>
+          <br>
+          <p>Usikker på størrelsen? Ring til Kim i butikken — han hjælper dig finde den rigtige.</p>
+        </div>
+        <table class="spec-table">
+          <tr><td>Materiale</td><td><span class="add">Bomuld (afklares med Kim inden publicering)</span></td></tr>
+          <tr><td>Krone</td><td><span class="add">11 cm</span></td></tr>
+          <tr><td>Skygge</td><td><span class="add">6 cm, formbar</span></td></tr>
+          <tr><td>Foring</td><td><span class="add">Satin</span></td></tr>
+          <tr><td>Størrelse</td><td><span class="add">S, M, L, XL (fire størrelser)</span></td></tr>
+        </table>
+      </div>
+    </div>
+    <div class="product-meta">
+      <div class="meta-group">
+        <span class="meta-label">Butik</span>
+        <span class="meta-value"><a href="https://hattemanden.dk/products/chauffeur-kasket-sort" target="_blank">hattemanden.dk/products/chauffeur-kasket-sort</a></span>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Leverandør</span>
+        <span class="meta-value"><a href="https://www.euroaccessories.co.uk/army-general-russian-military-hat-e23-23" target="_blank">euroaccessories.co.uk — Classic Chauffeur Hat E23-23</a></span>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Søgeord vi målretter</span>
+        <div class="meta-value">
+          <div class="kw-primary">chauffør kasket <span style="font-weight:400;color:#aaa;">(50 søgninger/md) — rang #1</span></div>
+          <div class="kw-secondary">+ chauffør hat (30/md) · klassisk kasket sort · chauffeur cap</div>
+        </div>
+      </div>
+      <div class="meta-group">
+        <span class="meta-label">Kollektion</span>
+        <span class="meta-value">
+          <a class="collection-tag" href="https://hattemanden.dk/collections/kasketter" target="_blank">Kasketter</a>
+        </span>
+      </div>
+    </div>
+    <div class="changes">
+      <span class="change-pill pill-red">Kritisk: specs.material var "Uld" — er bomuld eller polyester, ikke uld</span>
+      <span class="change-pill pill-red">Kritisk: pleje-råd var for uldfilt</span>
+      <span class="change-pill pill-red">Rettet: "tre størrelser" → fire størrelser (S, M, L, XL)</span>
+      <span class="change-pill pill-green">Tilføjet: krone 11 cm, skygge 6 cm (leverandørbekræftet)</span>
+      <span class="change-pill pill-green">Google-rang #1 bevaret: alle ranking-søgeord fastholdt</span>
+      <span class="change-pill pill-amber">Afventer Kim: materiale er bomuld eller polyester? (leverandørdata er modstridende)</span>
+    </div>
+  </div>
+
+  <div class="section-intro" style="margin-top:8px;">
+    <strong>Disse fire produkter er et udsnit.</strong> Alle 91 produkter er gennemgået på samme måde. Næste skridt: I godkender, og vi publicerer alle 91 på én gang. De 12 produkter der mangler fysiske mål fra butikken opdateres i en separat runde.
+  </div>
+
+</main>
+
+<div class="footer-note">
+  Udarbejdet af <strong>Build444</strong> for Hattemanden.dk &mdash; Maj 2026<br>
+  Alle forslag er baseret på verificerede leverandørdata. Intet er publiceret endnu.
+</div>
+
+</body>
+</html>

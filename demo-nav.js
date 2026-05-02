@@ -16,7 +16,8 @@
     { href: 'hat-images-demo.html',    label: 'Billeder' },
     { href: 'logo-design-journey.html', label: 'Logo Design' },
     { href: 'hat-sales-overview.html', label: 'Salgsoversigt' },
-    { href: 'supplier-link-compare.html', label: 'Link-verificering' }
+    { href: 'supplier-link-compare.html', label: 'Link-verificering' },
+    { href: 'copy-before-after.html', label: 'Tekst-opdatering' }
   ];
 
   var current = location.pathname.split('/').pop();
