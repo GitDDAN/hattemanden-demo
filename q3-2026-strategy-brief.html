@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#0a0a0a">
+<title>Q3 2026 Strategi · Hattemanden</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0a;
+    --charcoal: #1a1a1a;
+    --paper: #f7f4ed;
+    --paper-warm: #efeae0;
+    --cream: #f5f0e8;
+    --forest: #1B3B36;
+    --orange: #FF8A00;
+    --terracotta: #D97B61;
+    --gold: #c4a747;
+    --dark-gold: #997a1d;
+    --cognac: #8b4513;
+    --taupe: #88754a;
+    --muted: #8b8578;
+    --red: #c43b2f;
+    --green: #2f7d4a;
+    --border: rgba(26,26,26,0.1);
+    --border-dark: rgba(247,244,237,0.12);
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; overflow-x: hidden; background: var(--ink); color: var(--paper); font-family: 'Inter', system-ui, sans-serif; line-height: 1.5; -webkit-text-size-adjust: 100%; }
+  html { scroll-snap-type: y proximity; scroll-behavior: smooth; height: 100%; overflow-y: scroll; }
+
+  /* Password gate */
+  #gate { position: fixed; inset: 0; z-index: 100; display: flex; flex-direction: column; align-items: center; justify-content: center; background: var(--ink); padding: 24px; text-align: center; }
+  #gate.hidden { display: none; }
+  #gate .mark { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 22px; }
+  #gate .dot { width: 10px; height: 10px; background: var(--orange); border-radius: 50%; }
+  #gate .brand { font-family: 'Archivo Black', sans-serif; letter-spacing: 4px; color: var(--paper); font-size: 14px; }
+  #gate h1 { font-family: 'DM Serif Display', serif; font-size: 32px; line-height: 1.1; color: var(--paper); margin: 0 0 8px; max-width: 440px; }
+  #gate p { color: var(--muted); font-size: 14px; margin: 0 0 22px; max-width: 320px; }
+  #gate input { padding: 14px 18px; border: 1px solid var(--muted); background: transparent; color: var(--paper); font-size: 16px; min-width: 260px; border-radius: 2px; font-family: inherit; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+  #gate input:focus { outline: 2px solid var(--orange); outline-offset: 2px; }
+  #gate button { margin-top: 14px; padding: 14px 34px; background: var(--orange); color: var(--ink); border: none; border-radius: 2px; font-family: 'Archivo Black', sans-serif; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; cursor: pointer; transition: transform .15s; }
+  #gate button:hover { transform: translateY(-1px); }
+  #gate .err { color: var(--red); font-size: 13px; margin-top: 10px; min-height: 20px; }
+
+  /* Persistent header */
+  header.deck-head { position: fixed; top: 0; left: 0; right: 0; z-index: 50; padding: 14px 24px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; }
+  header.deck-head .brand-lock { display: inline-flex; align-items: center; gap: 10px; pointer-events: auto; background: rgba(10,10,10,0.72); padding: 6px 12px; border-radius: 999px; backdrop-filter: blur(6px); }
+  header.deck-head .brand-lock .dot { width: 8px; height: 8px; background: var(--orange); border-radius: 50%; }
+  header.deck-head .brand-lock span { font-family: 'Archivo Black', sans-serif; letter-spacing: 3px; color: var(--paper); font-size: 10px; }
+  header.deck-head .counter { background: rgba(10,10,10,0.72); padding: 6px 12px; border-radius: 999px; backdrop-filter: blur(6px); color: var(--orange); font-family: 'Archivo Black', sans-serif; font-size: 10px; pointer-events: auto; }
+  body.light-head header.deck-head .brand-lock, body.light-head header.deck-head .counter { background: rgba(247,244,237,0.88); color: var(--ink); }
+  body.light-head header.deck-head .brand-lock span { color: var(--ink); }
+  body.light-head header.deck-head .counter { color: var(--forest); }
+
+  /* Slide base */
+  .slide { min-height: 100vh; width: 100%; display: flex; flex-direction: column; justify-content: center; padding: 72px 40px 110px; scroll-snap-align: start; position: relative; overflow: hidden; }
+  @media (max-width: 640px) { .slide { padding: 60px 20px 120px; } }
+  .inner { max-width: 1100px; margin: 0 auto; width: 100%; position: relative; z-index: 2; }
+
+  .slide.dark { background: var(--ink); color: var(--paper); }
+  .slide.paper { background: var(--paper); color: var(--ink); }
+  .slide.forest { background: var(--forest); color: var(--paper); }
+  .slide.orange { background: var(--orange); color: var(--ink); }
+
+  /* Typography */
+  .eyebrow { font-family: 'Archivo Black', sans-serif; font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); margin-bottom: 18px; }
+  .slide.paper .eyebrow { color: var(--terracotta); }
+  .slide.forest .eyebrow { color: var(--orange); }
+  .slide.orange .eyebrow { color: var(--ink); }
+
+  .editorial { font-family: 'DM Serif Display', serif; font-size: clamp(40px, 7vw, 88px); line-height: 0.96; letter-spacing: -0.02em; margin: 0 0 22px; font-weight: 400; }
+  .editorial em { font-style: italic; color: var(--orange); }
+  .slide.paper .editorial em { color: var(--terracotta); }
+
+  .punch { font-family: 'Archivo Black', sans-serif; font-size: clamp(30px, 5vw, 52px); line-height: 0.98; text-transform: uppercase; letter-spacing: -0.02em; margin: 0 0 18px; }
+  .punch .accent { color: var(--orange); }
+  .slide.paper .punch .accent { color: var(--terracotta); }
+
+  .lead { font-size: clamp(16px, 1.7vw, 20px); line-height: 1.55; max-width: 700px; margin: 0 0 18px; color: inherit; opacity: 0.92; }
+  .lead strong { color: var(--orange); font-weight: 600; }
+  .slide.paper .lead strong { color: var(--terracotta); }
+
+  .micro { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+
+  /* KPI cards */
+  .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin: 24px 0; }
+  .kpi { background: rgba(247,244,237,0.05); border: 1px solid var(--border-dark); padding: 20px 22px; border-radius: 2px; }
+  .slide.paper .kpi { background: white; border-color: var(--border); }
+  .kpi .k { font-family: 'Archivo Black', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .kpi .v { font-family: 'DM Serif Display', serif; font-size: clamp(32px, 4.5vw, 48px); line-height: 1; margin: 8px 0 4px; letter-spacing: -1px; }
+  .kpi .s { font-size: 12px; color: var(--muted); }
+  .kpi.signal .v { color: var(--orange); }
+  .kpi.accent .v { color: var(--terracotta); }
+  .kpi.bad .v { color: var(--red); }
+  .kpi.good .v { color: var(--green); }
+
+  /* Tables */
+  table.data { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+  table.data th { font-family: 'Archivo Black', sans-serif; font-size: 9px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); padding: 12px 12px; text-align: left; border-bottom: 2px solid var(--border-dark); }
+  table.data td { padding: 14px 12px; border-bottom: 1px solid var(--border-dark); }
+  .slide.paper table.data th { color: var(--ink); border-bottom: 2px solid var(--border); }
+  .slide.paper table.data td { border-bottom: 1px solid var(--border); }
+  table.data .num { font-family: 'Archivo Black', sans-serif; font-size: 16px; }
+  table.data .accent { color: var(--orange); }
+  .slide.paper table.data .accent { color: var(--terracotta); }
+  table.data .small { font-size: 11px; color: var(--muted); }
+
+  /* Bars */
+  .bar-row { display: grid; grid-template-columns: 200px 1fr 80px; gap: 14px; align-items: center; margin: 8px 0; font-size: 14px; }
+  .bar-row .label { font-weight: 600; }
+  .bar-row .bar { height: 22px; background: var(--orange); border-radius: 2px; min-width: 4px; transition: width 0.4s; }
+  .bar-row .bar.muted { background: var(--muted); opacity: 0.4; }
+  .bar-row .num { font-family: 'Archivo Black', sans-serif; text-align: right; }
+
+  /* Pills / badges */
+  .pill { display: inline-block; padding: 4px 10px; background: rgba(255,138,0,0.15); color: var(--orange); border-radius: 999px; font-size: 10px; font-family: 'Archivo Black', sans-serif; letter-spacing: 1.5px; text-transform: uppercase; margin-right: 6px; }
+  .slide.paper .pill { background: rgba(217,123,97,0.18); color: var(--terracotta); }
+  .pill.green { background: rgba(47,125,74,0.2); color: var(--green); }
+  .pill.red { background: rgba(196,59,47,0.18); color: var(--red); }
+
+  /* Cards / lists */
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; margin: 24px 0; }
+  .card { background: rgba(247,244,237,0.04); border: 1px solid var(--border-dark); padding: 22px; border-radius: 2px; }
+  .slide.paper .card { background: white; border-color: var(--border); }
+  .card h4 { font-family: 'Archivo Black', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin: 0 0 10px; }
+  .slide.paper .card h4 { color: var(--terracotta); }
+  .card p { margin: 0; font-size: 14px; line-height: 1.5; opacity: 0.92; }
+  .card .big { font-family: 'DM Serif Display', serif; font-size: 32px; margin: 8px 0; line-height: 1; }
+
+  /* Two-column layout */
+  .split { display: grid; grid-template-columns: 1.1fr 1fr; gap: 40px; align-items: start; }
+  @media (max-width: 860px) { .split { grid-template-columns: 1fr; gap: 32px; } }
+
+  /* Action lists */
+  .actions { list-style: none; padding: 0; margin: 18px 0; }
+  .actions li { padding: 14px 0; border-bottom: 1px solid var(--border-dark); display: grid; grid-template-columns: 36px 1fr; gap: 12px; align-items: start; }
+  .slide.paper .actions li { border-bottom: 1px solid var(--border); }
+  .actions li .num-circle { width: 28px; height: 28px; border-radius: 50%; background: var(--orange); color: var(--ink); display: flex; align-items: center; justify-content: center; font-family: 'Archivo Black', sans-serif; font-size: 13px; }
+  .slide.paper .actions li .num-circle { background: var(--terracotta); color: var(--paper); }
+  .actions li .body strong { font-family: 'Archivo Black', sans-serif; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; display: block; margin-bottom: 4px; }
+  .actions li .body p { margin: 0; font-size: 14px; opacity: 0.88; line-height: 1.5; }
+
+  /* Editorial calendar */
+  .calendar { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin: 18px 0; }
+  @media (max-width: 720px) { .calendar { grid-template-columns: 1fr; } }
+  .month-block { background: rgba(247,244,237,0.04); border-left: 3px solid var(--orange); padding: 18px; border-radius: 2px; }
+  .slide.paper .month-block { background: rgba(0,0,0,0.03); border-left-color: var(--terracotta); }
+  .month-block .mtitle { font-family: 'Archivo Black', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin: 0 0 8px; }
+  .slide.paper .month-block .mtitle { color: var(--terracotta); }
+  .month-block ul { margin: 0; padding-left: 18px; font-size: 13px; line-height: 1.6; }
+
+  /* Final slide footer */
+  .deck-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 32px; font-size: 11px; opacity: 0.7; flex-wrap: wrap; gap: 12px; }
+
+  /* Dots nav */
+  .dots { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); z-index: 50; display: flex; gap: 5px; padding: 8px 12px; background: rgba(10,10,10,0.7); border-radius: 999px; backdrop-filter: blur(6px); }
+  .dots a { width: 7px; height: 7px; background: rgba(247,244,237,0.3); border-radius: 50%; transition: all .2s; }
+  .dots a.active { width: 20px; background: var(--orange); border-radius: 4px; }
+
+  /* Cover slide hero */
+  .cover-hero { display: flex; flex-direction: column; gap: 20px; }
+  .cover-hero .super { font-family: 'Archivo Black', sans-serif; font-size: 12px; letter-spacing: 4px; text-transform: uppercase; color: var(--orange); }
+  .cover-hero h1 { font-family: 'DM Serif Display', serif; font-size: clamp(48px, 9vw, 110px); line-height: 0.92; letter-spacing: -0.02em; margin: 0; }
+  .cover-hero h1 em { font-style: italic; color: var(--orange); }
+  .cover-hero .meta { font-size: 14px; opacity: 0.7; margin-top: 18px; max-width: 620px; }
+
+  /* Gap callout */
+  .gap-callout { background: rgba(255,138,0,0.08); border: 2px solid var(--orange); border-radius: 4px; padding: 20px 24px; margin: 18px 0; }
+  .slide.paper .gap-callout { background: rgba(217,123,97,0.08); border-color: var(--terracotta); }
+  .gap-callout .gtitle { font-family: 'Archivo Black', sans-serif; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--orange); margin: 0 0 8px; }
+  .slide.paper .gap-callout .gtitle { color: var(--terracotta); }
+
+  /* Comparison row */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 18px 0; }
+  .compare > div { padding: 18px; border-radius: 2px; }
+  .compare .us { background: rgba(47,125,74,0.12); border: 1px solid var(--green); }
+  .compare .them { background: rgba(196,59,47,0.08); border: 1px solid rgba(196,59,47,0.4); }
+  .compare h5 { font-family: 'Archivo Black', sans-serif; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; margin: 0 0 8px; color: var(--green); }
+  .compare .them h5 { color: var(--red); }
+
+</style>
+</head>
+<body>
+
+<div id="gate">
+  <div class="mark"><div class="dot"></div><div class="brand">HATTEMANDEN</div></div>
+  <h1>Q3 2026 Strategi</h1>
+  <p>Internt strategi-brief · adgangskode kræves</p>
+  <input id="gate-pw" type="password" autocomplete="off" placeholder="kode">
+  <button onclick="checkPw()">Åbn</button>
+  <div class="err" id="gate-err"></div>
+</div>
+
+<header class="deck-head">
+  <div class="brand-lock"><div class="dot"></div><span>HATTEMANDEN · Q3 2026</span></div>
+  <div class="counter" id="counter">01 / 12</div>
+</header>
+
+<!-- ============================================================== -->
+<!-- SLIDE 1 — COVER -->
+<!-- ============================================================== -->
+<section class="slide dark" id="s1">
+  <div class="inner">
+    <div class="cover-hero">
+      <div class="super">Strategi-brief · Internt</div>
+      <h1>Q3 <em>2026</em><br>Strategi</h1>
+      <div class="lead" style="max-width:680px; margin-top:12px;">
+        Hvad sker der frem mod efteråret — hvad konkurrenterne laver, hvad kunderne søger på, og <strong>hvad vi skal have hjem fra leverandørerne</strong> for at kunne levere på efterspørgslen.
+      </div>
+      <div class="meta">Udarbejdet 4. maj 2026 · Hattemanden.dk · Datakilder: Google Search Console, DataForSEO, live SERP-analyse, konkurrent-crawl</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 2 — EXECUTIVE SUMMARY -->
+<!-- ============================================================== -->
+<section class="slide paper" id="s2">
+  <div class="inner">
+    <div class="eyebrow">Hovedbudskab</div>
+    <h2 class="punch">Sommer-hatte er <span class="accent">10× større</span> end alt andet i Q3.</h2>
+    <p class="lead">Stråhatte, Panama og solhatte trækker den klart største søgevolumen i juli-september. Hattemanden har produkterne på lager, men <strong>mangler stadig børne-solhat og dedikeret herre-UV-solhat</strong> — to klare leverandør-bestillinger der skal i gang nu.</p>
+
+    <div class="kpi-grid" style="margin-top:32px;">
+      <div class="kpi signal">
+        <div class="k">Top Q3-søgning</div>
+        <div class="v">1.000</div>
+        <div class="s">stråhat (mdl.)</div>
+      </div>
+      <div class="kpi signal">
+        <div class="k">Damesøgning</div>
+        <div class="v">590</div>
+        <div class="s">solhat til damer</div>
+      </div>
+      <div class="kpi accent">
+        <div class="k">Børn-gap</div>
+        <div class="v">140</div>
+        <div class="s">sommerhat børn (0 SKU)</div>
+      </div>
+      <div class="kpi accent">
+        <div class="k">Herre-gap</div>
+        <div class="v">320</div>
+        <div class="s">solhat mænd (0 SKU)</div>
+      </div>
+    </div>
+
+    <div class="gap-callout">
+      <div class="gtitle">Det vigtigste at huske</div>
+      <p style="margin:0;font-size:15px;line-height:1.6;">
+        <strong>Hattemanden er Danmarks mindste konkurrent på trafik (321 besøg/mdr.) men én af kun to ægte danske hattebutikker i feltet.</strong> De tre store (Hatshop, Hattebutikken, Hatstore) er alle udenlandske og mangler MobilePay, Dankort og dansk telefonservice. Det er vores moat — vi skal udnytte det i marketing og indhold.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 3 — KONKURRENTER -->
+<!-- ============================================================== -->
+<section class="slide dark" id="s3">
+  <div class="inner">
+    <div class="eyebrow">Konkurrentlandskab</div>
+    <h2 class="editorial">De fem reelle <em>direkte</em> konkurrenter.</h2>
+    <p class="lead">Listen vi startede med (Shopik, Fenriz, Hat World, Stetson DK) viste sig at være forkert — ingen af dem dukker overhovedet op i søgeresultaterne. Her er det rigtige billede, baseret på 30 SERP-analyser i Google.dk.</p>
+
+    <table class="data" style="margin-top:28px;">
+      <thead>
+        <tr>
+          <th>Domæne</th>
+          <th>Type</th>
+          <th>Besøg/mdr.</th>
+          <th>Søgeord</th>
+          <th>Ejerskab</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>hatstore.dk</strong></td>
+          <td>Caps + hatte (sport)</td>
+          <td class="num accent">35.684</td>
+          <td>1.020</td>
+          <td>Svensk</td>
+        </tr>
+        <tr>
+          <td><strong>hatshop.dk</strong></td>
+          <td>Volume hat-shop</td>
+          <td class="num accent">21.002</td>
+          <td>589</td>
+          <td>Svensk (Cama-Gruppen)</td>
+        </tr>
+        <tr>
+          <td><strong>hattebutikken.dk</strong></td>
+          <td>Pan-EU dropship</td>
+          <td class="num accent">14.670</td>
+          <td>902</td>
+          <td>Tysk (ANTHEC GmbH)</td>
+        </tr>
+        <tr>
+          <td><strong>stetson.eu</strong></td>
+          <td>Premium brand-shop</td>
+          <td class="num">1.615</td>
+          <td>130</td>
+          <td>Tysk (Stetson EU)</td>
+        </tr>
+        <tr>
+          <td><strong>wilgart.dk</strong></td>
+          <td>Dansk kasketmager (København)</td>
+          <td class="num">1.046</td>
+          <td>160</td>
+          <td><span class="pill green">Dansk</span></td>
+        </tr>
+        <tr style="background: rgba(255,138,0,0.08);">
+          <td><strong>hattemanden.dk</strong></td>
+          <td>Dansk klassisk hattebutik (Kolding)</td>
+          <td class="num" style="color: var(--orange);">~500*</td>
+          <td>69</td>
+          <td><span class="pill green">Dansk · 1988</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="micro" style="margin-top:18px;">Kilde: DataForSEO bulk traffic estimation · Google.dk · 4. maj 2026 · *Hattemanden's tal er fra GA4 (faktisk målt organisk trafik), ikke estimat — DFS undervurderer brand-søgninger.</div>
+
+    <div class="gap-callout" style="margin-top:24px;">
+      <div class="gtitle">Vores faktiske trafik (alle kilder, sidste 30 dage)</div>
+      <p style="margin:0; font-size:14px; line-height:1.7;">
+        <strong>1.028 sessioner / 851 aktive brugere</strong> — fordelt: Organisk søgning 507 · Direkte 341 · Social 84 · Referral 26 · Email 8 · Andre 62.
+        Stadig lille i feltet, men retningen er rigtig. Kilde: GA4 + GSC.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 4 — VORES MOAT -->
+<!-- ============================================================== -->
+<section class="slide paper" id="s4">
+  <div class="inner">
+    <div class="eyebrow">Vores fordel</div>
+    <h2 class="punch">7 ud af 8 konkurrence-fordele <span class="accent">har vi allerede</span>.</h2>
+    <p class="lead">De tre store udenlandske operationer kan ikke kopiere disse — det er strukturelle fordele. Det er disse vi skal lede med i marketing og copy.</p>
+
+    <table class="data" style="margin-top:24px; font-size:13px;">
+      <thead>
+        <tr>
+          <th>Fordel</th>
+          <th>Hatshop</th>
+          <th>Hattebutikken</th>
+          <th>Hatstore</th>
+          <th>Stetson EU</th>
+          <th>Wilgart</th>
+          <th style="background:rgba(217,123,97,0.1);">Hattemanden</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Dankort</strong></td>
+          <td>✗</td><td>✗</td><td>?</td><td>?</td><td>✓</td>
+          <td style="background:rgba(47,125,74,0.1); color:var(--green); font-weight:700;">✓</td>
+        </tr>
+        <tr>
+          <td><strong>MobilePay</strong></td>
+          <td>✗</td><td>✗</td><td>?</td><td>✗</td><td>✓</td>
+          <td style="background:rgba(47,125,74,0.1); color:var(--green); font-weight:700;">✓</td>
+        </tr>
+        <tr>
+          <td><strong>Dansk telefon-service</strong></td>
+          <td>✗ (SE)</td><td>✗ (DE)</td><td>✗ (SE)</td><td>✗ (DE)</td><td>✓</td>
+          <td style="background:rgba(47,125,74,0.1); color:var(--green); font-weight:700;">✓</td>
+        </tr>
+        <tr>
+          <td><strong>Dansk historie + butik</strong></td>
+          <td>✗</td><td>✗</td><td>✗</td><td>✗</td><td>✓ (2010)</td>
+          <td style="background:rgba(47,125,74,0.1); color:var(--green); font-weight:700;">✓ (1988)</td>
+        </tr>
+        <tr>
+          <td><strong>Trustpilot live widget</strong></td>
+          <td>✗</td><td>✗</td><td>✗</td><td>✗</td><td>✗</td>
+          <td style="background:rgba(255,138,0,0.1); color:var(--orange); font-weight:700;">↻ klar</td>
+        </tr>
+        <tr>
+          <td><strong>Aktivt blog/guide-indhold</strong></td>
+          <td>✗</td><td>delvist</td><td>✗</td><td>✗</td><td>✓</td>
+          <td style="background:rgba(255,138,0,0.1); color:var(--orange); font-weight:700;">↻ udvides</td>
+        </tr>
+        <tr>
+          <td><strong>Gratis fragt på alle ordrer</strong></td>
+          <td>≥149kr</td><td>29kr</td><td>≥599kr</td><td>≥€150</td><td>✗</td>
+          <td style="background:rgba(47,125,74,0.1); color:var(--green); font-weight:700;">✓</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p class="lead" style="margin-top:24px;"><strong>Vi har allerede 5 grønne ✓ + 2 i pipeline.</strong> Konkurrenterne har 0-2 stk. hver. Det her er indholdet i alle vores PDP'er, kassen og marketingmateriale.</p>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 5 — PRISPOSITION -->
+<!-- ============================================================== -->
+<section class="slide dark" id="s5">
+  <div class="inner">
+    <div class="eyebrow">Prisstrategi</div>
+    <h2 class="editorial">Vi ejer båndet <em>400-1.500 kr.</em></h2>
+    <p class="lead">Vi kan ikke vinde i 129-299 kr. discount-laget — det dropshipper de svenske og tyske med private labels. Og vi behøver ikke jage Stetsons €1.950 top. Vi sidder hvor de fleste danskere reelt køber kvalitetshatte.</p>
+
+    <div class="cards" style="margin-top:30px;">
+      <div class="card">
+        <h4>Sixpence</h4>
+        <p class="big" style="color:var(--orange);">395 kr</p>
+        <p>Median for vores 18 SKU'er. Tæt på markedet, men over discount-floor (Hatshop 179).</p>
+      </div>
+      <div class="card">
+        <h4>Cowboyhat</h4>
+        <p class="big" style="color:var(--orange);">645 kr</p>
+        <p><strong>Bedste pris på ægte læder i markedet.</strong> Hatshop tager 729 for uld. Skal markedsføres hårdere.</p>
+      </div>
+      <div class="card">
+        <h4>Panama</h4>
+        <p class="big" style="color:var(--orange);">1.295 kr</p>
+        <p>Premium-prist (Hatshop 589) — <strong>kan kun retfærdiggøres med "ægte Ecuador toquilla"-historie</strong> på siden.</p>
+      </div>
+      <div class="card">
+        <h4>Fedora</h4>
+        <p class="big" style="color:var(--red);">545 kr</p>
+        <p><strong>Problem: alle 5 fedoraer koster det samme.</strong> Skal differentieres til 450-700 kr.-spand.</p>
+      </div>
+    </div>
+
+    <div class="gap-callout">
+      <div class="gtitle">Pris-aktioner i juni</div>
+      <ul style="margin:8px 0 0; padding-left:20px; font-size:14px; line-height:1.7;">
+        <li><strong>Differentiér de 5 fedora-priser</strong> — Italia til 495, Argentina-serien til 545-595, Classica til 645</li>
+        <li><strong>Defendér Panama-prisen</strong> med provenance-copy ("ægte Ecuador toquilla-strå, vævet i hånden") på alle 4 PDP'er</li>
+        <li><strong>Markér cowboy-værdien</strong> — "Vi sælger ægte læder for prisen af konkurrentens uld"</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 6 — Q3 EFTERSPØRGSEL -->
+<!-- ============================================================== -->
+<section class="slide paper" id="s6">
+  <div class="inner">
+    <div class="eyebrow">Q3 efterspørgsel</div>
+    <h2 class="punch">Hvad <span class="accent">danskerne</span> søger på i juli-september.</h2>
+    <p class="lead">Top 10 hat-relaterede søgninger i Q3-vinduet (DataForSEO, location DK, validerede månedlige volumener).</p>
+
+    <div style="margin-top:30px;">
+      <div class="bar-row">
+        <span class="label">stråhat</span>
+        <div class="bar" style="width:100%;"></div>
+        <span class="num">1.000</span>
+      </div>
+      <div class="bar-row">
+        <span class="label">panama hat</span>
+        <div class="bar" style="width:100%;"></div>
+        <span class="num">1.000</span>
+      </div>
+      <div class="bar-row">
+        <span class="label">solhat til damer</span>
+        <div class="bar" style="width:59%;"></div>
+        <span class="num">590</span>
+      </div>
+      <div class="bar-row">
+        <span class="label">sommerhat dame</span>
+        <div class="bar" style="width:48%;"></div>
+        <span class="num">480</span>
+      </div>
+      <div class="bar-row">
+        <span class="label" style="color:var(--red);">solhat mænd <span class="pill red" style="font-size:9px;">GAP</span></span>
+        <div class="bar" style="width:32%; background:var(--red);"></div>
+        <span class="num">320</span>
+      </div>
+      <div class="bar-row">
+        <span class="label">sommerhat herre</span>
+        <div class="bar" style="width:17%;"></div>
+        <span class="num">170</span>
+      </div>
+      <div class="bar-row">
+        <span class="label" style="color:var(--red);">sommerhat børn <span class="pill red" style="font-size:9px;">GAP</span></span>
+        <div class="bar" style="width:14%; background:var(--red);"></div>
+        <span class="num">140</span>
+      </div>
+      <div class="bar-row">
+        <span class="label">solhat dame bred skygge</span>
+        <div class="bar" style="width:7%;"></div>
+        <span class="num">70</span>
+      </div>
+      <div class="bar-row">
+        <span class="label">sommerhat mænd</span>
+        <div class="bar" style="width:5%;"></div>
+        <span class="num">50</span>
+      </div>
+      <div class="bar-row">
+        <span class="label">sommerhatte</span>
+        <div class="bar" style="width:5%;"></div>
+        <span class="num">50</span>
+      </div>
+    </div>
+
+    <p class="lead" style="margin-top:24px;font-size:14px;"><strong>Læsning:</strong> Stråhat og Panama er mega-segmenter. Vi har produkterne — men vi rangerer på position 12-14 organisk. Indhold + collection-optimering kan flytte os til top 8.</p>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 7 — LEVERANDØR-BESTILLINGER (THE CRITICAL SLIDE) -->
+<!-- ============================================================== -->
+<section class="slide orange" id="s7">
+  <div class="inner">
+    <div class="eyebrow" style="color:var(--ink);">Leverandør-bestillinger</div>
+    <h2 class="editorial" style="color:var(--ink);">Disse to <em style="color:var(--charcoal);font-style:italic;">SKU-grupper</em> mangler — bestil senest medio juni.</h2>
+
+    <div class="cards" style="margin-top:30px;">
+      <div class="card" style="background:rgba(10,10,10,0.08); border-color:var(--ink);">
+        <h4 style="color:var(--ink);">🎯 Børne-sommerhat</h4>
+        <p class="big" style="color:var(--ink); font-size:42px;">2-3 SKU'er</p>
+        <p style="color:var(--ink);">
+          <strong>140 søgninger/mdr.</strong> for "sommerhat børn". Vi har <strong>nul</strong> SKU'er.<br><br>
+          <strong>Anbefaling:</strong> 1 strå-bøllehat til drenge, 1 bredskygget solhat til piger, 1 unisex baby-stråhat.<br><br>
+          Pris-bånd: <strong>199-299 kr.</strong> (matcher konkurrenters børne-tier).
+        </p>
+      </div>
+
+      <div class="card" style="background:rgba(10,10,10,0.08); border-color:var(--ink);">
+        <h4 style="color:var(--ink);">🎯 Herre UV-solhat</h4>
+        <p class="big" style="color:var(--ink); font-size:42px;">2-3 SKU'er</p>
+        <p style="color:var(--ink);">
+          <strong>320 søgninger/mdr.</strong> for "solhat mænd" + UV-relaterede. Vi har kun en sixpence med UV — ingen dedikeret bredskygget herre-solhat.<br><br>
+          <strong>Anbefaling:</strong> 1 outdoor/sport solhat (UPF 50+), 1 klassisk bredskygget herre-stråhat, 1 panama-stil herre.<br><br>
+          Pris-bånd: <strong>395-695 kr.</strong>
+        </p>
+      </div>
+    </div>
+
+    <div class="gap-callout" style="background:rgba(10,10,10,0.05); border-color:var(--ink); margin-top:30px;">
+      <div class="gtitle" style="color:var(--ink);">Sekundær pre-stock til efteråret</div>
+      <p style="color:var(--ink); font-size:14px; margin:0; line-height:1.7;">
+        <strong>Bestil senest medio august:</strong> Tweed sixpence (3-5 varianter) · Newsboy i tweed/uld · Deerstalker (vi har 2, overvej at udvide) · Alpehue/tyrolerhat (Oktoberfest-aftermarket peaker okt-nov)
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 8 — Q3 EDITORIAL CALENDAR -->
+<!-- ============================================================== -->
+<section class="slide dark" id="s8">
+  <div class="inner">
+    <div class="eyebrow">Indholdskalender Q3</div>
+    <h2 class="editorial">Hvad vi <em>skriver</em> hvornår.</h2>
+    <p class="lead">Vi skal udnytte at Hatshop, Hatstore og Stetson EU har <strong>nul aktivt blog-indhold</strong>. Hver artikel målrettet Q3-spidsen for sit segment.</p>
+
+    <div class="calendar">
+      <div class="month-block">
+        <div class="mtitle">Juni — Tidlig sommer</div>
+        <ul>
+          <li>Stråhat 2026-guide</li>
+          <li>Sommerhat til damer (8 favoritter)</li>
+          <li>Panama hat: ægte vs efterligninger</li>
+          <li>Optimér /collections/straahatte-panama</li>
+        </ul>
+      </div>
+      <div class="month-block">
+        <div class="mtitle">Juli-aug — Peak sommer</div>
+        <ul>
+          <li>Solhat til mænd — UV-guide</li>
+          <li>Hatte til festival/Strömme</li>
+          <li>Cross-promotion på sociale</li>
+          <li>Email-kampagne "Sommer 2026 favoritter"</li>
+        </ul>
+      </div>
+      <div class="month-block">
+        <div class="mtitle">Aug-sept — Efterårs-skift</div>
+        <ul>
+          <li>Tweed-sixpence: efterårets klassiker</li>
+          <li>Newsboy + sixpence efterårsguide</li>
+          <li>Deerstalker / jagtsæson-opening</li>
+          <li>Pre-stock alpehue + tyrolerhat</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="lead" style="margin-top:24px;font-size:14px;"><strong>Forventet effekt:</strong> ~3.500 ekstra månedlige besøg inden for 6 måneder, baseret på position-5-7 mål for de 10 nye artikler.</p>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 9 — QUICK WINS -->
+<!-- ============================================================== -->
+<section class="slide paper" id="s9">
+  <div class="inner">
+    <div class="eyebrow">Quick wins</div>
+    <h2 class="punch">Tre ting der kan <span class="accent">flytte tallene nu</span>.</h2>
+
+    <ul class="actions">
+      <li>
+        <div class="num-circle">1</div>
+        <div class="body">
+          <strong>Match konkurrenternes 100-dages returret</strong>
+          <p>Hattebutikken, Hatstore og Stetson EU tilbyder alle 100 dages retur. Vi er på 14 dage. Det er nu en kategori-forventning — bør ændres for at undgå at tabe første-gangs-købere der sammenligner.</p>
+        </div>
+      </li>
+      <li>
+        <div class="num-circle">2</div>
+        <div class="body">
+          <strong>Aktivér Trustpilot live-widget</strong>
+          <p>Koden er allerede deployet — venter på Business Unit ID fra Trustpilot Business-kontoen. <em>Ingen</em> af de 5 konkurrenter viser Trustpilot prominent. First-mover-fordel i dansk hat-retail.</p>
+        </div>
+      </li>
+      <li>
+        <div class="num-circle">3</div>
+        <div class="body">
+          <strong>Markér MobilePay + Dankort på PDP og kassen</strong>
+          <p>Direkte differentiator — Hatshop, Hattebutikken, Hatstore har det ikke. Skal vises som badge på produktsiderne, ikke kun i kassen.</p>
+        </div>
+      </li>
+      <li>
+        <div class="num-circle">4</div>
+        <div class="body">
+          <strong>Quick wins fra Google Search Console</strong>
+          <p>23 søgninger hvor vi rangerer på pos 5-25 med dårlig CTR. Optimering af titler + meta-beskrivelser på top 30 sider = ~50 ekstra klik/mdr. uden ny indhold.</p>
+        </div>
+      </li>
+      <li>
+        <div class="num-circle">5</div>
+        <div class="body">
+          <strong>Differentiér de 5 fedora-priser</strong>
+          <p>Alle 5 fedoraer koster i dag 545 kr. Det signalerer "én tier" — kunder antager vi er overpriset for "house brand". Forslag: Italia 495, Argentina 545-595, Classica 645.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 10 — KONTRAST: HVAD STETSON EU IKKE KAN -->
+<!-- ============================================================== -->
+<section class="slide forest" id="s10">
+  <div class="inner">
+    <div class="eyebrow">Kontrast</div>
+    <h2 class="editorial">Stetson EU = €119 for en Hatteras. <em>Vi kan vinde Stetson-handelen i Danmark.</em></h2>
+    <p class="lead">Stetson EU's officielle online-shop sender til Danmark — men de viser kun EUR-priser, har tysk telefonsupport, ingen dansk fragt-info, og ingen MobilePay/Dankort. <strong>Vi kan være den danske Stetson-forhandler de aldrig kan blive.</strong></p>
+
+    <div class="compare">
+      <div class="us">
+        <h5>Hattemanden</h5>
+        <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.8;">
+          <li>Pris i DKK</li>
+          <li>MobilePay + Dankort</li>
+          <li>Dansk telefon-service</li>
+          <li>GLS 1-2 hverdage</li>
+          <li>Dansk moms-faktura</li>
+          <li>Personlig rådgivning på sidekontoret</li>
+        </ul>
+      </div>
+      <div class="them">
+        <h5>Stetson EU</h5>
+        <ul style="margin:0; padding-left:18px; font-size:14px; line-height:1.8;">
+          <li>EUR-priser kun</li>
+          <li>Ingen MobilePay, ingen Dankort</li>
+          <li>Tysk telefon-hotline</li>
+          <li>DPD med længere transit</li>
+          <li>Tysk faktura</li>
+          <li>Ingen personlig rådgivning</li>
+        </ul>
+      </div>
+    </div>
+
+    <p class="lead" style="margin-top:18px; font-size:15px;"><strong>Aktion:</strong> Bekræft hvilke Stetson-modeller vi har på lager. Byg en /pages/stetson-forhandler-danmark side. Ranger #1 i Danmark for "stetson danmark" (uomstridt — Stetson EU har ingen dansk side).</p>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 11 — 6-MÅNEDS MÅL -->
+<!-- ============================================================== -->
+<section class="slide dark" id="s11">
+  <div class="inner">
+    <div class="eyebrow">Mål</div>
+    <h2 class="editorial">Hvor vi er <em>30. september 2026</em>.</h2>
+    <p class="lead">Konservative mål baseret på indholdsplan + leverandør-pre-stock + quick wins.</p>
+
+    <table class="data" style="margin-top:24px;">
+      <thead>
+        <tr>
+          <th>Måling</th>
+          <th>I dag (maj)</th>
+          <th>Q3-mål (sept)</th>
+          <th>Drift</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Organisk trafik fra Google (klik/mdr.)</td>
+          <td class="num">517</td>
+          <td class="num accent">1.500+</td>
+          <td>Indhold + Trustpilot + 100d retur</td>
+        </tr>
+        <tr>
+          <td>Total sessioner (alle kanaler, mdr.)</td>
+          <td class="num">1.028</td>
+          <td class="num accent">2.500+</td>
+          <td>Organisk + email + social skala</td>
+        </tr>
+        <tr>
+          <td>Søgeord vi rangerer på</td>
+          <td class="num">69</td>
+          <td class="num accent">300+</td>
+          <td>10 nye guide-artikler + collection-optimering</td>
+        </tr>
+        <tr>
+          <td>Position for "stråhat"</td>
+          <td class="num">ikke synlig</td>
+          <td class="num accent">top 10</td>
+          <td>Stråhat-guide + collection-rewrite</td>
+        </tr>
+        <tr>
+          <td>Position for "panama hat"</td>
+          <td class="num">13,8</td>
+          <td class="num accent">top 8</td>
+          <td>Panama-ægte-vs-efterligninger artikel</td>
+        </tr>
+        <tr>
+          <td>Aktive børnehat-SKU'er</td>
+          <td class="num">3 (kun sixpence)</td>
+          <td class="num accent">6 (+ 3 sommer)</td>
+          <td>Leverandør-bestilling juni</td>
+        </tr>
+        <tr>
+          <td>Aktive herre-UV-solhat-SKU'er</td>
+          <td class="num">0</td>
+          <td class="num accent">2-3</td>
+          <td>Leverandør-bestilling juni</td>
+        </tr>
+        <tr>
+          <td>Damehatte i kollektionen</td>
+          <td class="num">18</td>
+          <td class="num accent">25-30</td>
+          <td>Tagging-pas + nye dame-fokuserede SKU'er</td>
+        </tr>
+        <tr>
+          <td>Herrehatte i kollektionen</td>
+          <td class="num">69</td>
+          <td class="num accent">75+</td>
+          <td>Aktivér drafts + nye herre-SKU'er</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================== -->
+<!-- SLIDE 12 — NÆSTE SKRIDT / TAKEAWAYS -->
+<!-- ============================================================== -->
+<section class="slide paper" id="s12">
+  <div class="inner">
+    <div class="eyebrow">Næste skridt</div>
+    <h2 class="editorial">Tre <em>handlinger</em> denne uge.</h2>
+
+    <div class="cards" style="margin-top:30px;">
+      <div class="card">
+        <h4>① Til indkøb</h4>
+        <p>Kontakt leverandører om <strong>børne-sommerhat (3 SKU'er)</strong> + <strong>herre UV-solhat (3 SKU'er)</strong>. Lead time 4-8 uger på europæiske leverandører — vi skal nå at have det hjem til midten af juni for at fange peak Q3.</p>
+      </div>
+      <div class="card">
+        <h4>② Til Trustpilot</h4>
+        <p>Hent <strong>Business Unit ID</strong> fra business.trustpilot.com → Showcase → TrustBoxes (eller fra Trustpilot Reviews-appen i Shopify Admin). Indsæt i tema-indstillinger. Live widgets aktiveres automatisk.</p>
+      </div>
+      <div class="card">
+        <h4>③ Til retur-politik</h4>
+        <p>Beslut om vi går fra 14 til <strong>100 dages returret</strong>. Tre konkurrenter har det allerede — det er nu kategori-forventning. Lille operationel risiko, stor konverterings-effekt.</p>
+      </div>
+    </div>
+
+    <div class="gap-callout" style="margin-top:36px;">
+      <div class="gtitle">Den fulde rapport</div>
+      <p style="margin:0; font-size:14px;">
+        Detaljeret data og analyse: <strong>.planning/phases/19-competitor-trend-research/</strong><br>
+        — 19-A: Konkurrent-landskab (5.200 ord)<br>
+        — 19-B: Pris-matrix (alle 5 konkurrenter, 4 kategorier)<br>
+        — 19-C: Indhold-gap (top 10 artikler, ~3.500 klik/mdr. potentiale)<br>
+        — 19-D: Q3 trend-forecast + leverandør-anbefalinger
+      </p>
+    </div>
+
+    <div class="deck-footer">
+      <span>Hattemanden · Strategi Q3 2026 · Internt brief</span>
+      <span>Udarbejdet 4. maj 2026 · Datakilder: GSC, DataForSEO, live SERP-analyse</span>
+    </div>
+  </div>
+</section>
+
+<!-- Dots nav -->
+<nav class="dots" id="dots"></nav>
+
+<script>
+  // Password gate
+  const PWD = 'hattemanden2026';
+  function checkPw() {
+    const v = document.getElementById('gate-pw').value.trim().toLowerCase();
+    if (v === PWD) {
+      document.getElementById('gate').classList.add('hidden');
+      try { localStorage.setItem('hm-q3-deck', '1'); } catch(_){}
+    } else {
+      document.getElementById('gate-err').textContent = 'Forkert kode. Prøv igen.';
+    }
+  }
+  document.getElementById('gate-pw').addEventListener('keydown', e => { if (e.key === 'Enter') checkPw(); });
+  if (typeof localStorage !== 'undefined' && localStorage.getItem('hm-q3-deck') === '1') {
+    document.getElementById('gate').classList.add('hidden');
+  }
+
+  // Dots
+  const slides = document.querySelectorAll('.slide');
+  const dots = document.getElementById('dots');
+  slides.forEach((s, i) => {
+    const a = document.createElement('a');
+    a.href = '#' + s.id;
+    if (i === 0) a.classList.add('active');
+    dots.appendChild(a);
+  });
+  const counter = document.getElementById('counter');
+  const totalStr = String(slides.length).padStart(2, '0');
+  function fmt(n) { return String(n).padStart(2, '0'); }
+
+  // Scroll observer
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && e.intersectionRatio > 0.55) {
+        const idx = Array.from(slides).indexOf(e.target);
+        document.querySelectorAll('.dots a').forEach((d, i) => d.classList.toggle('active', i === idx));
+        counter.textContent = fmt(idx + 1) + ' / ' + totalStr;
+        document.body.classList.toggle('light-head', e.target.classList.contains('paper') || e.target.classList.contains('orange'));
+      }
+    });
+  }, { threshold: [0.55] });
+  slides.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
